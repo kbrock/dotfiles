@@ -1,0 +1,13 @@
+--type-set=haml=.haml
+--type-add=ruby=.feature
+--type-add=css=.sass,.scss
+--type-add=js=.coffee
+--ignore-dir=.bundle
+--ignore-dir=.git
+--ignore-dir=tmp
+--ignore-dir=log
+#--ignore-dir=vendor
+--ignore-dir=index
+--ignore-dir=upload
+--ignore-dir=attachments
+

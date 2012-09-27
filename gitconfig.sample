@@ -1,0 +1,54 @@
+[user]
+  name = ###
+  email = ###
+[github]
+  user = ###
+  token = ###
+[alias]
+  st = status
+  br = branch
+  co = checkout
+#  ci = commit
+#  df = diff
+#  lg = log -p
+#  rb = rebase
+#  ls = !ls
+#  up = svn rebase
+#  ci = svn dcommit
+  #add ${remote-name:-origin} ${remote-url:-git@...}
+  #branch=git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
+[apply]
+  whitespace = fix
+#[branch]
+#  autosetupmerge = true
+# [color]
+#   branch = auto
+#   diff = auto
+#   status = auto
+#   ui = auto
+[color "diff"]
+  whitespace = red reverse
+#   meta = yellow bold
+#   frag = magenta bold
+#   old = red bold
+#   new = green bold
+# [color "status"]
+#   added = yellow
+#   changed = green
+#   untracked = cyan
+# [color "branch"]
+#   current = red bold
+#   local = green
+#   remote = white
+#	external = /Users/kbrock/bin/git_chdiff
+[core]
+  excludesfile = ~/.gitignore
+[format]
+  pretty = %C(cyan)>> %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+# [merge]
+#     tool = chdiff
+# [mergetool "chdiff"]
+#     cmd = /usr/bin/env chdiff "$LOCAL" "$REMOTE"
+#     keepBackup = false
+#     trustExitCode = false
