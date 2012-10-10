@@ -9,9 +9,8 @@ alias irb='irb --readline -r irb/completion'
 alias bake='bundle exec rake'
 alias beer='bundle exec ruby'
 alias cuke='RAILS_ENV=cucumber bundle exec cucumber'
-#may want to add
-alias spec='ruby -Ispec -J-d32'
-
+alias spec='ruby -Ispec'
+alias specr='spec --debug -Srdebug'
 #given a migration task, return the file name
 function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
 #given a migration task, return the version
