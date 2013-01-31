@@ -46,7 +46,7 @@ function mw() { more  `which $1` ; }
 function lw() { ls -l `which $1` ; }
 function sw() { subl  `which $1` ; }
 function vw() { vi    `which $1` ; }
-
+function cw() { cd $(dirname $(which $1)) ; }
 #copy in the background (add an & in there?)
 function bgcp { cp "$@" && ding copied || ding failed ; }
 

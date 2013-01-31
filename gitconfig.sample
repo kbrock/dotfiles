@@ -18,6 +18,7 @@
   #add ${remote-name:-origin} ${remote-url:-git@...}
   #branch=git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
+  prune = fetch --prune
 [apply]
   whitespace = fix
 #[branch]
