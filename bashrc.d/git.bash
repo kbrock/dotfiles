@@ -73,11 +73,9 @@ function gf() {
   git status | grep "${status}" | sed 's/^.*: *//'
 }
 
-alias branch_name="git branch | awk '/^\*/{print \$2}'"
-
 #bring this bug up to date
 function bug_rebase() {
-  local CURRENT=${1:-`branch_name`}
+  local CURRENT=${1:-git curren-branch}
   git checkout master
   git pull origin master --rebase
   git checkout ${CURRENT}
@@ -102,13 +100,14 @@ function find_git_branch {
       git_root="${git_dir##*/}"
       git_loc="${PWD/${git_dir}}"
 
-      #wish there was a way to do this not running all these commands
-      if ! $(git diff-files --ignore-submodules --quiet) ; then
+      # wish there was a way to do this not running all these commands
+      # note: these fail when running in .git directory
+      if ! $(git diff-files --ignore-submodules --quiet 2> /dev/null) ; then
         #locally modified
-        git_status=32
-      elif ! $(git diff-index --cached --quiet HEAD --) ; then
+        git_status=31
+      elif ! $(git diff-index --ignore-submodules --cached --quiet HEAD -- 2> /dev/null) ; then
         #committed, but not pushed
-        git_status=33
+        git_status=32
       else
         git_status=36
       fi
@@ -124,7 +123,9 @@ function find_git_branch {
   git_root=''
   git_loc=${PWD##*/}
 }
+
 export PROMPT_COMMAND="find_git_branch; $PROMPT_COMMAND"
+#TODO: return status - emoji?
 export PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
 # # sneaking some svn commands in here
 # 
