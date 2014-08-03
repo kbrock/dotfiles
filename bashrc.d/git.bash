@@ -32,7 +32,40 @@ alias gdd='chdiff --local-scm'
 alias gexport='git clone --bare -l .git ' #/pub/scm/proj.git'
 
 alias gpr='git pull --rebase'
-alias gpo='git push origin HEAD'
+#alias gpo="git push origin HEAD"
+
+function gpo() {
+  local branch_name=`git symbolic-ref --short HEAD` # contents of file .git/HEAD
+  local remote=`git config branch.${branch_name}.remote`
+  local args="${@-$remote}"
+
+  if [ -z "${remote}" ] ; then
+    local remotes=`git remote`
+    for r in $remotes ; do
+      if [[ "$args" =~ "$r" ]] ; then
+        remote=$"r"
+      fi
+    done
+    args="$args -u"
+  fi
+  if [[ ! "$args" =~ "$remote" ]] ; then
+    args="$remote $args"
+  fi
+  if [ -z "$remote" ] ; then
+    echo "remote not defined"
+    echo
+    echo "usage: gpo remote_name"
+    echo "       " $remotes
+    return
+  fi
+  # if [ -z "$remote" -a "$args" =~ "origin" ] ; then
+  #   echo "no remote defined"
+  #   return
+  # fi
+  [ -n "$remote" ] || args="$args -u"
+  echo "git push $args ${branch_name}"
+  git push $args ${branch_name}
+}
 
 # files that status shows from git
 function gf() {
