@@ -3,7 +3,7 @@
 #if this function is not available
 function not_defined() {
 #	return `which $1 |grep -v "^no ">/dev/null`
-  if `which $1 >/dev/null` ; then
+  if `type -a $1 >/dev/null 2>&1` ; then
     return 1
   else
     return 0
@@ -12,11 +12,15 @@ function not_defined() {
 
 #if we need to add this path to our environment
 function not_in_path {
-  if [ -d $1 ] && ! echo $PATH | grep $1 > /dev/null ; then
+  if [ -d $1 ] && ! echo :${PATH}: | grep $1{1}: > /dev/null ; then
     return 0
   else
     return 1
   fi
+}
+
+function add_to_path() {
+  not_in_path "$1" && export PATH=$PATH:$1
 }
 
 NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
@@ -35,14 +39,30 @@ alias ds='du -sk * |sort -nr'
 alias more='less -r'
 alias mroe='less -r'
 alias wget='curl -O'
-alias growl='growlnotify -m'
+# would alias to which, but
+alias whereis='type -a'
+# gem install terminal-notifier
+alias growl='terminal-notifier -message'
 
 #mac only
 not_defined 'ldd' && alias ldd='otool -L'
 not_in_path ~/bin && export PATH=$PATH:~/bin
 
 function title() { echo -e "\033];${1:?please specify a title}\007" ; }
+#javascript alert dialog
+function alert() {
+  message="$1"
+  title="${2-Alert}"
+  osascript -e "tell app \"System Events\" to display alert \"${title}\" message \"${message}\""
+}
+function notify {
+  message="${1}"
+  title="${2-Alert}"
+  osascript -e "display notification \"${message}\" with title \"${title}\"" }
+}
+
 function mw() { more  `which $1` ; }
+function catw() { cat `which $1` ; }
 function lw() { ls -l `which $1` ; }
 function sw() { subl  `which $1` ; }
 function vw() { vi    `which $1` ; }
@@ -61,6 +81,11 @@ function mate() {
       shift
     done
   fi
+}
+
+#you just ran ack, now sack to sublime the files
+function sack() {
+  subl $(ack -l "$@")
 }
 
 if [ -d ~/.Trash ] ; then
