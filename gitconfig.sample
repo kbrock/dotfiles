@@ -1,55 +1,97 @@
 [user]
   name = ###
   email = ###
-[github]
-  user = ###
-  token = ###
 [alias]
   st = status
   br = branch
   co = checkout
-#  ci = commit
-#  df = diff
-#  lg = log -p
-#  rb = rebase
-#  ls = !ls
-#  up = svn rebase
-#  ci = svn dcommit
-  #add ${remote-name:-origin} ${remote-url:-git@...}
-  #branch=git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  cat = show
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
   prune = fetch --prune
+  #amend keeping the same comment
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+  # add file to .gitignore
+  ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
+  # fetch a github pull request from ($1 = remote, $2 = pr number)
+  fetch-pr = "!f() { git fetch $1 refs/pull/$2/head:pr/$2; }; f"
+  # fetch-pr = "!f() { git fetch $1 refs/pull/$2/head:refs/remotes/pr/$2; }; f"
+  # fetch a github pull request from upstream ($1 = pr number)
+  upstream-pr = "!get fetch-pr upstream $1"
+  # rebase a pull request fromt he current branch (suggestion, be on master)
+  rebase-pr = "!f() { git checkout -b pr_$1 pr/$1; git rebase @{-1}; git checkout @{-2}; git rebase @{-1}; }; f"
+  # create a local branch for a pull request ($1 = number)
+  checkout-pr = "!f() { git fetch-pr $1 ; git checkout -b pr_$1 pr/$1 ; }; f"
+  # name of the current branch
+  # e.g.: master
+  current-branch  = "symbolic-ref --short HEAD"
+  #current-branch = "!git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`"
+  # tracking branch for the current branch
+  tracking-branch = "symbolic-ref HEAD"
+  # remote branch this current branch is tracking
+  # e.g.:  origin
+  current-remote  = "!git config branch.$(git current-branch).remote"
+  # show untracked files
+  untracked = "ls-files --others -i --exclude-standard"
+  # url for the current branch ($1 = name of remote)
+  # e.g.: git@github.com:user/prog.git
+  url     = "! f() { git config remote.${1:-$(git current-remote)}.url ; }; f"
+  # url at github ($1 = tree compare)
+  hub-url = "! f() { hu="$(echo $(git url $1) | sed -e 'sX:X/X' -e 'sXgit@\\(.*\\).gitXhttp://\\1X')" ; echo "${hu}/tree/$(git current-branch)" ; }; f"
+  # url at github for this branch ($1 = branch)
+  branch-url ="! f() { echo \"$(git hub-url $1)/compare/$(git current-branch)\" ; }; f"
+  # open hub-url ($1 tree compare)
+  open    = "! f() { open $(git hub-url ${1}) ; }; f"
+  # log in a graph (add --all all branches)
+  graph = log --graph --decorate --oneline -n30
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+  # setup tracking for this branch ($1 = remote. defaults to origin)
+  track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git current-branch); }; f"
+  # remove reference to a remote branch. (git fetch will repopulate it)
+  branch-remote-delete-all = "!() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d }"
+
+  # setup this repo to take photos
+  photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
+  # show the most recent photos
+  photo-show = "!qlmanage -p $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
+  # show the photo directory
+  photo-show-all = "!open ~/Pictures/git/"
+  # remove last photo taken
+  photo-rm = "!rm $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
+  # commits will go in on my personal email (for non redhat ensorsed repos)
+  personal = "!git config user.email keenan@thebrocks.net"
 [apply]
   whitespace = fix
 #[branch]
+# git checkout automatically tracks the remote ()
 #  autosetupmerge = true
-# [color]
-#   branch = auto
-#   diff = auto
-#   status = auto
-#   ui = auto
-[color "diff"]
-  whitespace = red reverse
-#   meta = yellow bold
-#   frag = magenta bold
-#   old = red bold
-#   new = green bold
-# [color "status"]
-#   added = yellow
-#   changed = green
-#   untracked = cyan
-# [color "branch"]
-#   current = red bold
-#   local = green
-#   remote = white
-#	external = /Users/kbrock/bin/git_chdiff
 [core]
   excludesfile = ~/.gitignore
-[format]
-  pretty = %C(cyan)>> %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
-# [merge]
-#     tool = chdiff
+# / use mac keychain for ssh passwords
+[credential]
+  helper = osxkeychain
+[grep]
+  lineNumber = true
+[pull]
+  rebase = true
+[push]
+  default = simple
+[rebase]
+  autosquash = true
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
+[color "diff"]
+  whitespace = red reverse
+#[format]
+#  pretty = %C(cyan)>> %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+[diff]
+  algorithm = patience
 # [mergetool "chdiff"]
 #     cmd = /usr/bin/env chdiff "$LOCAL" "$REMOTE"
 #     keepBackup = false
 #     trustExitCode = false
+
+#thanks:
+# http://georgebrock.com/blog/useful-git-aliases

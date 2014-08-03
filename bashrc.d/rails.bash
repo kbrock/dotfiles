@@ -17,6 +17,17 @@ function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
 #e.g.: rake db:migrate:redo VERSION=$(mver create_photo)
 function mver() { mf $1 | sed 's=^[^0-9]*\([0-9][^_]*\)_.*$=\1=' ; }
 
+function ruby-version {
+  local rv="ruby-1.9.3-p448"
+  if [ $# -eq 1 ] ; then
+    chruby $1
+    rv=`chruby | awk '/\*/ { print $2; }'`
+  fi
+  echo $rv > .ruby-version
+
+  which ruby
+}
+
 # Cucumber env setting 
 export AUTOFEATURE=true	
 #export RSPEC=true

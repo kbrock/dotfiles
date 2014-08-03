@@ -3,10 +3,12 @@
 :verbose: true
 :update_sources: true
 :sources: 
-- http://gemcutter.org
-- http://gems.rubyforge.org/
-- http://gems.github.com
+- https://rubygems.org/
 :backtrace: false
 :bulk_threshold: 1000
 #rdoc: --inline-source --line-numbers --format=html --template=hanna
-gem: --no-ri --no-rdoc
+#gem: --no-ri --no-rdoc
+gem: --no-ri 
+install: --format-executable --no-user-install
+update: --format-executable --no-user-install
+uninstall: --format-executable --no-user-install
