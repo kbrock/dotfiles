@@ -88,6 +88,10 @@ function sack() {
   subl $(ack -l "$@")
 }
 
+function sag() {
+  subl $(ag -l "$@")
+}
+
 if [ -d ~/.Trash ] ; then
 function rm () {
   local path
