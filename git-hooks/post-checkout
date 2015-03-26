@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# * Put this in manageiq/.git/hooks/post-checkout
+# * Make sure you chmod +x this file!!!
+# * Make you convert this file to unix line endings, NOT dos/windows.
+# * 5.3.z needs ruby 1.9.3 with bundler ~1.3.5.
+# * Master needs ruby 2+ with bundler ~1.5+.
+# * You have to `bundle` once on 5.3.z to populate the empty Gemfile.lock.5.3.z
+# * If you have a long running branch such as rails4 and want a Gemfile.lock
+#    just for this branch:
+#    `touch Gemfile.lock.rails4`, `git checkout rails4`, `bundle`.
+## * If you are based upon another branch:
+##     "git config --add branch.${branch}.gemfile Gemfile.lock.${branch}"
+
+branch=$(git symbolic-ref -q --short HEAD)
+
+git_lockfile=$(git config --get branch.$branch.gemfile)
+branch_lockfile="Gemfile.lock.${branch}"
+branch_lockfile="${git_lockfile:-$branch_lockfile}"
+lockfile="${branch_lockfile}"
+
+# if they didn't hard code lockfile in git
+# if there isn't a lockfile for the branch
+# then just point to master or 5.3.z
+if [ -z "${git_lockfile}" -a ! -f "vmdb/$lockfile" ]
+then
+  case "$branch" in
+    "5.3*" ) lockfile="Gemfile.lock.5.3.z"  ;;
+    *)       lockfile="Gemfile.lock.master" ;;
+  esac 
+fi
+
+rm -f vmdb/Gemfile.lock
+ln -s $lockfile vmdb/Gemfile.lock
+
+if [ "${branch_lockfile}" != "${lockfile}" ]
+then
+  echo "** Using $lockfile"
+  # 1 character comes back when the files are the same
+  # return status is 0, so need to work a a little harder
+  ret=$(git diff upstream/master -- Gemfile)
+  if [ $( echo "${ret}" | wc -c) -gt 1 ] ; then
+  echo "    Gemfile differs from upstream/master, may want to run a custom gem lockfile via:"
+  echo "       touch ${branch_lockfile}"
+  echo ">> ${ret}"
+  fi
+elif [ -s vmdb/$lockfile ]
+then
+  echo "** Using $lockfile"
+else
+  touch vmdb/$lockfile
+  echo "** Created $lockfile, run bundle"
+fi
