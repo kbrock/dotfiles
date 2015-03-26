@@ -42,8 +42,7 @@ function gpo() {
   local args="${@-$remote}"
 
   # not tracking a remote
-  # find a remote that looks like argument
-  # updates push with -u to start tracking it
+  # see if the user specified a remote
   if [ -z "${remote}" ] ; then
     local remotes=`git remote`
     for r in $remotes ; do
@@ -51,6 +50,7 @@ function gpo() {
         remote=$"r"
       fi
     done
+    # start tracking this branch
     args="$args -u"
   fi
   # add remote name to command if it isn't already in there
@@ -65,14 +65,21 @@ function gpo() {
     echo "       " $remotes
     return
   fi
-  # if [ -z "$remote" -a "$args" =~ "origin" ] ; then
-  #   echo "no remote defined"
-  #   return
-  # fi
-  [ -n "$remote" ] || args="$args -u"
-  echo "git push $args ${branch_name}"
-  git push $args ${branch_name}
+
+  # this could be HEAD, but using the branch name is more clear
+  if [[ ! "$args" =~ "$branch_name" ]] ; then
+    args="$args ${branch_name}"
+  fi
+
+  echo "git push $args"
+  git push $args
 }
+
+function _gpo_complete {
+  COMPREPLY=($(compgen -W "$(git remote)" -- ${COMP_WORDS[COMP_CWORD]}))
+  return 0
+}
+complete -o nospace -F _gpo_complete gpo
 
 # files that status shows from git
 function gf() {
