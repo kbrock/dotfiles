@@ -50,14 +50,21 @@
   branch-remote-delete-all = "!() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d }"
 
   # setup this repo to take photos
+  ## setup this repo to take photos
   photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
-  # show the most recent photos
+
+  ## show the most recent photos
   photo-show = "!qlmanage -p $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
-  # show the photo directory
+
+  ## show the photo directory
   photo-show-all = "!open ~/Pictures/git/"
-  # remove last photo taken
+
+  ## remove last photo taken
   photo-rm = "!rm $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
-  # commits will go in on my personal email (for non redhat ensorsed repos)
+
+  ## commits will go in on my personal email (for non redhat ensorsed repos)
+  photo-count = "! ls ~/Pictures/git | wc -l"
+
   personal = "!git config user.email keenan@thebrocks.net"
 [apply]
   whitespace = fix

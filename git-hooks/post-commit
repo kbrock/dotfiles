@@ -7,9 +7,15 @@ set -e
 export PATH="$PATH:/usr/local/bin/"
 
 # if we are on a branch (and not in the middle of a rebase)
+
+#?? GIT_DIR == git rev-parse --git-dir
+
+# $GIT_DIR/rebase-merge $GIT_DIR/rebase-apply
 if git symbolic-ref -q --short HEAD 2>&1 > /dev/null ; then
-  PHOTO_NAME="${HOME}/Pictures/git/$(date '+%Y_%m_%d-%H_%M_%S').jpg"
-  [ -t 1 ] && echo "Say Cheese"
-  # wait 2 seconds to let the camera aperture adjust to room light
-  imagesnap -q -w 2.5 ${PHOTO_NAME}
+  # if we are not in the middle of cherry-pick
+    PHOTO_NAME="${HOME}/Pictures/git/$(date '+%Y_%m_%d-%H_%M_%S').jpg"
+    [ -t 1 ] && echo "Say Cheese"
+    # wait 2 seconds to let the camera aperture adjust to room light
+    imagesnap -q -w 2.5 ${PHOTO_NAME}
+  # fi
 fi
