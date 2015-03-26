@@ -6,50 +6,98 @@
   br = branch
   co = checkout
   cat = show
+  ## git rebase master: rebase current branch to upstream/master
+  rem = "!git fetch upstream ; git rebase upstream/master"
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
-  prune = fetch --prune
-  #amend keeping the same comment
-  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
-  # add file to .gitignore
-  ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
-  # fetch a github pull request from ($1 = remote, $2 = pr number)
-  fetch-pr = "!f() { git fetch $1 refs/pull/$2/head:pr/$2; }; f"
-  # fetch-pr = "!f() { git fetch $1 refs/pull/$2/head:refs/remotes/pr/$2; }; f"
-  # fetch a github pull request from upstream ($1 = pr number)
-  upstream-pr = "!get fetch-pr upstream $1"
-  # rebase a pull request fromt he current branch (suggestion, be on master)
-  rebase-pr = "!f() { git checkout -b pr_$1 pr/$1; git rebase @{-1}; git checkout @{-2}; git rebase @{-1}; }; f"
-  # create a local branch for a pull request ($1 = number)
-  checkout-pr = "!f() { git fetch-pr $1 ; git checkout -b pr_$1 pr/$1 ; }; f"
-  # name of the current branch
-  # e.g.: master
-  current-branch  = "symbolic-ref --short HEAD"
-  #current-branch = "!git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`"
-  # tracking branch for the current branch
-  tracking-branch = "symbolic-ref HEAD"
-  # remote branch this current branch is tracking
-  # e.g.:  origin
-  current-remote  = "!git config branch.$(git current-branch).remote"
-  # show untracked files
-  untracked = "ls-files --others -i --exclude-standard"
-  # url for the current branch ($1 = name of remote)
-  # e.g.: git@github.com:user/prog.git
-  url     = "! f() { git config remote.${1:-$(git current-remote)}.url ; }; f"
-  # url at github ($1 = tree compare)
-  hub-url = "! f() { hu="$(echo $(git url $1) | sed -e 'sX:X/X' -e 'sXgit@\\(.*\\).gitXhttp://\\1X')" ; echo "${hu}/tree/$(git current-branch)" ; }; f"
-  # url at github for this branch ($1 = branch)
-  branch-url ="! f() { echo \"$(git hub-url $1)/compare/$(git current-branch)\" ; }; f"
-  # open hub-url ($1 tree compare)
-  open    = "! f() { open $(git hub-url ${1}) ; }; f"
-  # log in a graph (add --all all branches)
-  graph = log --graph --decorate --oneline -n30
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
-  # setup tracking for this branch ($1 = remote. defaults to origin)
-  track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git current-branch); }; f"
-  # remove reference to a remote branch. (git fetch will repopulate it)
-  branch-remote-delete-all = "!() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d }"
 
-  # setup this repo to take photos
+  ## git merge master: checkout master and merge with upstream master
+  mem = "!git fetch upstream && git checkout master && git merge --ff-only upstream/master"
+  #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
+
+  ## prune my own branches that have been deleted on the server
+  prune = fetch --prune
+
+  ## amend current commit keeping the same comment
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+
+  ## add file to .gitignore
+  ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
+
+  ## edit gitconfig file with sublime
+  config-subl = "!subl ~/.gitconfig"
+  ## fetch a github pull request from upstream ($1 = pr number)
+  fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; }; f"
+  #fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/pr/$1; }; f"
+
+  ## rebase a pull request from the current branch (suggestion is to be on master)
+  rebase-pr = "!f() { git checkout -b pr_$1 pr/$1; git rebase @{-1}; git checkout @{-2}; git rebase @{-1}; }; f"
+
+  ## create a local branch for a pull request ($1 = number)
+  #checkout-pr = "!f() { git fetch-pr $1 ; git checkout -b pr_$1 pr/$1 ; }; f"
+
+  ## name of the current branch
+  # e.g.: master
+  branch-name  = "symbolic-ref -q --short HEAD"
+  #branch-name = "!git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`"
+  # deprecated name:
+  current-branch  = "symbolic-ref --short HEAD"
+
+  ## remove all branches that do not have any commits in them (and have been merged
+  branch-prune = "!git checkout master && git branch --merged | grep -v master | xargs git branch -d"
+
+  ## tracking branch for the current branch
+  tracking-branch = "symbolic-ref HEAD"
+
+  ## remote branch this current branch is tracking
+  ## e.g.:  origin
+  current-remote  = "!git config branch.$(git branch-name).remote"
+
+  ## show untracked files
+  untracked = "ls-files --others -i --exclude-standard"
+
+  ## url for the current branch ($1 = name of remote) must be linked to master
+  ## e.g.: git@github.com:user/prog.git
+  url     = "! f() { git config remote.${1:-$(git current-remote)}.url ; }; f"
+
+  ## url at github ($1 = remote e.g.: origin) ($2 = tree compare)
+  #hub-url = "! f() { hu="$(echo $(git url $1) | sed -e 'sX:X/X' -e 'sXgit@\\(.*\\).gitXhttp://\\1X')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
+  hub-url  = "! f() { hu="$(echo $(git url $1) | sed -e 'sX^git@\\([^:]*\\):Xhttp://\\1/X' -e 'sX\\.git$XX')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
+
+  ## open a pr
+  pr = "! f() { git push -u ${1:-origin} HEAD ; git open ${1:-origin} compare expand=1 ; }; f"
+
+  ## open a pr on production
+  # TODO
+  # ?merge_request%5Bsource_branch%5D=531_embed_key&merge_request%5Bsource_project_id%5D=69&merge_request%5Btarget_branch%5D=master&merge_request%5Btarget_project_id%5D=59
+  # merge_request%5Bsource_project_id%5D=69
+  # merge_request%5Bsource_branch%5D=531_embed_key
+  # merge_request%5Btarget_project_id%5D=59
+  # merge_request%5Btarget_branch%5D=5.3.z
+  prodpr="! f() { git push -u production HEAD ; git open production compare ; }; f"
+
+  ## open hub-url (origin tree compare)
+  open    = "! f() { open $(git hub-url ${1} ${2} ${3}) ; }; f"
+
+  ## open new pr (used?
+  new     = "! f() { open $(git hub-url $(git current-remote) pull/new) ; }; f"
+
+  ## log in a graph (add --all all branches)
+  graph = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+  lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+
+  ## setup tracking for this branch (default: remote=origin)
+  track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git branch-name); }; f"
+  ## remove reference to a remote branch. (git fetch will repopulate it)
+  branch-remote-delete-regex = "!f() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d ; } ; f"
+
+  ## git upstream ($1 = github account. default: manageiq)
+  ## create branch upstream based upon origin
+  upstream = "!f() { url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
+
+  ## cherry-prod anand master ; cherry-prod 5.3.z
+  cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
+  #git log --no-merges --oneline upstream/master --not production/5.3.z --author kbrock
+
   ## setup this repo to take photos
   photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
 
@@ -65,7 +113,9 @@
   ## commits will go in on my personal email (for non redhat ensorsed repos)
   photo-count = "! ls ~/Pictures/git | wc -l"
 
+  ## config userid for this account
   personal = "!git config user.email keenan@thebrocks.net"
+  redhat = "!git config user.email kbrock@redhat.com"
 [apply]
   whitespace = fix
 #[branch]
@@ -73,15 +123,17 @@
 #  autosetupmerge = true
 [core]
   excludesfile = ~/.gitignore
-# / use mac keychain for ssh passwords
+# use mac keychain for ssh passwords
 [credential]
   helper = osxkeychain
 [grep]
   lineNumber = true
 [pull]
+  ff = only
   rebase = true
 [push]
   default = simple
+#  default = current
 [rebase]
   autosquash = true
 [color]
@@ -95,10 +147,25 @@
 #  pretty = %C(cyan)>> %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [diff]
   algorithm = patience
+# haven't played with this yet
+# but in theory, it replaces all github http urls to use ssh instead
+[url "git@github.com:"]
+	insteadOf = gh:
+	insteadOf = ghub:
+	insteadOf = github:
+	insteadOf = https://github.com/
+	insteadOf = http://github.com/
 # [mergetool "chdiff"]
 #     cmd = /usr/bin/env chdiff "$LOCAL" "$REMOTE"
 #     keepBackup = false
 #     trustExitCode = false
+
+# [difftool "sourcetree"]
+#	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+#	path = 
+# [mergetool "sourcetree"]
+#	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+#	trustExitCode = true
 
 #thanks:
 # http://georgebrock.com/blog/useful-git-aliases
