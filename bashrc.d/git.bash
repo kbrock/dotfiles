@@ -32,13 +32,18 @@ alias gdd='chdiff --local-scm'
 alias gexport='git clone --bare -l .git ' #/pub/scm/proj.git'
 
 alias gpr='git pull --rebase'
-#alias gpo="git push origin HEAD"
 
+# push current branch (HEAD) to the origin
+#alias gpo="git push origin HEAD"
+# function doesn't assume origin, uses remote that this branch is tracking
 function gpo() {
   local branch_name=`git symbolic-ref --short HEAD` # contents of file .git/HEAD
   local remote=`git config branch.${branch_name}.remote`
   local args="${@-$remote}"
 
+  # not tracking a remote
+  # find a remote that looks like argument
+  # updates push with -u to start tracking it
   if [ -z "${remote}" ] ; then
     local remotes=`git remote`
     for r in $remotes ; do
@@ -48,9 +53,11 @@ function gpo() {
     done
     args="$args -u"
   fi
+  # add remote name to command if it isn't already in there
   if [[ ! "$args" =~ "$remote" ]] ; then
     args="$remote $args"
   fi
+  # don't know the remote, give user feedback / options
   if [ -z "$remote" ] ; then
     echo "remote not defined"
     echo
