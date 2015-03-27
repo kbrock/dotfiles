@@ -50,6 +50,8 @@
 
   ## remote branch this current branch is tracking
   ## e.g.:  origin
+  remote-name  = "!git config branch.$(git branch-name).remote"
+  # deprecated name:
   current-remote  = "!git config branch.$(git branch-name).remote"
 
   ## show untracked files
@@ -57,14 +59,13 @@
 
   ## url for the current branch ($1 = name of remote) must be linked to master
   ## e.g.: git@github.com:user/prog.git
-  url     = "! f() { git config remote.${1:-$(git current-remote)}.url ; }; f"
+  remote-url= "! f() { git config remote.${1:-$(git remote-name)}.url ; }; f"
 
   ## url at github ($1 = remote e.g.: origin) ($2 = tree compare)
-  #hub-url = "! f() { hu="$(echo $(git url $1) | sed -e 'sX:X/X' -e 'sXgit@\\(.*\\).gitXhttp://\\1X')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
-  hub-url  = "! f() { hu="$(echo $(git url $1) | sed -e 'sX^git@\\([^:]*\\):Xhttp://\\1/X' -e 'sX\\.git$XX')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
+  hub-url  = "! f() { hu="$(echo $(git remote-url $1) | sed -e 'sX^git@\\([^:]*\\):Xhttp://\\1/X' -e 'sX\\.git$XX')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
 
   ## open a pr
-  pr = "! f() { git push -u ${1:-origin} HEAD ; git open ${1:-origin} compare expand=1 ; }; f"
+  pr = "! f() { git push ; git open $(git remote-name) compare expand=1 ; }; f"
 
   ## open a pr on production
   # TODO
@@ -78,8 +79,8 @@
   ## open hub-url (origin tree compare)
   open    = "! f() { open $(git hub-url ${1} ${2} ${3}) ; }; f"
 
-  ## open new pr (used?
-  new     = "! f() { open $(git hub-url $(git current-remote) pull/new) ; }; f"
+  ## open new pr (used?)
+  new     = "! f() { open $(git hub-url $(git remote-name) pull/new) ; }; f"
 
   ## log in a graph (add --all all branches)
   graph = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
