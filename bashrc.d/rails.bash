@@ -28,6 +28,14 @@ function ruby-version {
   which ruby
 }
 
+function powrc {
+cat <<EOF > .powrc
+source /usr/local/share/chruby/chruby.sh
+[ -f .ruby-version ] && chruby \$(cat .ruby-version)
+[ -f .env ] && export \$(cat .env)
+EOF
+}
+
 # Cucumber env setting 
 export AUTOFEATURE=true	
 #export RSPEC=true
