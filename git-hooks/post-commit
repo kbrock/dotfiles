@@ -11,7 +11,8 @@ export PATH="$PATH:/usr/local/bin/"
 #?? GIT_DIR == git rev-parse --git-dir
 
 # $GIT_DIR/rebase-merge $GIT_DIR/rebase-apply
-if git symbolic-ref -q --short HEAD 2>&1 > /dev/null ; then
+if false ; then
+# if git symbolic-ref -q --short HEAD 2>&1 > /dev/null ; then
   # if we are not in the middle of cherry-pick
     PHOTO_NAME="${HOME}/Pictures/git/$(date '+%Y_%m_%d-%H_%M_%S').jpg"
     [ -t 1 ] && echo "Say Cheese"
