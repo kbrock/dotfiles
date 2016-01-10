@@ -22,16 +22,18 @@ lockfile="${branch_lockfile}"
 # if they didn't hard code lockfile in git
 # if there isn't a lockfile for the branch
 # then just point to master or 5.3.z
-if [ -z "${git_lockfile}" -a ! -f "vmdb/$lockfile" ]
+if [ -z "${git_lockfile}" -a ! -f "$lockfile" ]
 then
   case "$branch" in
     "5.3*" ) lockfile="Gemfile.lock.5.3.z"  ;;
+    "5.4*" ) lockfile="Gemfile.lock.5.4.z"  ;;
+    "5.5*" ) lockfile="Gemfile.lock.5.5.z"  ;;
     *)       lockfile="Gemfile.lock.master" ;;
   esac 
 fi
 
-rm -f vmdb/Gemfile.lock
-ln -s $lockfile vmdb/Gemfile.lock
+rm -f Gemfile.lock
+ln -s $lockfile Gemfile.lock
 
 if [ "${branch_lockfile}" != "${lockfile}" ]
 then
@@ -44,10 +46,10 @@ then
   echo "       touch ${branch_lockfile}"
   echo ">> ${ret}"
   fi
-elif [ -s vmdb/$lockfile ]
+elif [ -s $lockfile ]
 then
   echo "** Using $lockfile"
 else
-  touch vmdb/$lockfile
+  touch $lockfile
   echo "** Created $lockfile, run bundle"
 fi
