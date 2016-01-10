@@ -33,48 +33,6 @@ alias gexport='git clone --bare -l .git ' #/pub/scm/proj.git'
 
 alias gpr='git pull --rebase'
 
-# push current branch (HEAD) to the origin
-#alias gpo="git push origin HEAD"
-# function doesn't assume origin, uses remote that this branch is tracking
-function gpo() {
-  local branch_name=`git symbolic-ref --short HEAD` # contents of file .git/HEAD
-  local remote=`git config branch.${branch_name}.remote`
-  local args="${@-$remote}"
-
-  # not tracking a remote
-  # see if the user specified a remote
-  if [ -z "${remote}" ] ; then
-    local remotes=`git remote`
-    for r in $remotes ; do
-      if [[ "$args" =~ "$r" ]] ; then
-        remote=$"r"
-      fi
-    done
-    # start tracking this branch
-    args="$args -u"
-  fi
-  # add remote name to command if it isn't already in there
-  if [[ ! "$args" =~ "$remote" ]] ; then
-    args="$remote $args"
-  fi
-  # don't know the remote, give user feedback / options
-  if [ -z "$remote" ] ; then
-    echo "remote not defined"
-    echo
-    echo "usage: gpo remote_name"
-    echo "       " $remotes
-    return
-  fi
-
-  # this could be HEAD, but using the branch name is more clear
-  if [[ ! "$args" =~ "$branch_name" ]] ; then
-    args="$args ${branch_name}"
-  fi
-
-  echo "git push $args"
-  git push $args
-}
-
 function _gpo_complete {
   COMPREPLY=($(compgen -W "$(git remote)" -- ${COMP_WORDS[COMP_CWORD]}))
   return 0
@@ -83,8 +41,13 @@ complete -o nospace -F _gpo_complete gpo
 
 # files that status shows from git
 function gf() {
-  status=${*:-unmerged}
+  local status=${*:-modified}
   git status | grep "${status}" | sed 's/^.*: *//'
+}
+
+# files that have changed from master
+function gn() {
+  git diff master --name-only
 }
 
 #bring this bug up to date
@@ -104,6 +67,12 @@ function find_git_branch {
   until [ "$dir" -ef / ]; do
     if [ -f "$dir/.git/HEAD" ]; then
       head=$(< "$dir/.git/HEAD")
+    elif [ -f "$dir/.git" ] ; then
+      gitref=$(< "$dir/.git")
+      head=$(< "${gitref#* }/HEAD")
+    fi
+
+    if [ -n "$head" ] ; then
       if [[ $head == ref:\ refs/heads/* ]]; then
         git_branch="${head#*/*/}"
       elif [[ $head != '' ]]; then
@@ -126,9 +95,10 @@ function find_git_branch {
         git_status=36
       fi
       return
+    else
+      git_dir="${git_dir%/*}"
+      dir="../$dir"
     fi
-    git_dir="${git_dir%/*}"
-    dir="../$dir"
   done
 # exported variables
   git_status=36
