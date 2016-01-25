@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+target = ARGV[0] || ENV["HOME"]
+pwd = Dir.pwd
+
+# gitconfig is customized
+
+excludes = %w(. .. .git README.md gitconfig.sample .gitignore bootstrap)
+dotfiles = Dir.entries(pwd) - excludes
+
+dotfiles.each do |dotfile|
+  src = "#{pwd}/#{dotfiles}"
+  target = "#{target}/.#{dotfile}"
+  if File.exist?(target)
+    unless File.identical?(src, target)
+      puts "file exists: .#{dotfile} (move and run script again)"
+    end
+  else
+    puts "Linking #{target}"
+    FileUtil.ln_s(src, target)
+  end
+end
+
+
+src = "#{pwd}/gitconfig.sample"
+target = "#{target}/.gitconfig"
+if File.exist?(target)
+  FileUtil.cp(src, target)
+  puts "created: .gitconfig (customize to add username / password)"
+else
+  puts "file exists: .gitconfig (you probably want to diff)"
+end
