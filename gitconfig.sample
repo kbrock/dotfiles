@@ -3,8 +3,6 @@
   email = ###
 [alias]
   st = status
-  br = branch
-  co = checkout
   cat = show
   ## git rebase master: rebase current branch to upstream/master
   rem = "!git fetch upstream ; git rebase upstream/master"
@@ -26,7 +24,7 @@
   ## edit gitconfig file with sublime
   config-subl = "!subl ~/.gitconfig"
   ## fetch a github pull request from upstream ($1 = pr number)
-  fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1; }; f"
+  fetch-pr = "!f() { git fetch -u upstream refs/pull/$1/head:pr/$1; }; f"
   #fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/pr/$1; }; f"
 
   ## rebase a pull request from the current branch (suggestion is to be on master)
@@ -52,20 +50,17 @@
   ## e.g.:  origin
   remote-name  = "!git config branch.$(git branch-name).remote"
   # deprecated name:
-  current-remote  = "!git config branch.$(git branch-name).remote"
+  current-remote = "!git config branch.$(git branch-name).remote"
 
   ## show untracked files
   untracked = "ls-files --others -i --exclude-standard"
 
   ## url for the current branch ($1 = name of remote) must be linked to master
   ## e.g.: git@github.com:user/prog.git
-  remote-url= "! f() { git config remote.${1:-$(git remote-name)}.url ; }; f"
-
-  ## url at github ($1 = remote e.g.: origin) ($2 = tree compare)
-  hub-url  = "! f() { hu="$(echo $(git remote-url $1) | sed -e 'sX^git@\\([^:]*\\):Xhttp://\\1/X' -e 'sX\\.git$XX')" ; echo "${hu}/${2:-tree}/$(git branch-name)${3:+?}${3}" ; }; f"
+  remote-url = "! f() { git config remote.${1:-$(git remote-name)}.url ; }; f"
 
   ## open a pr
-  pr = "! f() { git push ; git open $(git remote-name) compare expand=1 ; }; f"
+  pr = "! f() { open $(git url compare) ; }; f"
 
   ## open a pr on production
   # TODO
@@ -76,24 +71,28 @@
   # merge_request%5Btarget_branch%5D=5.3.z
   prodpr="! f() { git push -u production HEAD ; git open production compare ; }; f"
 
-  ## open hub-url (origin tree compare)
-  open    = "! f() { open $(git hub-url ${1} ${2} ${3}) ; }; f"
+  ## open hub-url (origin compare ?expand=1)
+  open = "! f() { open $(git url $*) ; }; f"
 
-  ## open new pr (used?)
-  new     = "! f() { open $(git hub-url $(git remote-name) pull/new) ; }; f"
+  ## open new pr (used?) (origin)
+  new     = "! f() { open $(git url ${1:-$(git remote-name)} pull/new) ; }; f"
 
   ## log in a graph (add --all all branches)
   graph = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
-  lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
+  lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(cyan)<%an>%Creset'
 
   ## setup tracking for this branch (default: remote=origin)
   track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git branch-name); }; f"
   ## remove reference to a remote branch. (git fetch will repopulate it)
   branch-remote-delete-regex = "!f() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d ; } ; f"
 
+  ## delete my remote branches for a given regular expression (don't delete origin or HEAD)
+  # branch-delete-remote git branch -a | awk -F/ ' /origin\/[^mH]/ { print $3 }'
+
   ## git upstream ($1 = github account. default: manageiq)
   ## create branch upstream based upon origin
   upstream = "!f() { url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
+  downstream = "!f() { url=`git url production` ; git remote add downstream ${url/kbrock/${1:-cfme}}; }; f"
 
   ## cherry-prod anand master ; cherry-prod 5.3.z
   cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
@@ -117,6 +116,14 @@
   ## config userid for this account
   personal = "!git config user.email keenan@thebrocks.net"
   redhat = "!git config user.email kbrock@redhat.com"
+
+  #fork ="!hub fork && git remote rename origin upstream && git remote rename kbrock origin && git checkout master ; git branch -u origin/master master"
+  collaborate = "! f() { local remote=$(git config remote.origin.url) ; git remote add $1 ${remote/:*\\//:$1/} ; git fetch $1 ; } ; f"
+  #collaborate = "!f() { url=`git url origin` ; echo ${1:-upstream} ${url/kbrock/${1:-manageiq}}; }; f"
+
+  # unsure
+  fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
+
 [apply]
   whitespace = fix
 #[branch]
