@@ -18,7 +18,7 @@
   ## amend current commit keeping the same comment
   amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 
-  ## add file to .gitignore
+  ## add a file to .gitignore
   ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
 
   ## edit gitconfig file with sublime
@@ -41,7 +41,7 @@
   current-branch  = "symbolic-ref --short HEAD"
 
   ## remove all branches that do not have any commits in them (and have been merged
-  branch-prune = "!git checkout master && git branch --merged | grep -v master | xargs git branch -d"
+  branch-prune = "!git checkout master && git branch --merged | grep -v '*' | xargs git branch -d"
 
   ## tracking branch for the current branch
   tracking-branch = "symbolic-ref HEAD"
@@ -69,7 +69,7 @@
   # merge_request%5Bsource_branch%5D=531_embed_key
   # merge_request%5Btarget_project_id%5D=59
   # merge_request%5Btarget_branch%5D=5.3.z
-  prodpr="! f() { git push -u production HEAD ; git open production compare ; }; f"
+  prodpr="! f() { git push -u gorigin HEAD ; git open downstream compare ; }; f"
 
   ## open hub-url (origin compare ?expand=1)
   open = "! f() { open $(git url $*) ; }; f"
@@ -94,6 +94,9 @@
   upstream = "!f() { url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
   downstream = "!f() { url=`git url production` ; git remote add downstream ${url/kbrock/${1:-cfme}}; }; f"
 
+  # back patch / cherry pick to 5.4
+  cherry-pick-54 = "cherry-pick -Xsubtree=vmdb"
+
   ## cherry-prod anand master ; cherry-prod 5.3.z
   cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
   #git log --no-merges --oneline upstream/master --not production/5.3.z --author kbrock
@@ -113,16 +116,16 @@
   ## commits will go in on my personal email (for non redhat ensorsed repos)
   photo-count = "! ls ~/Pictures/git | wc -l"
 
-  ## config userid for this account
-  personal = "!git config user.email keenan@thebrocks.net"
-  redhat = "!git config user.email kbrock@redhat.com"
-
-  #fork ="!hub fork && git remote rename origin upstream && git remote rename kbrock origin && git checkout master ; git branch -u origin/master master"
+  ## add a remote for a collaborator
+  ## git collaborate bdunne
   collaborate = "! f() { local remote=$(git config remote.origin.url) ; git remote add $1 ${remote/:*\\//:$1/} ; git fetch $1 ; } ; f"
   #collaborate = "!f() { url=`git url origin` ; echo ${1:-upstream} ${url/kbrock/${1:-manageiq}}; }; f"
 
   # unsure
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
+
+  # open a file on upstream master
+  master = "! f() { git open upstream/master $(find . -name \"$@\") ; } ; f"
 
 [apply]
   whitespace = fix
@@ -131,6 +134,11 @@
 #  autosetupmerge = true
 [core]
   excludesfile = ~/.gitignore
+  pager = less -x4 -r
+[pager]
+  log = diff-highlight | less -x4 -r
+  show = diff-highlight | less -x4 -r
+  diff = diff-highlight | less -x4 -r
 # use mac keychain for ssh passwords
 [credential]
   helper = osxkeychain

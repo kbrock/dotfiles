@@ -12,3 +12,7 @@ work
 rake.txt
 .agignore
 .rspec-local
+public/run-*.html
+public/run-*.json
+.byebug_history
+.ver/
