@@ -14,29 +14,32 @@
 
 branch=$(git symbolic-ref -q --short HEAD)
 
+ver_dir="$(git rev-parse --show-toplevel)/.ver"
 git_lockfile=$(git config --get branch.$branch.gemfile)
-branch_lockfile="Gemfile.lock.${branch}"
+if [ -s "${git_lockfile}" -a ! -f "${git_lockfile}" -a -f "${ver_dir}/${git_lockfile}" ] ; then
+  git_lockfile="${ver_dir}/${git_lockfile}"
+fi
+
+branch_lockfile="${ver_dir}/Gemfile.lock.${branch}"
 branch_lockfile="${git_lockfile:-$branch_lockfile}"
 lockfile="${branch_lockfile}"
 
 # if they didn't hard code lockfile in git
 # if there isn't a lockfile for the branch
 # then just point to master or 5.3.z
-if [ -z "${git_lockfile}" -a ! -f "$lockfile" ]
-then
+if [ -z "${git_lockfile}" -a ! -f "$lockfile" ] ; then
   case "$branch" in
-    "5.3*" ) lockfile="Gemfile.lock.5.3.z"  ;;
-    "5.4*" ) lockfile="Gemfile.lock.5.4.z"  ;;
-    "5.5*" ) lockfile="Gemfile.lock.5.5.z"  ;;
-    *)       lockfile="Gemfile.lock.master" ;;
+    "5.3*" ) lockfile="${ver_dir}/Gemfile.lock.5.3.z"  ;;
+    "5.4*" ) lockfile="${ver_dir}/Gemfile.lock.5.4.z"  ;;
+    "5.5*" ) lockfile="${ver_dir}/Gemfile.lock.5.5.z"  ;;
+    *)       lockfile="${ver_dir}/Gemfile.lock.master" ;;
   esac 
 fi
 
 rm -f Gemfile.lock
 ln -s $lockfile Gemfile.lock
 
-if [ "${branch_lockfile}" != "${lockfile}" ]
-then
+if [ "${branch_lockfile}" != "${lockfile}" ] ; then
   echo "** Using $lockfile"
   # 1 character comes back when the files are the same
   # return status is 0, so need to work a a little harder
