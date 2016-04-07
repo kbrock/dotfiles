@@ -6,28 +6,27 @@ pwd = Dir.pwd
 
 # gitconfig is customized
 
-excludes = %w(. .. .git README.md gitconfig.sample .gitignore bootstrap)
+excludes = %w(. .. .git README.md .gitignore bootstrap bashrc.d git-hooks gitconfig.local.sample)
 dotfiles = Dir.entries(pwd) - excludes
 
 dotfiles.each do |dotfile|
-  src = "#{pwd}/#{dotfiles}"
-  target = "#{target}/.#{dotfile}"
-  if File.exist?(target)
-    unless File.identical?(src, target)
+  src = "#{pwd}/#{dotfile}"
+  dest = "#{target}/.#{dotfile}"
+  if File.exist?(dest)
+    unless File.identical?(src, dest)
       puts "file exists: .#{dotfile} (move and run script again)"
     end
   else
-    puts "Linking #{target}"
-    FileUtil.ln_s(src, target)
+    puts "ln -s #{src} #{dest}"
+    FileUtils.ln_s(src, dest)
   end
 end
 
-
-src = "#{pwd}/gitconfig.sample"
-target = "#{target}/.gitconfig"
-if File.exist?(target)
-  FileUtil.cp(src, target)
-  puts "created: .gitconfig (customize to add username / password)"
+src = "#{pwd}/gitconfig.local.sample"
+dest = "#{target}/.gitconfig.local"
+if File.exist?(dest)
+  puts "file exists: .gitconfig.local (you probably want to diff)"
 else
-  puts "file exists: .gitconfig (you probably want to diff)"
+  FileUtil.cp(src, dest)
+  puts "created: .gitconfig.local (customize to add username / password)"
 end

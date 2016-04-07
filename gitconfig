@@ -1,6 +1,6 @@
-[user]
-  name = ###
-  email = ###
+[include]
+# contains user.name, user.email, github.token, github.token
+  path=~/.gitconfig.local
 [alias]
   st = status
   cat = show
@@ -102,20 +102,21 @@
   cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
   #git log --no-merges --oneline upstream/master --not production/5.3.z --author kbrock
 
-  ## setup this repo to take photos
-  photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
+  # ## setup this repo to take photos
+  # photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
 
-  ## show the most recent photos
-  photo-show = "!qlmanage -p $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
+  # ## show the most recent photos
+  # photo-show = "!qlmanage -p $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
 
-  ## show the photo directory
-  photo-show-all = "!open ~/Pictures/git/"
+  # ## show the photo directory
+  # photo-show-all = "!open ~/Pictures/git/"
 
-  ## remove last photo taken
-  photo-rm = "!rm $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
+  # ## remove last photo taken
+  # photo-rm = "!rm $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
 
-  ## commits will go in on my personal email (for non redhat ensorsed repos)
-  photo-count = "! ls ~/Pictures/git | wc -l"
+  # ## commits will go in on my personal email (for non redhat ensorsed repos)
+  # photo-count = "! ls ~/Pictures/git | wc -l"
+
 
   ## add a remote for a collaborator
   ## git collaborate bdunne
