@@ -3,6 +3,7 @@
 #alias debug='bundle exec rdebug -c -no-stop'
 alias gems='gem list'
 alias irb='irb --readline -r irb/completion'
+alias beers='beer s'
 
 #given a migration task, return the file name
 function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
