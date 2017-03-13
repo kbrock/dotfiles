@@ -32,3 +32,5 @@ complete -o default -o nospace -F _psqlcomplete createdb
 complete -o default -o nospace -F _psql_database_complete ptop
 complete -o default -o nospace -F _psql_database_complete gitdb
 complete -o default -o nospace -F _psql_database_complete pmv
+complete -o default -o nospace -F _psql_database_complete pdu
+complete -o default -o nospace -F _psql_database_complete pcp
