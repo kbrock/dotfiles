@@ -70,10 +70,16 @@
   # merge_request%5Bsource_branch%5D=531_embed_key
   # merge_request%5Btarget_project_id%5D=59
   # merge_request%5Btarget_branch%5D=5.3.z
-  prodpr="! f() { git push -u gorigin HEAD ; git open downstream compare ; }; f"
+  prodpr="! f() { git push -u gorigin HEAD ; open $(git url downstream compare) ; }; f"
+
+  ## open a pr
+  pr = "! f() { open $(git url compare) ; }; f"
 
   ## open hub-url (origin compare ?expand=1)
   open = "! f() { open $(git url \"$@\") ; }; f"
+
+  ## open upstream
+  uopen = "! f() { open $(git url upstream/master \"$@\") ; }; f"
 
   ## open new pr (used?) (origin)
   new     = "! f() { open $(git url ${1:-$(git remote-name)} pull/new) ; }; f"
@@ -137,10 +143,11 @@
 [core]
   excludesfile = ~/.gitignore
   pager = less -x4
-[pager]
-  log = diff-highlight | less -R
-  show = diff-highlight | less -x4 -R
-  diff = diff-highlight | less -x4 -R
+# for word level highlighting
+# [pager]
+#   log = diff-highlight | less -R
+#   show = diff-highlight | less -x4 -R
+#   diff = diff-highlight | less -x4 -R
 # use mac keychain for ssh passwords
 [credential]
   helper = osxkeychain
@@ -167,12 +174,14 @@
   algorithm = patience
 # haven't played with this yet
 # but in theory, it replaces all github http urls to use ssh instead
-[url "git@github.com:"]
-	insteadOf = gh:
-	insteadOf = ghub:
-	insteadOf = github:
-	insteadOf = https://github.com/
-	insteadOf = http://github.com/
+# [url "git@github.com:"]
+#   insteadOf = gh:
+#   insteadOf = ghub:
+#   insteadOf = github:
+#   insteadOf = https://github.com/
+#   insteadOf = http://github.com/
+[url "https://github.com/"]
+	insteadOf = git@github.com:
 # [mergetool "chdiff"]
 #     cmd = /usr/bin/env chdiff "$LOCAL" "$REMOTE"
 #     keepBackup = false
