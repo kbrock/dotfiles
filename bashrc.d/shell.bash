@@ -47,7 +47,7 @@ alias growl='terminal-notifier -message'
 not_defined 'ldd' && alias ldd='otool -L'
 not_in_path ~/bin && export PATH=$PATH:~/bin
 
-function title() { echo -e "\033];${1:?please specify a title}\007" ; }
+function title() { echo -e "\033]0;${1:?please specify a title}\007" ; }
 #javascript alert dialog
 function alert() {
   message="$1"
