@@ -4,6 +4,9 @@
 alias gems='gem list'
 alias irb='irb --readline -r irb/completion'
 alias beers='beer s'
+alias burps='RAILS_ENV=production beer s'
+alias burp='RAILS_ENV=production beer'
+alias bu='ruby -I~/dotfiles/ -rbundler_trap bin/bundle update'
 
 #given a migration task, return the file name
 function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
