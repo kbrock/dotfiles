@@ -45,6 +45,9 @@ function gf() {
   git status | grep "${status}" | sed 's/^.*: *//'
 }
 
+# auto complete for git db
+function _git_db { __gitcomp "$(git-db-complete $cur)" ; }
+
 # files that have changed from master
 function gn() {
   git diff master --name-only
