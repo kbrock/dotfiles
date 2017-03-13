@@ -1,3 +1,6 @@
+
+# ruby-build 2.4.0 /opt/rubies/ruby-2.4.0
+# helps choose 2.4.0 version and auto types full path
 _ruby_build_complete() {
   local cur prev target
   cur="${COMP_WORDS[COMP_CWORD]}"
