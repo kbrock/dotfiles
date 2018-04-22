@@ -5,7 +5,8 @@
   st = status
   cat = show
   ## git rebase master: rebase current branch to upstream/master
-  rem = "!git fetch upstream ; git rebase upstream/master"
+  rem = "!git fetch upstream && git rebase upstream/master"
+  remi = "!git rebase upstream/master "${@--i}
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
   ## git merge master: checkout master and merge with upstream master
@@ -85,6 +86,7 @@
   new     = "! f() { open $(git url ${1:-$(git remote-name)} pull/new) ; }; f"
 
   ## log in a graph (add --all all branches)
+  # see also --oneline
   graph = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(cyan)<%an>%Creset'
   lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(cyan)<%an>%Creset'
 
