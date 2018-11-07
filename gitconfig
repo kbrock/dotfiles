@@ -128,8 +128,7 @@
 
   ## add a remote for a collaborator
   ## git collaborate bdunne
-  collaborate = "! f() { local remote=$(git config remote.origin.url) ; git remote add $1 ${remote/:*\\//:$1/} ; git fetch $1 ; } ; f"
-  #collaborate = "!f() { url=`git url origin` ; echo ${1:-upstream} ${url/kbrock/${1:-manageiq}}; }; f"
+  collaborate = "! f() { local remote=$(git config remote.origin.url) ; remote=${remote-$(git config remote.upstream.url)} ; git remote add $1 ${remote/:*\\//:$1/} ; git fetch $1 ; } ; f"
 
   # unsure
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
