@@ -15,15 +15,21 @@ function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
 function mver() { mf $1 | sed 's=^[^0-9]*\([0-9][^_]*\)_.*$=\1=' ; }
 
 function ruby-version {
-  local rv="ruby-2.2.3"
   if [ $# -eq 1 ] ; then
     chruby $1
-    rv=`chruby | awk '/\*/ { print $2; }'`
   fi
-  echo $rv > .ruby-version
+  local rv=`chruby | awk '/\*/ { print $2; }'`
+  if [ -n "$rv" ] ; then
+    echo $rv > .ruby-version
 
-  which ruby
+    which ruby
+  else
+    echo "please pick a ruby"
+    chruby
+  fi
 }
+complete -o nospace -F _chrubycomplete ruby-version
+
 
 function powrc {
 [ -f .powrc] && return
