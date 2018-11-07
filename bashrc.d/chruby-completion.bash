@@ -9,7 +9,7 @@ function chruby_discover() {
 
 _chrubycomplete() {
   local cur=${COMP_WORDS[COMP_CWORD]}
-  local rubies="system ${RUBIES[@]##*/}"
+  local rubies="${RUBIES[@]##*/}"
 
   if [[ $COMP_CWORD -eq 1 ]]; then
     COMPREPLY=($( compgen -W "$rubies" -- $cur ))
