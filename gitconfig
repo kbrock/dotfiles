@@ -128,7 +128,8 @@
 
   ## add a remote for a collaborator
   ## git collaborate bdunne
-  collaborate = "! f() { local remote=$(git config remote.origin.url) ; remote=${remote-$(git config remote.upstream.url)} ; git remote add $1 ${remote/:*\\//:$1/} ; git fetch $1 ; } ; f"
+  ## now uses http (vs ssh) urls
+  collaborate = "! f() { local remote=$(git config remote.origin.url) ; remote=${remote-$(git config remote.upstream.url)} ; [[ $remote =~ (https?://[^/]*/)([^/]*)(/.*$) ]] ; git remote add $1 ${BASH_REMATCH[1]}$1${BASH_REMATCH[3]} ; git fetch $1 ; } ; f"
 
   # unsure
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
