@@ -91,6 +91,14 @@ function sag() {
   subl $(ag -l "$@")
 }
 
+function mag() {
+  ag "$@" ~/src/manageiq*
+}
+
+function marge() {
+  ag "$@" ~/src/manageiq/{app,lib/vmdb} ~/src/manageiq-*/lib
+}
+
 if [ -d ~/.Trash ] ; then
 function rm () {
   local path
