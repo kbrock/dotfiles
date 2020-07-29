@@ -111,25 +111,7 @@ function find_git_branch {
   git_loc=${PWD##*/}
 }
 
-export PROMPT_COMMAND="find_git_branch; $PROMPT_COMMAND"
+[[ "$PROMPT_COMMAND" != *"find_git_branch"* ]] && export PROMPT_COMMAND="find_git_branch; $PROMPT_COMMAND"
 #TODO: return status - emoji?
 export PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
-# # sneaking some svn commands in here
-# 
-# function git2svn() {
-#   if [ ! -d .git ] ; then
-#     echo "need to run this from the root directory"
-#     exit 1
-#   fi
-#   svn_name=${1:?need an svn project name}
-#   SVN_ROOT=svn+ssh://svn.eons.dev/opt/svn/repo/${svn_name}
-#   svn mkdir ${SVN_ROOT} ${SVN_ROOT}/trunk ${SVN_ROOT}/branches ${SVN_ROOT}/tags
-# 
-#   git svn init -s $SVN_ROOT
-#   git svn fetch
-#   #git checkout -b svnrebase trunk
-#   git rebase --onto trunk --root master
-#   git svn dcommit
-#   #git push origin
-# }
 
