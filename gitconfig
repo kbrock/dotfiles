@@ -201,3 +201,5 @@
 
 #thanks:
 # http://georgebrock.com/blog/useful-git-aliases
+[cola]
+	spellcheck = false
