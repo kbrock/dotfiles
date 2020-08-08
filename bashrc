@@ -6,3 +6,6 @@
 for i in $HOME/dotfiles/bashrc.d/* ; do
   source $i
 done
+
+# added by travis gem
+[ -f /Users/kbrock/.travis/travis.sh ] && source /Users/kbrock/.travis/travis.sh
