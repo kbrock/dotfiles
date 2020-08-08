@@ -92,8 +92,13 @@ function sag() {
 }
 
 function mag() {
-  ag "$@" ~/src/manageiq*
+  ag "$@" --ignore gems ~/src/
 }
+
+function magg() {
+  # -G says only ruby files (^c = spec)
+  ag "$@" --ignore '*_spec.rb' ~/src/
+} 
 
 function marge() {
   ag "$@" ~/src/manageiq/{app,lib/vmdb} ~/src/manageiq-*/lib
