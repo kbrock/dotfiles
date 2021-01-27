@@ -148,6 +148,7 @@
 [core]
   excludesfile = ~/.gitignore
   pager = less -x4
+	autocrlf = ""
 # for word level highlighting
 # [pager]
 #   log = diff-highlight | less -R
@@ -160,7 +161,7 @@
   lineNumber = true
 [pull]
   ff = only
-  rebase = true
+	rebase = true
 [push]
   default = simple
 #  default = current
@@ -203,3 +204,8 @@
 # http://georgebrock.com/blog/useful-git-aliases
 [cola]
 	spellcheck = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
