@@ -5,3 +5,16 @@ log
 index
 upload
 attachments
+*.po
+*.pot
+# ui classic app/javascript/oldjs/locale
+locale/en.json
+locale/zh_CN.json
+locale/ja.json
+locale/de.json
+locale/fr.json
+locale/it.json
+locale/ko.json
+locale/pt_BR.json
+locale/zh_TW.json
+locale/es.json
