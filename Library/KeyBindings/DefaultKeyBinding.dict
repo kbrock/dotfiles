@@ -1,0 +1,12 @@
+/*
+see https://gist.github.com/trusktr/1e5e516df4e8032cbc3d
+
+not sure if I want this yet
+   "\UF729"  = moveToBeginningOfLine:; // home
+   "\UF72B"  = moveToEndOfLine:; // end
+   "$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home
+   "$\UF72B" = moveToEndOfLineAndModifySelection:; // shift-end
+*/
+{
+    
+}

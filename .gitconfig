@@ -143,8 +143,9 @@
 # git checkout automatically tracks the remote ()
 #  autosetupmerge = true
 [core]
-  excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore_global
   pager = less -x4
+  attributesfile = ~/.gitattributes
 	autocrlf = ""
 # for word level highlighting
 # [pager]
@@ -175,6 +176,7 @@
 #  pretty = %C(cyan)>> %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [diff]
   algorithm = patience
+	tool = smerge
 # haven't played with this yet
 # but in theory, it replaces all github http urls to use ssh instead
 # [url "git@github.com:"]
@@ -185,17 +187,15 @@
 #   insteadOf = http://github.com/
 [url "https://github.com/"]
 	insteadOf = git@github.com:
-# [mergetool "chdiff"]
-#     cmd = /usr/bin/env chdiff "$LOCAL" "$REMOTE"
-#     keepBackup = false
-#     trustExitCode = false
+[merge]
+	tool = smerge
+[difftool "smerge"]
+  cmd = smerge \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 
-# [difftool "sourcetree"]
-#	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-#	path = 
-# [mergetool "sourcetree"]
-#	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-#	trustExitCode = true
+# echo 'merge_cmd () {
+#   "$merge_tool_path" mergetool \
+#     "$BASE" "$LOCAL" "$REMOTE" -o "$MERGED"
+# }' > /usr/lib/git-core/mergetools/smerge
 
 #thanks:
 # http://georgebrock.com/blog/useful-git-aliases

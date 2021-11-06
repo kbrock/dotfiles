@@ -1,0 +1,32 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"ANSIescape",
+		"ApacheConf",
+		"Crystal",
+		"EditorConfig",
+		"ESLint",
+		"ESLint Fix",
+		"GitGutter",
+		"Github Tools",
+		"Gnuplot",
+		"HDL Syntax Highlighting",
+		"Marked App Menu",
+		"Monokai Extended",
+		"Package Control",
+		"Pretty JSON",
+		"RPM Spec Syntax",
+		"RSpec",
+		"Ruby Debugger",
+		"Sass",
+		"SQLTools",
+		"Sublimerge 3",
+		"Swift Format",
+		"Vue Syntax Highlight",
+		"yardoc"
+	],
+}

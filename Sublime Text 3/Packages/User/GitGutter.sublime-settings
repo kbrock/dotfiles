@@ -1,0 +1,5 @@
+// GitGutter Settings - User
+{
+  "git_binary": "/usr/local/bin/git",
+  "show_line_annotation": "false"
+}
