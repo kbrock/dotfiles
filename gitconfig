@@ -61,9 +61,6 @@
   ## e.g.: git@github.com:user/prog.git
   remote-url = "! f() { git config remote.${1:-$(git remote-name)}.url ; }; f"
 
-  ## open a pr
-  pr = "! f() { open $(git url compare) ; }; f"
-
   ## open a pr on production
   # TODO
   # ?merge_request%5Bsource_branch%5D=531_embed_key&merge_request%5Bsource_project_id%5D=69&merge_request%5Btarget_branch%5D=master&merge_request%5Btarget_project_id%5D=59
@@ -81,9 +78,6 @@
 
   ## open upstream
   uopen = "! f() { open $(git url upstream/master \"$@\") ; }; f"
-
-  ## open new pr (used?) (origin)
-  new     = "! f() { open $(git url ${1:-$(git remote-name)} pull/new) ; }; f"
 
   ## log in a graph (add --all all branches)
   # see also --oneline
@@ -139,6 +133,9 @@
 
   # open a file on upstream master
   master = "! f() { git open upstream/master $(find . -name \"$@\") ; } ; f"
+
+  #diff against head
+  # TODO: diff-head = "diff { open $(git url compare) ; }; f"
 
 [apply]
   whitespace = fix
