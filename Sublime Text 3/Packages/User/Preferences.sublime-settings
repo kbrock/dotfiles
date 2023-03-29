@@ -36,7 +36,6 @@
 		"bower_components/*",
 		"node_modules/*",
 		"lcov-report/*",
-		"spec/manageiq/*",
 		"*.cache",
 		"*.dds",
 		"*.eot",
@@ -98,7 +97,7 @@
 		"log",
 		"node_modules",
 		"public/packs",
-		"spec/manageiq",
+		"//spec/manageiq",
 		"spec/tmp"
 	],
 	"font_face": "Jetbrains Mono",
