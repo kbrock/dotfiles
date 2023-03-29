@@ -28,7 +28,8 @@ _ruby_build_complete() {
       *) target="ruby-${prev}" ;;
     esac
 
-    COMPREPLY=( $(compgen -W "/opt/rubies/${target}" -- ${cur}) )
+    # was /opt/rubies/${target}
+    COMPREPLY=( $(compgen -W "~/.rubies/${target}" -- ${cur}) )
     return 0
   fi
 }

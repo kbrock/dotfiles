@@ -92,7 +92,7 @@ function sag() {
 }
 
 function mag() {
-  ag "$@" --ignore gems ~/src/
+  ag "$@" --ignore gems --ignore bluecf ~/src/
 }
 
 function magg() {
