@@ -5,19 +5,19 @@
   st = status
   cat = show
   ## git rebase master: rebase current branch to upstream/master
-  rem = "!git fetch upstream && git rebase upstream/master"
-  remi = "!git rebase upstream/master "${@--i}
+  rem = "!git fetch upstream && git rebase upstream/`git master-branch`"
+  remi = "!git rebase upstream/`git master-branch` "${@--i}
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
   ## git merge master: checkout master and merge with upstream master
-  mem = "!git fetch upstream && git checkout master && git merge --ff-only upstream/master"
+  mem = "!git fetch upstream && git checkout `git master-branch` && git merge --ff-only upstream/`git master-branch`"
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
   ## prune my own branches that have been deleted on the server
   prune = fetch --prune
 
   ## amend current commit keeping the same comment
-  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+  amend = commit --amend --no-edit
 
   ## add a file to .gitignore
   ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
@@ -26,7 +26,7 @@
   config-subl = "!subl ~/.gitconfig"
 
   ## fetch a github pull request from upstream: git fetch-pr 151
-  fetch-pr = "!f() { git fetch -u upstream refs/pull/$1/head:pr/$1; }; f"
+  fetch-pr = "!f() { git fetch --force --update-head-ok -u upstream refs/pull/$1/head:pr/$1; }; f"
   #fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/pr/$1; }; f"
 
   ## rebase a pull request from the current branch (suggestion is to be on master)
@@ -43,7 +43,7 @@
   current-branch  = "symbolic-ref --short HEAD"
 
   ## remove all branches that do not have any commits in them (and have been merged
-  branch-prune = "!git checkout master && git branch --merged | grep -v '*' | xargs git branch -d"
+  branch-prune = "!git checkout `git master-branch` && git branch --merged | grep -v '*' | xargs git branch -d"
 
   ## tracking branch for the current branch
   tracking-branch = "symbolic-ref HEAD"
@@ -77,7 +77,7 @@
   open = "! f() { open $(git url \"$@\") ; }; f"
 
   ## open upstream
-  uopen = "! f() { open $(git url upstream/master \"$@\") ; }; f"
+  uopen = "! f() { open $(git url upstream/`git master-branch` \"$@\") ; }; f"
 
   ## log in a graph (add --all all branches)
   # see also --oneline
@@ -101,7 +101,7 @@
   cherry-pick-54 = "cherry-pick -Xsubtree=vmdb"
 
   ## cherry-prod anand master ; cherry-prod 5.3.z
-  cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
+  #cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
   #git log --no-merges --oneline upstream/master --not production/5.3.z --author kbrock
 
   # ## setup this repo to take photos
@@ -131,12 +131,14 @@
   # unsure
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
 
-  # open a file on upstream master
-  master = "! f() { git open upstream/master $(find . -name \"$@\") ; } ; f"
+  # open a file on upstream "master"
+  master = "! f() { git open upstream/`git master-branch` $(find . -name \"$@\") ; } ; f"
 
   #diff against head
   # TODO: diff-head = "diff { open $(git url compare) ; }; f"
 
+  # to use a main branch: git config init.defaultBranch main
+  master-branch = "!BRANCH=`git config init.defaultBranch` ; echo ${BRANCH:-master}"
 [apply]
   whitespace = fix
 #[branch]
