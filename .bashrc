@@ -8,4 +8,5 @@ for i in $HOME/dotfiles/bashrc.d/* ; do
 done
 
 # added by travis gem
-[ -f /Users/kbrock/.travis/travis.sh ] && source /Users/kbrock/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && . $HOME/.travis/travis.sh
+[ -f $HOME/.cargo/env ] && . "$HOME/.cargo/env"

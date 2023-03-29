@@ -6,6 +6,3 @@ export HOSTNAME=$(hostname -s)
 
 # source .bashrc if it's there for aliases and functions
 [ -f ~/.bashrc ] && . ~/.bashrc
-
-#rbenv
-#if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
