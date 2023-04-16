@@ -711,6 +711,8 @@
 	<true/>
 	<key>EnableProxyIcon</key>
 	<false/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x19-0x60000-0x0</key>
@@ -1262,6 +1264,17 @@
 			<key>Text</key>
 			<string>0x4</string>
 		</dict>
+		<key>0xf728-0x100000-0x75</key>
+		<dict>
+			<key>Action</key>
+			<integer>11</integer>
+			<key>Label</key>
+			<string></string>
+			<key>Text</key>
+			<string>^k</string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 		<key>0xf728-0x80000-0x0</key>
 		<dict>
 			<key>Action</key>
@@ -1385,6 +1398,8 @@
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>IRMemory</key>
+	<integer>4</integer>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/to_wk/color</string>
 	<key>NSNavLastUserSetHideExtensionButtonState</key>
@@ -1412,13 +1427,15 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
-	<string>0 161 120 165 0 0 3440 1415 </string>
+	<string>66 161 120 165 0 0 1792 1095 </string>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>1320 745 800 450 0 0 3440 1415 </string>
+	<string>1347 723 800 450 0 0 3440 1415 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>4789 326 400 135 3440 320 1792 1095 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>4026 842 620 398 3440 320 1792 1095 </string>
+	<string>1445 762 620 398 0 0 3440 1415 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1 90 1790 999 0 0 1792 1095 </string>
+	<string>1750 784 825 631 0 0 3440 1415 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>482 177 825 631 0 0 3440 1415 </string>
 	<key>New Bookmarks</key>
@@ -1670,6 +1687,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Blend</key>
+			<real>0.49719864112743428</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -1743,7 +1762,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -1771,6 +1790,8 @@
 			<string>B5E39454-2D3B-4CA5-B4B9-A8A668ACB105</string>
 			<key>Horizontal Spacing</key>
 			<real>0.88</real>
+			<key>Icon</key>
+			<integer>1</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Initial Use Transparency</key>
@@ -1991,7 +2012,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>JetBrainsMono-Light 19</string>
+			<string>JetBrainsMono-Regular 19</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2003,7 +2024,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>20000</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -2030,6 +2051,15 @@
 				<key>Red Component</key>
 				<real>0.61568629741668701</real>
 			</dict>
+			<key>Semantic History</key>
+			<dict>
+				<key>action</key>
+				<string>best editor</string>
+				<key>editor</key>
+				<string>com.sublimetext.4</string>
+				<key>text</key>
+				<string></string>
+			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
 			<key>Shortcut</key>
@@ -2043,13 +2073,13 @@
 			<key>Tags</key>
 			<array/>
 			<key>Terminal Type</key>
-			<string>xterm</string>
+			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
-			<integer>0</integer>
+			<real>0.0</real>
 			<key>Triggers</key>
 			<array>
 				<dict>
@@ -2071,6 +2101,8 @@
 			<true/>
 			<key>Use Cursor Guide</key>
 			<true/>
+			<key>Use Custom Tab Title</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -2087,23 +2119,26 @@
 	</array>
 	<key>NoSyncAllAppVersions</key>
 	<array>
+		<string>3.4.18</string>
 		<string>3.4.1</string>
 		<string>3.4.4</string>
+		<string>3.4.16</string>
+		<string>3.4.19</string>
 		<string>3.4.10</string>
 	</array>
 	<key>NoSyncFrame_SessionsPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{3440, 320}, {1792, 1120}}</string>
+		<string>{{0, 0}, {3440, 1440}}</string>
 		<key>topLeft</key>
-		<string>{3479, 1374}</string>
+		<string>{1258, 964}</string>
 	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {3440, 1440}}</string>
 		<key>topLeft</key>
-		<string>{1540, 889}</string>
+		<string>{1119, 1038}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -2112,11 +2147,11 @@
 	<key>NoSyncInstallationId</key>
 	<string>D56DD44C-6C5D-4042-93EE-810FAACCB3B5</string>
 	<key>NoSyncLastOSVersion</key>
-	<string>Version 11.6 (Build 20G165)</string>
+	<string>Version 12.6 (Build 21G115)</string>
 	<key>NoSyncLastSystemPythonVersionRequirement</key>
 	<string>1.17</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>14</integer>
+	<integer>23</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>638306152.55979705</real>
 	<key>NoSyncOnboardingWindowHasBeenShown34</key>
@@ -2955,17 +2990,15 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2021-11-06T14:03:30Z</date>
+	<date>2023-04-15T14:22:12Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
-	<key>SUSkippedVersion</key>
-	<string>3.4.12</string>
 	<key>SUUpdateGroupIdentifier</key>
-	<integer>3706668273</integer>
+	<integer>4253850818</integer>
 	<key>SUUpdateRelaunchingMarker</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>ShowPaneTitles</key>
@@ -2976,6 +3009,10 @@
 	<real>0.16412435524251934</real>
 	<key>StretchTabsToFillBar</key>
 	<false/>
+	<key>SwitchTabModifier</key>
+	<integer>9</integer>
+	<key>SwitchWindowModifier</key>
+	<integer>9</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>1</integer>
 	<key>TabsHaveCloseButton</key>
@@ -2989,7 +3026,7 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.4.10</string>
+	<string>3.4.19</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

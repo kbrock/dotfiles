@@ -101,7 +101,7 @@
 		"spec/tmp"
 	],
 	"font_face": "Jetbrains Mono",
-	"font_size": 28.0,
+	"font_size": 32.0,
 	"ignored_packages":
 	[
 		"Vintage",
