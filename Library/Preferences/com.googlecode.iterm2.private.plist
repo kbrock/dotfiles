@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NoSyncSearchHistory2</key>
+	<array>
+		<string>deliv</string>
+		<string>_read_attribute</string>
+		<string>Saving</string>
+		<string>scanning</string>
+		<string>building</string>
+		<string>assoc_id</string>
+		<string>tag_names</string>
+		<string>min_max</string>
+		<string>instance</string>
+		<string>compile</string>
+	</array>
+</dict>
+</plist>
