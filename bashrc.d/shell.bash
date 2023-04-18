@@ -1,28 +1,3 @@
-
-#helper functions
-#if this function is not available
-function not_defined {
-  if `type -a "$1" >/dev/null 2>&1` ; then
-    return 1
-  else
-    return 0
-  fi
-}
-
-#if we need to add this path to our environment
-function not_in_path {
-  if [ -d "$1" ] && ! echo ":${PATH}:" | grep ":${1}:" > /dev/null ; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-function add_to_path() {
-  not_in_path "$1" && export PATH="$PATH:$1"
-}
-
-NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
 export LC_CTYPE=en_US.UTF-8
 export GREP_COLOR='1;32'
 export CLICOLOR=1 

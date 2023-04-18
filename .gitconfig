@@ -210,7 +210,7 @@
 	process = git-lfs filter-process
 	required = true
 [gpg]
-	program = /usr/local/bin/gpg
+  # this section has been moved to gitconfig.local
 [commit]
 	gpgsign = true
 [tag]

@@ -31,14 +31,14 @@ function ruby-version {
 complete -o nospace -F _chrubycomplete ruby-version
 
 
-function powrc {
-[ -f .powrc] && return
-cat <<EOF > .powrc
-source /usr/local/share/chruby/chruby.sh
-[ -f .ruby-version ] && chruby \$(cat .ruby-version)
-[ -f .env ] && export \$(cat .env)
-EOF
-}
+# function powrc {
+# [ -f .powrc] && return
+# cat <<EOF > .powrc
+# source /usr/local/share/chruby/chruby.sh
+# [ -f .ruby-version ] && chruby \$(cat .ruby-version)
+# [ -f .env ] && export \$(cat .env)
+# EOF
+# }
 
 # Cucumber env setting 
 export AUTOFEATURE=true	

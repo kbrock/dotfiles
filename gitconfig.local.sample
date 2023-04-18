@@ -1,9 +1,21 @@
 [user]
 	name = ...
 	email = ...
+  # determined from: gpg --list-secret-keys --keyid-format=long
+    signingkey = ...
 [github]
 	login = ...
 	token = ...
   # token = !security find-generic-password -gs \"GitHub API Token\" 2>&1 >/dev/null | awk '/password/ {print $2}' | tr -d \\\"
 [credential]
 	helper = osxkeychain
+# set to your path
+[gpg]
+  # default: format = opengpg
+	program = /opt/homebrew/bin/gpg
+	program = /usr/local/bin/gpg
+  # 1password
+  # format = ssh
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+#[gpg "ssh"]
+#  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"

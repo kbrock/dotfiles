@@ -4,7 +4,7 @@
 set -e
 
 # running from gitx does not set path properly
-export PATH="$PATH:/usr/local/bin/"
+#export PATH="$PATH:/usr/local/bin/"
 
 # if we are on a branch (and not in the middle of a rebase)
 
