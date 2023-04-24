@@ -1,11 +1,8 @@
 # standard chruby
 
-if [[ -d /usr/local/share/chruby ]] ; then
-  . /usr/local/share/chruby/chruby.sh
+
+if [[ -d $(brew --prefix)/share/chruby ]] ; then
+  . $(brew --prefix)/share/chruby/chruby.sh
   # chruby.xtra
-  . /usr/local/share/chruby/auto.sh
-elif [[ -d /opt/homebrew/share/chruby ]]; then
-  . /opt/homebrew/share/chruby/chruby.sh
-  # chruby.xtra
-  . /opt/homebrew/share/chruby/auto.sh
+  . $(brew --prefix)/share/chruby/auto.sh
 fi
