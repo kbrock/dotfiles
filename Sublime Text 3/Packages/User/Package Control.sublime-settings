@@ -15,6 +15,7 @@
 		"GitGutter",
 		"Github Tools",
 		"Gnuplot",
+		"Markdown Extended",
 		"Marked App Menu",
 		"Monokai Extended",
 		"Package Control",
@@ -25,8 +26,7 @@
 		"Sass",
 		"SQLTools",
 		"Sublimerge 3",
-		"Swift Format",
 		"Vue Syntax Highlight",
-		"yardoc"
+		"yardoc",
 	],
 }
