@@ -6,10 +6,3 @@
 for i in $HOME/dotfiles/bashrc.d/* ; do
   source $i
 done
-
-# added by rust
-[ -f $HOME/.cargo/env ] && . "$HOME/.cargo/env"
-# added by lima
-if [ -d $HOME/.lima ] ; then
-  export KUBECONFIG="$HOME/.lima/default/copied-from-guest/kubeconfig.yaml"
-fi
