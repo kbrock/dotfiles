@@ -23,5 +23,6 @@ function add_to_path() {
 }
 
 # this adds brew, so brew --prefix works for all others
-add_to_path /opt/homebrew/bin
+not_in_path "/opt/homebrew/bin" && export PATH="/opt/homebrew/bin:$PATH"
+# probably not necessary
 add_to_path /usr/local/bin
