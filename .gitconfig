@@ -139,6 +139,7 @@
 
   # to use a main branch: git config init.defaultBranch main
   master-branch = "!BRANCH=`git config init.defaultBranch` ; echo ${BRANCH:-master}"
+  config-master = "config init.defaultbranch master"
 [apply]
   whitespace = fix
 #[branch]
