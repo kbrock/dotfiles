@@ -7,6 +7,12 @@ export NVM_DIR=~/.nvm
 # nvm install 18.0.0
 # nvm default 18.0.0
 
+# alt:
+# From https://www.ioannispoulakas.com/2020/02/22/how-to-speed-up-shell-load-while-using-nvm/
+# # Add default node to path
+# add_to_path ${NVM_DIR}/versions/node/v$(< ${NVM_DIR}/alias/default)/bin
+# [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh" --no-use
+
 # From https://www.growingwiththeweb.com/2018/01/slow-nvm-init.html
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 # run. Ensure this block is only run once if .profile gets sourced multiple times
