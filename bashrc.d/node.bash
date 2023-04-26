@@ -6,7 +6,6 @@ export NVM_DIR=~/.nvm
 # source $(brew --prefix nvm)/nvm.sh
 # nvm install 18.0.0
 # nvm default 18.0.0
-# ln -s ${HOMEBREW_PREFIX}/etc/bash_completion.d/nvm ${NVM_DIR}/bash_completion
 
 # From https://www.growingwiththeweb.com/2018/01/slow-nvm-init.html
 # Defer initialization of nvm until nvm, node or a node-dependent command is
@@ -21,7 +20,6 @@ if [[ -s "$NVM_DIR/nvm.sh" ]] && ! type -t __init_nvm > /dev/null ; then
     unset -f __init_nvm
   }
   for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
-  [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
 fi
 
 [ -d ${HOMEBREW_PREFIX}/lib/node_modules ] && NODE_PATH=$NODE_PATH:${HOMEBREW_PREFIX}/lib/node_modules
