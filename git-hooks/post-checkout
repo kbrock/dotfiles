@@ -16,7 +16,7 @@ branch=$(git symbolic-ref -q --short HEAD)
 
 ver_dir="$(git rev-parse --show-toplevel)/.ver"
 git_lockfile=$(git config --get branch.$branch.gemfile)
-if [ -s "${git_lockfile}" -a ! -f "${git_lockfile}" -a -f "${ver_dir}/${git_lockfile}" ] ; then
+if [[ -s "${git_lockfile}" && ! -f "${git_lockfile}" && -f "${ver_dir}/${git_lockfile}" ]] ; then
   git_lockfile="${ver_dir}/${git_lockfile}"
 fi
 
@@ -27,11 +27,11 @@ lockfile="${branch_lockfile}"
 # if they didn't hard code lockfile in git
 # if there isn't a lockfile for the branch
 # then just point to master or 5.3.z
-if [ -z "${git_lockfile}" -a ! -f "$lockfile" ] ; then
+if [[ -z "${git_lockfile}" && ! -f "$lockfile" ]] ; then
   case "$branch" in
-    "5.3*" ) lockfile="${ver_dir}/Gemfile.lock.5.3.z"  ;;
-    "5.4*" ) lockfile="${ver_dir}/Gemfile.lock.5.4.z"  ;;
-    "5.5*" ) lockfile="${ver_dir}/Gemfile.lock.5.5.z"  ;;
+#    "5.3*" ) lockfile="${ver_dir}/Gemfile.lock.5.3.z"  ;;
+#    "5.4*" ) lockfile="${ver_dir}/Gemfile.lock.5.4.z"  ;;
+#    "5.5*" ) lockfile="${ver_dir}/Gemfile.lock.5.5.z"  ;;
     *)       lockfile="${ver_dir}/Gemfile.lock.master" ;;
   esac 
 fi
@@ -39,20 +39,19 @@ fi
 rm -f Gemfile.lock
 ln -s $lockfile Gemfile.lock
 
-if [ "${branch_lockfile}" != "${lockfile}" ] ; then
-  echo "** Using $lockfile"
+# if we are on a branch but using master's lockfile
+if [[ "${branch_lockfile}" != "${lockfile}" ]] ; then
   # 1 character comes back when the files are the same
   # return status is 0, so need to work a a little harder
   ret=$(git diff upstream/master -- Gemfile)
-  if [ $( echo "${ret}" | wc -c) -gt 1 ] ; then
+  if [[ $( echo "${ret}" | wc -c) -gt 1 ]] ; then
   echo "    Gemfile differs from upstream/master, may want to run a custom gem lockfile via:"
   echo "       touch ${branch_lockfile}"
   echo ">> ${ret}"
   fi
-elif [ -s $lockfile ]
-then
-  echo "** Using $lockfile"
-else
+#elif [[ -s $lockfile ]] ; then
+#  echo "** Using $lockfile"
+elif [[ ! -s $lockfile ]] ; then
   touch $lockfile
   echo "** Created $lockfile, run bundle"
 fi
