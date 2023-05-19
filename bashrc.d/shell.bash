@@ -40,39 +40,22 @@ function catw() { cat `which $1` ; }
 function lw() { ls -l `which $1` ; }
 function sw() { subl  `which $1` ; }
 function vw() { vi    `which $1` ; }
-function cw() { cd $(dirname $(which $1)) ; }
+function cw() { local dn="$(dirname $(which $1))" ; [ -d "$dn" ] && pushd $dn ; }
 #copy in the background (add an & in there?)
 function bgcp { cp "$@" && ding copied || ding failed ; }
-
-#mate each argument. so they end up in the existing editor
-function mate() {
-  mexe=$(which mate)
-  if [ $# -eq 0 ] ; then
-    $mexe
-  else
-    while [ $# -ne 0 ] ; do
-      $mexe "$1"
-      shift
-    done
-  fi
-}
-
-#you just ran ack, now sack to sublime the files
-function sack() {
-  subl $(ack -l "$@")
-}
 
 function sag() {
   subl $(ag -l "$@")
 }
 
 function mag() {
-  ag "$@" --ignore gems --ignore bluecf ~/src/
+  # ignore: bluecf, gems, plugins/providers files
+  ag "$@" ~/src/{agrare,amazon,container,dbus,httpd,ibm,inventory,manageiq,miq,perf_utils,ui,vmware}* ~/src/gems/{more_core_extensions,manage}*
 }
 
 function magg() {
   # -G says only ruby files (^c = spec)
-  ag "$@" --ignore '*_spec.rb' ~/src/
+  mag "$@" --ignore '*_spec.rb'
 } 
 
 function marge() {
