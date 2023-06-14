@@ -17,12 +17,17 @@ function find_git_branch {
   local head git_dir=${PWD}
   local git_branch git_root git_loc git_status
 
-  until [[ -z "$git_dir" || "$git_dir" = / ]] ; do
+  until [[ -z "$git_dir" || "$git_dir" = "/" ]] ; do
     if [[ -f "$git_dir/.git/HEAD" ]] ; then
       head=$(< "$git_dir/.git/HEAD")
     elif [[ -f "$git_dir/.git" ]] ; then
       local gitref=$(< "$git_dir/.git")
       head=$(< "${gitref#* }/HEAD")
+    elif [[ "$git_dir" == "$HOME" ]] ; then
+      git_root="~" #"${git_dir##*/}"
+      git_loc="${PWD/${git_dir}}"
+      PS1="\[\033[1;34m\]${git_root}\[\033[0m\]${git_loc} $ "
+      return
     fi
 
     if [[ -n "$head" ]] ; then
@@ -46,20 +51,14 @@ function find_git_branch {
       else
         git_status=36 # cyan - pristine
       fi
-      # TODO: git_status="\033[${git_status}m"
-      PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
+      PS1="[\[\033[${git_status}m\]${git_branch}\[\033[0m\]] \[\033[1;34m\]${git_root}\[\033[0m\]${git_loc} $ "
       return
     else # keep looking
       git_dir="${git_dir%/*}"
     fi
   done
   # not in a git directory (set variables accordingly)
-  # TODO: git_status=\033[36m
-  git_status=36
-  git_branch=''
-  git_root=''
-  git_loc=${PWD##*/}
-  PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
+  PS1="${PWD##*/} $ "
 }
 
 [[ "$PROMPT_COMMAND" != *"find_git_branch"* ]] && export PROMPT_COMMAND="find_git_branch${PROMPT_COMMAND:+ ; }${PROMPT_COMMAND}"
