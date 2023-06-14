@@ -1,19 +1,26 @@
 # https://github.com/sgruhier/rake_cap_bash_autocomplete/blob/master/rake_cap_bash_autocomplete.sh
-
-export COMP_WORDBREAKS=${COMP_WORDBREAKS/\:/}
+# cleanup of COMP_WORDBREAKS from:
+# https://stackoverflow.com/questions/10528695/how-to-reset-comp-wordbreaks-without-affecting-other-completion-script
 
 _rakecomplete() {
-  COMPREPLY=($(compgen -W "`rake -s -T 2>/dev/null | awk '{{print $2}}'`" -- ${COMP_WORDS[COMP_CWORD]}))
+  local cur
+  _get_comp_words_by_ref -n : cur
+
+  COMPREPLY=( $(compgen -W "`rake -s -T 2>/dev/null | awk '{{print $2}}'`" -- $cur) )
   return 0
 }
 
 _capcomplete() {
-  COMPREPLY=($(compgen -W "`cap  -T  2>/dev/null| awk '{{ if ( $3 ~ /\#/ ) print $2}}'`" -- ${COMP_WORDS[COMP_CWORD]}))
+  local cur
+  _get_comp_words_by_ref -n : cur
+  COMPREPLY=($(compgen -W "`cap  -T  2>/dev/null| awk '{{ if ( $3 ~ /\#/ ) print $2}}'`" -- $cur))
   return 0
 }
 
 _thorcomplete() {
-  COMPREPLY=($(compgen -W "`THOR_COLUMNS=1000 thor -T 2>/dev/null| awk '{{ if ( $2 ~ /./ ) print $2}}'`" -- ${COMP_WORDS[COMP_CWORD]}))
+  local cur
+  _get_comp_words_by_ref -n : cur
+  COMPREPLY=($(compgen -W "`THOR_COLUMNS=1000 thor -T 2>/dev/null| awk '{{ if ( $2 ~ /./ ) print $2}}'`" -- $cur))
   return 0
 }
 
