@@ -15,6 +15,7 @@ fi
 
 function find_git_branch {
   local head git_dir=${PWD}
+  local git_branch git_root git_loc git_status
 
   until [[ -z "$git_dir" || "$git_dir" = / ]] ; do
     if [[ -f "$git_dir/.git/HEAD" ]] ; then
@@ -46,7 +47,7 @@ function find_git_branch {
         git_status=36 # cyan - pristine
       fi
       # TODO: git_status="\033[${git_status}m"
-      # TODO: ? export PS1=
+      PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
       return
     else # keep looking
       git_dir="${git_dir%/*}"
@@ -58,8 +59,7 @@ function find_git_branch {
   git_branch=''
   git_root=''
   git_loc=${PWD##*/}
-  # TODO: ? export PS1=
+  PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
 }
 
 [[ "$PROMPT_COMMAND" != *"find_git_branch"* ]] && export PROMPT_COMMAND="find_git_branch${PROMPT_COMMAND:+ ; }${PROMPT_COMMAND}"
-export PS1="\${git_branch:+[}\[\033[\${git_status}m\]\${git_branch}\[\033[0m\]\${git_branch:+] }\[\033[1;34m\]\${git_root}\[\033[0m\]\${git_loc} $ "
