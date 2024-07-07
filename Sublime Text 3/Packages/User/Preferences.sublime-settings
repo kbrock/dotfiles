@@ -111,7 +111,7 @@
 	[
 		"*.log"
 	],
-	"open_files_in_new_window": false,
+	"open_files_in_new_window": "never",
 	"rulers":
 	[
 		72,
