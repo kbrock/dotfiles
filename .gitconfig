@@ -5,12 +5,16 @@
   st = status
   cat = show
   ## git rebase master: rebase current branch to upstream/master
-  rem = "!git fetch upstream && git rebase upstream/`git master-branch`"
-  remi = "!git rebase upstream/`git master-branch` "${@--i}
+  rem = "!git fetch upstream && git rebase upstream/$(git master-branch)"
+  remi = "!git rebase upstream/$(git master-branch) "${@--i}
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
+  # checkout, but optional. if we are already on the branch, don't checkout
+  # this means you don't loose the ability to git checkout - after running this
+  optcheckout = "!f() { [[ $(git branch-name) = "$1" ]] || git checkout $1; }; f"
+
   ## git merge master: checkout master and merge with upstream master
-  mem = "!git fetch upstream && git checkout `git master-branch` && git merge --ff-only upstream/`git master-branch`"
+  mem = "!git fetch upstream && git optcheckout $(git master-branch) && git merge --ff-only upstream/$(git master-branch)"
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
   ## prune my own branches that have been deleted on the server
@@ -26,7 +30,7 @@
   config-subl = "!subl ~/.gitconfig"
 
   ## fetch a github pull request from upstream: git fetch-pr 151
-  fetch-pr = "!f() { git fetch --force --update-head-ok -u upstream refs/pull/$1/head:pr/$1; }; f"
+  fetch-pr = "!f() { git fetch --force --update-head-ok -u ${2:-upstream} refs/pull/$1/head:pr/$1; }; f"
   #fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/pr/$1; }; f"
 
   ## rebase a pull request from the current branch (suggestion is to be on master)
@@ -43,7 +47,7 @@
   current-branch  = "symbolic-ref --short HEAD"
 
   ## remove all branches that do not have any commits in them (and have been merged
-  branch-prune = "!git checkout `git master-branch` && git branch --merged | grep -v '*' | xargs git branch -d"
+  branch-prune = "!git optcheckout $(git master-branch) && git branch --merged | grep -v '*' | xargs git branch -d"
 
   ## tracking branch for the current branch
   tracking-branch = "symbolic-ref HEAD"
@@ -77,7 +81,7 @@
   open = "! f() { open $(git url \"$@\") ; }; f"
 
   ## open upstream
-  uopen = "! f() { open $(git url upstream/`git master-branch` \"$@\") ; }; f"
+  uopen = "! f() { open $(git url upstream/$(git master-branch) \"$@\") ; }; f"
 
   ## log in a graph (add --all all branches)
   # see also --oneline
@@ -94,31 +98,8 @@
 
   ## git upstream ($1 = github account. default: manageiq)
   ## create branch upstream based upon origin
-  upstream = "!f() { url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
-  downstream = "!f() { url=`git url production` ; git remote add downstream ${url/kbrock/${1:-cfme}}; }; f"
-
-  # back patch / cherry pick to 5.4
-  cherry-pick-54 = "cherry-pick -Xsubtree=vmdb"
-
-  ## cherry-prod anand master ; cherry-prod 5.3.z
-  #cherry-prod = "!f() { git log --no-walk --oneline --pretty=format:'%Cred%h%Creset - %C(cyan)%an%Creset %s' $(git cherry $1 ${2-master} | awk '/^\\+/{print $2}') ; } ; f"
-  #git log --no-merges --oneline upstream/master --not production/5.3.z --author kbrock
-
-  # ## setup this repo to take photos
-  # photo-link = "![ -d .git ] && ln -s ~/dotfiles/git-hooks/post-commit .git/hooks/"
-
-  # ## show the most recent photos
-  # photo-show = "!qlmanage -p $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
-
-  # ## show the photo directory
-  # photo-show-all = "!open ~/Pictures/git/"
-
-  # ## remove last photo taken
-  # photo-rm = "!rm $(ls ~/Pictures/git/*.jpg | tail -1) > /dev/null 2>&1"
-
-  # ## commits will go in on my personal email (for non redhat ensorsed repos)
-  # photo-count = "! ls ~/Pictures/git | wc -l"
-
+  upstream = "!f() { local url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
+  downstream = "!f() { local url=`git url production` ; git remote add downstream ${url/kbrock/${1:-cfme}}; }; f"
 
   ## add a remote for a collaborator
   ## git collaborate bdunne
@@ -127,19 +108,29 @@
   # https://github.com/kbrock/manageiq.git
 
   collaborate = "! f() { local remote=$(git config remote.origin.url) ; remote=${remote:-$(git config remote.upstream.url)} ; [[ $remote =~ (https?://[^/]*/|git@[^:]*:)([^/]*)(.*)$ ]] ; git remote add $1 ${BASH_REMATCH[1]}$1${BASH_REMATCH[3]} ; git fetch $1 ; } ; f"
-
+  # fetch a provider (points to miq)
+  # not sure if we should check for $USER too
+  # not sure if we want to look for manageiq-providers-... and tack it on
+  fetch-provider = "! f() { local remote="https://github.com/manageiq/${1}" ; git clone -o upstream $remote && [[ -f providers && $1 =~ ".*provider.*" ]] && (echo $1 >> providers) ; } ; f"
   # unsure
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
 
   # open a file on upstream "master"
-  master = "! f() { git open upstream/`git master-branch` $(find . -name \"$@\") ; } ; f"
+  master = "! f() { git open upstream/$(git master-branch) $(find . -name \"$@\") ; } ; f"
 
   #diff against head
   # TODO: diff-head = "diff { open $(git url compare) ; }; f"
 
-  # to use a main branch: git config init.defaultBranch main
-  master-branch = "!BRANCH=`git config init.defaultBranch` ; echo ${BRANCH:-master}"
+  # if this fails, fix with:
+  #   git remote set-head origin -a
+  # master-branch = "!BRANCH=$(git config init.defaultBranch) ; echo ${BRANCH:-master}"
+  master-branch = !git branch -rl '*/HEAD' | sed 's@.*/@@'
+  # not sure if new master-branch and defaultbranch work together
   config-master = "config init.defaultbranch master"
+  config-main   = "config init.defaultbranch main"
+
+  # list the branches that contain a tag
+  branch-having-tag="! f() { git branch -r --contains $(git rev-list --no-walk $1) ; } ; f"
 [apply]
   whitespace = fix
 #[branch]
@@ -205,6 +196,8 @@
 # http://georgebrock.com/blog/useful-git-aliases
 [cola]
 	spellcheck = false
+# [init]
+# defaultBranch=master
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
