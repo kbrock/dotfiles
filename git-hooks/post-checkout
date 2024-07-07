@@ -24,16 +24,19 @@ if [ -f ${branch_lockfile} ] ; then
   lockfile="${branch_lockfile}"
 else
   ret=$(git diff upstream/master -- Gemfile)
+
   if [[ $( echo "${ret}" | wc -c) -gt 1 ]] ; then
-  echo "    Gemfile differs from upstream/master, may want to run a custom gem lockfile via:"
-  echo "       touch ${branch_lockfile}"
-  echo ">> ${ret}"
+    echo "    Gemfile differs from upstream/master, may want to run a custom gem lockfile via:"
+    echo "       git gemfile"
+    echo ">> ${ret}"
   fi
 
   lockfile="${ver_dir}/Gemfile.lock.master"
 fi
 
-rm -f ${root_dir}/Gemfile.lock
-ln -s $lockfile ${root_dir}/Gemfile.lock
+if [ -f "$lockfile" ] ; then
+  rm -f ${root_dir}/Gemfile.lock
+  ln -s $lockfile ${root_dir}/Gemfile.lock
+fi
 
-echo ln -s $lockfile ${root_dir}/Gemfile.lock
+# TODO: may want to get v2key or GUID back
