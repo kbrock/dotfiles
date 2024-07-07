@@ -6,22 +6,20 @@ api_token() {
 # providers -x "[ \$(git branch-name) = 'master' ] && echo \$i"
 # providers -t "[ \$(git branch-name) = 'master' ]
 # providers git status
-
 providers() {
-  local v1
-  local i
+  local v1 i
   case $1 in
     -t) shift ; v1=true ;;
     -f) shift ; v1=false ;;
     -x|-q) shift ; v1=quiet ;;
   esac
-  pushd ~/src/ > /dev/null
-  for i in $(cat providers) ; do
+  for i in $(cat ~/src/providers) ; do
     [[ -z "${v1}" ]] && echo " === $i ==="
-    pushd $i > /dev/null
+    pushd ~/src/$i > /dev/null
     eval $*
     [[ "${v1}" == "true" && ${?} = 0 || "${v1}" == "false" && ${?} != 0 ]] && echo " === $i ==="
     popd > /dev/null
   done
-  popd > /dev/null
 }
+
+# sed 's/"//g' ~/src/manageiq/Gemfile | awk '/plugin.*-providers-/ {printf "%s\n", $2}' > ~/src/providers2
