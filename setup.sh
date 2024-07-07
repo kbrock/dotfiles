@@ -82,3 +82,9 @@ for target in ${files[@]}; do
 #	fi
 	link_file "$DIR/Sublime Text 3/Packages/User" "$target_dir/Sublime Text 3/Packages/User"
 done
+
+# point iTerm to our custom config files
+defaults write com.googlecome.iterm2 PrefsCustomFolder -string "~/dotfiles/Library/iTerm"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+# Divyy has been acting up
+open $DIR/Library/Divvy.url
