@@ -3,3 +3,4 @@
 # ensure_gem "pry-doc"
 # ensure_gem "pry-rails"
 # ensure_gem "pry-theme"
+ensure_gem "byebug"

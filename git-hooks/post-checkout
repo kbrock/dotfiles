@@ -34,7 +34,8 @@ else
   lockfile="${ver_dir}/Gemfile.lock.master"
 fi
 
-if [ -f "$lockfile" ] ; then
+if [[ $(readlink -f ${root_dir}/Gemfile.lock) != $lockfile ]] ; then
+  echo "Linking to ${lockfile}" >&2
   rm -f ${root_dir}/Gemfile.lock
   ln -s $lockfile ${root_dir}/Gemfile.lock
 fi

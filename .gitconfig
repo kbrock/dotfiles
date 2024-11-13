@@ -6,11 +6,11 @@
   cat = show
   ## git rebase master: rebase current branch to upstream/master
   rem = "!git fetch upstream && git rebase upstream/$(git master-branch)"
-  remi = "!git rebase upstream/$(git master-branch) "${@--i}
-  #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
+  remi = "!git rebase upstream/$(git master-branch) ${@--i}"
+  # origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
-  # checkout, but optional. if we are already on the branch, don't checkout
-  # this means you don't loose the ability to git checkout - after running this
+  # checkout, but optional. if we are already on the branch, do not checkout
+  # this means you do not loose the ability to git checkout - after running this
   optcheckout = "!f() { [[ $(git branch-name) = "$1" ]] || git checkout $1; }; f"
 
   ## git merge master: checkout master and merge with upstream master
@@ -194,8 +194,6 @@
 
 #thanks:
 # http://georgebrock.com/blog/useful-git-aliases
-[cola]
-	spellcheck = false
 # [init]
 # defaultBranch=master
 [filter "lfs"]

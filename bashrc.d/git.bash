@@ -5,12 +5,6 @@
 
 alias gexport='git clone --bare -l .git ' #/pub/scm/proj.git'
 
-function _gpo_complete {
-  COMPREPLY=($(compgen -W "$(git remote)" -- ${COMP_WORDS[COMP_CWORD]}))
-  return 0
-}
-complete -o nospace -F _gpo_complete gpo
-
 # files that status shows from git
 function gf() {
   local status=${*:-modified}
@@ -20,12 +14,13 @@ function gf() {
 # auto complete for git db
 function _git_db { __gitcomp "$(git-db-complete $cur)" ; }
 
-# not using:
 # files that have changed from master
+# not using, but use beer master and beer head - which basically does this
 function gn() {
   git diff master --name-only
 }
 
+# using rem instead
 # not using:
 #bring this bug up to date
 function bug_rebase() {
@@ -34,4 +29,14 @@ function bug_rebase() {
   git pull origin master --rebase
   git checkout ${CURRENT}
   git rebase master
+  # alt:
+  # git fetch origin
+  # git rebase origin/master
+}
+
+# usage:
+#   git commit "$(author_from )"
+# the quotes do not act as quoted
+function author_from() {
+  echo "--author=\"$(git log -1 --pretty='%an <%ae>' ${1?Need commit})\" --date=\"$(git log -1 --pretty=%ad $1)\""
 }
