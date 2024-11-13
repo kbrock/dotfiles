@@ -29,3 +29,4 @@ _ruby_build_complete() {
   fi
 }
 complete -F _ruby_build_complete ruby-build
+complete -o nospace -F _chrubycomplete ruby-version
