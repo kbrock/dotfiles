@@ -23,10 +23,12 @@ function link_file() {
 
 	if [ "$copy" == "true" ]; then
 		echo "Copying $file -> $target"
+		echo "TODO"
 		rm -f "$target"
 		cp "$file" "$target"
 	else
 		echo "Linking $target -> $file"
+		echo "TODO: ensure linked target isn't wonky"
 		ln -snf "$file" "$target"
 	fi
 }
