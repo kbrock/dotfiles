@@ -180,6 +180,8 @@
 #   insteadOf = github:
 #   insteadOf = https://github.com/
 #   insteadOf = http://github.com/
+[diff "gron"]
+  textconv=gron
 [url "https://github.com/"]
 	insteadOf = git@github.com:
 [merge]
