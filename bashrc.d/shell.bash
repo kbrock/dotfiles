@@ -68,13 +68,15 @@ function rm () {
   for path in "$@"; do
     # ignore any arguments
     if [[ "$path" = -* ]]; then :
-    else
+    elif [ -e "$path" ] ; then
       local dst=${path##*/}
       # append the time if necessary
       while [ -e ~/.Trash/"$dst" ]; do
         dst="$dst "$(date +%H-%M-%S)
       done
       mv "$path" ~/.Trash/"$dst"
+    else
+      echo "smart rm: $path: No such file or directory"
     fi
   done
 }
