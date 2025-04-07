@@ -13,7 +13,7 @@
 		"ESLint",
 		"ESLint Fix",
 		"GitGutter",
-		"Github Tools",
+		"GitHubTools",
 		"Gnuplot",
 		"LSP",
 		"LSP-json",
@@ -29,7 +29,7 @@
 		"SQLTools",
 		"Sublimerge 3",
 		"Sublimerge Pro",
-		"Vue Syntax Highlight",
+		"Vue",
 		"yardoc",
 	],
 }
