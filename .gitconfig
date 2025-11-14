@@ -11,14 +11,12 @@
 
   # checkout, but optional. if we are already on the branch, do not checkout
   # this means you do not loose the ability to git checkout - after running this
-  optcheckout = "!f() { [[ $(git branch-name) = "$1" ]] || git checkout $1; }; f"
+  optcheckout = "!f() { [[ $(git branch --show-current) = "$1" ]] || git checkout $1; }; f"
 
   ## git merge master: checkout master and merge with upstream master
+  # note: using optcheckout so git checkout - history is not lost
   mem = "!git fetch upstream && git optcheckout $(git master-branch) && git merge --ff-only upstream/$(git master-branch)"
   #origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
-
-  ## prune my own branches that have been deleted on the server
-  prune = fetch --prune
 
   ## amend current commit keeping the same comment
   amend = commit --amend --no-edit
@@ -41,10 +39,8 @@
 
   ## name of the current branch
   # e.g.: master
-  branch-name  = "symbolic-ref -q --short HEAD"
-  #branch-name = "!git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`"
-  # deprecated name:
-  current-branch  = "symbolic-ref --short HEAD"
+  branch-name  = "branch --show-current"
+  #branch-name = "symbolic-ref --short HEAD"
 
   ## remove all branches that do not have any commits in them (and have been merged
   branch-prune = "!git optcheckout $(git master-branch) && git branch --merged | grep -v '*' | xargs git branch -d"
@@ -54,9 +50,7 @@
 
   ## remote branch this current branch is tracking
   ## e.g.:  origin
-  remote-name  = "!git config branch.$(git branch-name).remote"
-  # deprecated name:
-  current-remote = "!git config branch.$(git branch-name).remote"
+  remote-name  = "!git config branch.$(git branch --show-current).remote"
 
   ## show untracked files
   untracked = "ls-files --others -i --exclude-standard"
@@ -89,8 +83,9 @@
   lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(cyan)<%an>%Creset'
 
   ## setup tracking for this branch (default: remote=origin)
-  track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git branch-name); }; f"
-  ## remove reference to a remote branch. (git fetch will repopulate it)
+  # deprecate?
+  track = "!f() { git branch --set-upstream-to=${1:-origin}/$(git branch --show-current); }; f"
+  ## remove reference to a remote branch (typically for someone you follow). It is still on remote and git fetch will repopulate id
   branch-remote-delete-regex = "!f() { git branch -r | grep ${1?need a regular expression} | xargs git branch -r -d ; } ; f"
 
   ## delete my remote branches for a given regular expression (don't delete origin or HEAD)
@@ -124,7 +119,7 @@
   # if this fails, fix with:
   #   git remote set-head origin -a
   # master-branch = "!BRANCH=$(git config init.defaultBranch) ; echo ${BRANCH:-master}"
-  master-branch = !git branch -rl '*/HEAD' | sed 's@.*/@@'
+  master-branch = !git branch -rl '*/HEAD' | sed 's@.*/@@' | head -1
   # not sure if new master-branch and defaultbranch work together
   config-master = "config init.defaultbranch master"
   config-main   = "config init.defaultbranch main"
