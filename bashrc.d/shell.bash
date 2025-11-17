@@ -48,16 +48,36 @@ function sag() {
   subl $(ag -l "$@")
 }
 
+# open bob all the files we found in ag (like sublime ag)
+function cag() {
+  bobide $(ag -l "$@")
+}
+
+# ag for all miq files
 function mag() {
   # ignore: bluecf, gems, plugins/providers files
-  ag "$@" ~/src/{agrare,amazon,container,dbus,httpd,ibm,inventory,manageiq,miq,perf_utils,ui,vmware}* ~/src/gems/{more_core_extensions,manage}*
+  ag "$@" ~/src/{amazon,container,dbus,httpd,ibm,inventory,manageiq,miq,ui,vmware}* ~/src/gems/{more_core_extensions,manage}*
+}
+
+# mag for markdown
+function magm() {
+  local ROOT=~/src # and src/gems (hence that gems gook)
+  # ag --ruby 'def (self\.)?(search|find)\b' $ROOT/* | ruby -ne "f,l,*s=\$_.split(':');s=s.join(':').strip; m=f.match(%r{^.*${ROOT}(/gems)?/([^/]*)(/.*)$}); _,d,p=m[1..3]; fn=p.split('/').last; puts \"\`#{s.chomp}\` [#{fn}](https://github.com/ManageIQ/#{d}/blob/master#{p}#L#{l})\""
+  mag --ruby "$@" | ruby -ne "f,l,*s=\$_.split(':');s=s.join(':').strip; m=f.match(%r{^.*${ROOT}(/gems)?/([^/]*)(/.*)$}); _,d,p=m[1..3]; fn=p.split('/').last; puts \"\`#{s.chomp}\` [#{d}:#{fn}:#{l}](https://github.com/ManageIQ/#{d}/blob/master#{p}#L#{l})\""
+}
+# mag for markdown slack
+function magms() {
+  local ROOT=~/src # and src/gems (hence that gems gook)
+  # technically fn is not needed. kept to keep magm and magms as similar as possible
+  mag --ruby "$@" | ruby -ne "f,l,*s=\$_.split(':');s=s.join(':').strip; m=f.match(%r{^.*${ROOT}(/gems)?/([^/]*)(/.*)$}); _,d,p=m[1..3]; fn=p.split('/').last; puts \"\`#{s.chomp}\` https://github.com/ManageIQ/#{d}/blob/master#{p}#L#{l}\""
 }
 
 function magg() {
   # -G says only ruby files (^c = spec)
   mag "$@" --ignore '*_spec.rb'
-} 
+}
 
+# ? maybe magg (ignoring specs) is what we want instead?
 function marge() {
   ag "$@" ~/src/manageiq/{app,lib/vmdb} ~/src/manageiq-*/lib
 }

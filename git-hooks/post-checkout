@@ -3,8 +3,6 @@
 # * Put this in manageiq/.git/hooks/post-checkout
 # * Make sure you chmod +x this file!!!
 # * Make you convert this file to unix line endings, NOT dos/windows.
-# * 5.3.z needs ruby 1.9.3 with bundler ~1.3.5.
-# * Master needs ruby 2+ with bundler ~1.5+.
 # * You have to `bundle` once on 5.3.z to populate the empty Gemfile.lock.5.3.z
 # * If you have a long running branch such as rails4 and want a Gemfile.lock
 #    just for this branch:
@@ -12,9 +10,22 @@
 ## * If you are based upon another branch:
 ##     "git config --add branch.${branch}.gemfile Gemfile.lock.${branch}"
 
-branch=$(git symbolic-ref -q --short HEAD)
 root_dir=$(git rev-parse --show-toplevel)
+branch=$(git branch --show-current)
 ver_dir="${root_dir}/.ver"
+
+if [[ -z "$branch" ]] ; then
+  for git_mode in rebase-merge rebase-apply ; do
+    # path=$(git rev-parse --git-path $git_mode)
+    path="${root_dir}/.git/${git_mode}"
+    if [[ -d $path ]] ; then
+      branch=$(<${path}/head-name)
+      branch=${branch##refs/heads/}
+      break
+    fi
+  done
+  echo "no branch. using $branch"
+fi
 
 # dropped configuration for branch specific gemfiles
 # git_lockfile=$(git config --get branch.$branch.gemfile)
@@ -23,21 +34,27 @@ branch_lockfile="${ver_dir}/Gemfile.lock.${branch}"
 if [ -f ${branch_lockfile} ] ; then
   lockfile="${branch_lockfile}"
 else
-  ret=$(git diff upstream/master -- Gemfile)
+  # default the lockfile to the one on master
+  lockfile="${ver_dir}/Gemfile.lock.master"
+
+  # if the Gemfile is different from master/Gemfile:
+  #    - show differences
+  #    - suggest running a custom emfile.lock
+  ret=$(git diff -w upstream/master -- Gemfile)
 
   if [[ $( echo "${ret}" | wc -c) -gt 1 ]] ; then
+    echo ">> ${ret}"
+    echo ""
     echo "    Gemfile differs from upstream/master, may want to run a custom gem lockfile via:"
     echo "       git gemfile"
-    echo ">> ${ret}"
   fi
-
-  lockfile="${ver_dir}/Gemfile.lock.master"
 fi
 
+# create link to approperiate Gemfile.lock (if it has changed)
 if [[ $(readlink -f ${root_dir}/Gemfile.lock) != $lockfile ]] ; then
   echo "Linking to ${lockfile}" >&2
   rm -f ${root_dir}/Gemfile.lock
   ln -s $lockfile ${root_dir}/Gemfile.lock
 fi
 
-# TODO: may want to get v2key or GUID back
+# TODO: may want to link to a customer v2key or GUID

@@ -14,8 +14,8 @@ api_token() {
 providers() {
   local v1 i
   case $1 in
-    -t) shift ; v1=true ;;
-    -f) shift ; v1=false ;;
+    -t|-y) shift ; v1=true ;;
+    -f|-n) shift ; v1=false ;;
     -x|-q) shift ; v1=quiet ;;
   esac
   for i in $(cat ~/src/providers) ; do
@@ -31,8 +31,8 @@ providers() {
 repos() {
   local v1 i f
   case $1 in
-    -t) shift ; v1=true ;;
-    -f) shift ; v1=false ;;
+    -t|-y) shift ; v1=true ;;
+    -f|-n) shift ; v1=false ;;
     -x|-q) shift ; v1=quiet ;;
   esac
   for f in ~/src/{manageiq,manageiq-*,inventory_refresh} ; do
@@ -48,8 +48,8 @@ repos() {
 plugins() {
   local v1 i
   case $1 in
-    -t) shift ; v1=true ;;
-    -f) shift ; v1=false ;;
+    -t|-y) shift ; v1=true ;;
+    -f|-n) shift ; v1=false ;;
     -x|-q) shift ; v1=quiet ;;
   esac
   for i in $(grep -v '#' ~/src/plugins) ; do

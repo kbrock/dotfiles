@@ -14,7 +14,7 @@ function mf() { ls db/migrate/*${1:?Please specify migration action}* ; }
 #e.g.: rake db:migrate:redo VERSION=$(mver create_photo)
 function mver() { mf $1 | sed 's=^[^0-9]*\([0-9][^_]*\)_.*$=\1=' ; }
 
-function ruby-version {
+function ruby_version {
   if [ $# -eq 1 ] ; then
     chruby $1
   fi
