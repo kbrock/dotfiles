@@ -1,4 +1,4 @@
-#http://www.debian-administration.org/article/317/An_introduction_to_bash_completion_part_2
+# http://www.debian-administration.org/article/317/An_introduction_to_bash_completion_part_2
 # http://linux.about.com/library/cmd/blcmdl1_compgen.htm
 function _psql_database_complete {
   COMPREPLY=($(compgen -W "$(psql -l | awk -F\| '/\|/ {print $1}')" -- ${COMP_WORDS[COMP_CWORD]}))
@@ -17,8 +17,9 @@ function _psqlcomplete {
   #  f file  g group   j job     k keyword   u user v variable
   # ? -s
 
+  # default to postgres user
   if [ ${prev} = -U ] ; then
-    COMPREPLY=( $(compgen -W "postgres" -- ${cur}) )
+    COMPREPLY=( $(compgen -W "postgres" $PGUSER -- ${cur}) )
     return 0
   fi
 
