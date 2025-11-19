@@ -1,1 +1,1 @@
-# ensure_gem "byebug"
+ensure_gem "byebug"

@@ -90,3 +90,8 @@ defaults write com.googlecome.iterm2 PrefsCustomFolder -string "~/dotfiles/Libra
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 # Divyy has been acting up
 open $DIR/Library/Divvy.url
+
+# default to sublime
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=com.sublimetext.4;}'
+# default to vscode
+# defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType=public.plain-text;LSHandlerRoleAll=com.microsoft.VSCode;}'

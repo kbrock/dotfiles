@@ -1,10 +1,12 @@
+# choping block?
+
 #profile
 
 SSH_ENV=$HOME/.ssh/environment
 SSHAGENT='/usr/bin/ssh-agent'
 SSHAGENTARGS="-s"
 
-function ssh-agent-kb {
+function ssh_agent_kb {
     if [ -f "${SSH_ENV}" ]
     then
         . ${SSH_ENV} > /dev/null
