@@ -57,6 +57,11 @@
             "foreground": "var(yellow)"
         },
         {
+            "name": "String Key",
+            "scope": "meta.mapping.key string - meta.mapping.key meta meta | meta.mapping.key meta.mapping.key string - meta.mapping.key meta.mapping.key meta meta",
+            "foreground": "var(orange)",
+        },
+        {
             "name": "Number",
             "scope": "constant.numeric",
             "foreground": "var(purple)"
