@@ -42,7 +42,6 @@ for target in \
 	.gitattributes \
 	.gitconfig \
 	.gitignore_global \
-	.gnupg/gpg.conf \
 	.inputrc \
 	.irbrc \
 do
@@ -50,7 +49,6 @@ do
 done
 
 for target in \
-	.gnupg/gpg-agent.conf \
 	.gitconfig_platform
 do
 	if [ "$IS_MAC" == "true" ]; then
@@ -59,13 +57,6 @@ do
 #		link_file "$DIR/$target-linux" "$HOME/$target"
 	fi
 done
-
-# Set gnupg permissions
-if [ -d "$HOME/.gnupg" ]; then
-	chown -R $(whoami) $HOME/.gnupg/ 2>/dev/null || true
-	chmod 600 $HOME/.gnupg/* 2>/dev/null || true
-	chmod 700 $HOME/.gnupg 2>/dev/null || true
-fi
 
 if [ "$IS_MAC" == "true" ]; then
 	target="Library/KeyBindings/DefaultKeyBinding.dict"

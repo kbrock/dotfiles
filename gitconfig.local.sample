@@ -1,21 +1,19 @@
 [user]
 	name = ...
 	email = ...
-  # determined from: gpg --list-secret-keys --keyid-format=long
-	signingkey = $HOME/.ssh/id_ed25519.pub
+	# upload to github when you regenerate on a new machine
+	signingkey = ~/.ssh/id_ed25519.pub
+#  signingkey = "ssh-ed25519 AAAA..." # use key from 1Password
 [github]
 	login = ...
-	token = ...
+# todo: is this needed?
+#	token = ...
+  # Alternative: Store token in keychain
   # token = !security find-generic-password -gs \"GitHub API Token\" 2>&1 >/dev/null | awk '/password/ {print $2}' | tr -d \\\"
 [credential]
+  # todo: do we want this?
 	helper = osxkeychain
-# set to your path
-[gpg]
-  # default: format = opengpg
-	program = /opt/homebrew/bin/gpg
-	program = /usr/local/bin/gpg
-  # 1password
-  format = ssh
-	# program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+# 1 password:
 #[gpg "ssh"]
 #  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
