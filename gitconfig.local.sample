@@ -2,7 +2,7 @@
 	name = ...
 	email = ...
   # determined from: gpg --list-secret-keys --keyid-format=long
-    signingkey = ...
+	signingkey = $HOME/.ssh/id_ed25519.pub
 [github]
 	login = ...
 	token = ...
@@ -15,7 +15,7 @@
 	program = /opt/homebrew/bin/gpg
 	program = /usr/local/bin/gpg
   # 1password
-  # format = ssh
-	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  format = ssh
+	# program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 #[gpg "ssh"]
 #  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"

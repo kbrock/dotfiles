@@ -118,12 +118,14 @@
 
   # if this fails, fix with:
   #   git remote set-head origin -a
+  #   git remote set-head origin main
   # master-branch = "!BRANCH=$(git config init.defaultBranch) ; echo ${BRANCH:-master}"
+  # config-master = "config init.defaultbranch master"
+  # config-main   = "config init.defaultbranch main"
   master-branch = !git branch -rl '*/HEAD' | sed 's@.*/@@' | head -1
   # not sure if new master-branch and defaultbranch work together
-  config-master = "config init.defaultbranch master"
-  config-main   = "config init.defaultbranch main"
-
+  config-master = "symbolic-ref HEAD refs/master"
+  config-main   = "symbolic-ref HEAD refs/main"
   # list the branches that contain a tag
   branch-having-tag="! f() { git branch -r --contains $(git rev-list --no-walk $1) ; } ; f"
 [apply]
@@ -199,6 +201,7 @@
 	process = git-lfs filter-process
 	required = true
 [gpg]
+	format = ssh
   # this section has been moved to gitconfig.local
 [commit]
 	gpgsign = true

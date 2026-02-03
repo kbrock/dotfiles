@@ -6,7 +6,7 @@ SSH_ENV=$HOME/.ssh/environment
 SSHAGENT='/usr/bin/ssh-agent'
 SSHAGENTARGS="-s"
 
-function ssh_agent_kb {
+function ssh-agent-kb {
     if [ -f "${SSH_ENV}" ]
     then
         . ${SSH_ENV} > /dev/null

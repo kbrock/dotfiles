@@ -14,26 +14,6 @@ function gf() {
 # auto complete for git db
 function _git_db { __gitcomp "$(git-db-complete $cur)" ; }
 
-# files that have changed from master
-# not using, but use beer master and beer head - which basically does this
-function gn() {
-  git diff master --name-only
-}
-
-# using rem instead
-# not using:
-#bring this bug up to date
-function bug_rebase() {
-  local CURRENT=${1:-git curren-branch}
-  git checkout master
-  git pull origin master --rebase
-  git checkout ${CURRENT}
-  git rebase master
-  # alt:
-  # git fetch origin
-  # git rebase origin/master
-}
-
 # usage:
 #   git commit "$(author_from )"
 # the quotes do not act as quoted
