@@ -10,61 +10,49 @@ xcode-select --install
 
 git clone https://github.com/kbrock/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+
 brew bundle install   # install cli tools and some mac apps
 ./install-appstore.sh # install mac apps
 ./setup.sh            # link dotfiles
+./macos_apply.sh      # apply finder/apple preferences
 cp gitconfig.local.sample ~/.gitconfig.local
 # vi ~/.gitconfig.local
 open ~/dotfiles/Library/Divvy.url # imports divy bookmarks
 ```
 
-## Install Yealink USB Headset configuration
-
-Not strictly necessary.
-
-- https://www.yealink.com/en/software
-- Yealink USB Connect
+## Yealink USB Connect (optional)
+- https://www.yealink.com/en/software # Yealink USB Connect 
 - Mount (if DMG): `hdiutil mount YealinkUSBConnect.dmg`
 - Install: `sudo installer -pkg /Volumes/YealinkUSBConnect/YealinkUSBConnect.pkg -target /`
 
-## Monitor control
-There is "LG Screen Manager"
-But use MonitorControl instead
+## LG webcam configurator (Optional)
 
+## Manual:
+
+- System Settings > Keyboard > Keyboard Shortcuts
+  - > Missing Control
+    - move space left/right/switch desktop
+  - > Windows (overlaps with Divyy - may want to revisit)
+  - > Input Sources
+    - turned off (control-space, control-command-space)
+  - > Spotlight
+    - turned off both
+  - > App Shortcuts
+    - global shortcuts for file... used alfred instead for this - may want to revisit
 ---
 
 ## What Gets Linked
 
 ### Dotfiles (symlinked to ~/)
-- `.agignore`, `.bash_profile`, `.bashrc`
-- `.gemrc`, `.gitattributes`, `.gitconfig`, `.gitignore_global`
-- `.inputrc`, `.irbrc`
-- `.bundler.d/Gemfile.global.rb`
-- `.gnupg/gpg.conf`
-- `.gnupg/gpg-agent.conf` (platform-specific: `-mac` or `-linux`)
-- `.gitconfig_platform` (platform-specific)
-
-### Editor Configurations
-- **Sublime Text**: `~/Library/Application Support/Sublime Text 3/Packages/User/` → `dotfiles/Sublime Text 3/Packages/User/`
-- **Zed**: `~/.config/zed/settings.json` → `dotfiles/.config/zed/settings.json`
-- **Claude Code**: `~/.claude/settings.json` → `dotfiles/.claude/settings.json`
-
-### System Preferences
+### App Configurations
+- **Sublime Text**: `~/Library/Application Support/Sublime Text 3/Packages/User/`
+- **Zed**: `~/.config/zed/settings.json`
+- **Claude Code**: `~/.claude/settings.json`
 - **iTerm2**: Uses `defaults write` to point to `~/dotfiles/Library/iTerm/`
-- **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict` → `dotfiles/Library/KeyBindings/DefaultKeyBinding.dict`
-
-### Not Linked (Must Be Manually Imported)
-- **Divvy**: Import via URL (preferences can't be symlinked)
-- **gitconfig.local**: Contains sensitive information (name, email, tokens)
+  - `defaults read com.googlecode.iterm2 PrefsCustomFolder`
+- **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict`
 
 ---
-
-### iTerm2 not loading preferences
-Check that the preferences are pointing to the right location:
-```bash
-defaults read com.googlecode.iterm2 PrefsCustomFolder
-# Should output: ~/dotfiles/Library/iTerm
-```
 
 ## Transferring to a New Machine
 

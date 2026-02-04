@@ -62,6 +62,10 @@ if [ "$IS_MAC" == "true" ]; then
 	target="Library/KeyBindings/DefaultKeyBinding.dict"
 	link_file "$DIR/$target" "$HOME/$target"
 
+	# Link custom dictionary
+	target="Library/Spelling/LocalDictionary"
+	link_file "$DIR/$target" "$HOME/$target"
+
 	# Link Sublime Text User preferences directory
 	if [ -d "$DIR/Sublime Text 3/Packages/User" ]; then
 		target_dir="$HOME/Library/Application Support"
