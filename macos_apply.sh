@@ -95,6 +95,7 @@ do
 done
 
 # Keep Xcode for Apple development files
+EDITOR_BUNDLE="com.apple.dt.Xcode"
 for content_type in \
     public.swift-source \
     com.apple.dt.playground \
@@ -102,7 +103,7 @@ for content_type in \
     com.apple.xcode.project \
     com.apple.xcode.workspace
 do
-    defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add "{LSHandlerContentType=${content_type};LSHandlerRoleAll=com.apple.dt.Xcode;}"
+    defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add "{LSHandlerContentType=${content_type};LSHandlerRoleAll=${EDITOR_BUNDLE};}"
 done
 
 echo ""

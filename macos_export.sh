@@ -59,13 +59,4 @@ read_default com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking
 read_default com.apple.AppleMultitouchTrackpad Clicking
 echo ""
 
-echo "## Custom Dictionaries"
-if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
-    word_count=$(wc -l < "$HOME/Library/Spelling/LocalDictionary" | tr -d ' ')
-    echo "  LocalDictionary: $word_count words"
-else
-    echo "  LocalDictionary: NOT FOUND"
-fi
-echo ""
-
 echo "=== Export Complete ==="
