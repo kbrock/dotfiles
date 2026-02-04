@@ -74,9 +74,9 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 echo "Configuring Performance..."
 # Reduce transparency (improves performance, reduces memory usage)
-defaults write com.apple.universalaccess reduceTransparency -bool true
+# defaults write com.apple.universalaccess reduceTransparency -bool true
 # Reduce motion (disables animations)
-defaults write com.apple.universalaccess reduceMotion -bool true
+# defaults write com.apple.universalaccess reduceMotion -bool true
 
 echo "Configuring default file handlers..."
 #EDITOR_BUNDLE="com.sublimetext.4"

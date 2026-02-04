@@ -6,8 +6,10 @@ Open Mac App store and sign in with apple ID (for `install-appstore.sh`)
 
 ```bash
 xcode-select --install
+sudo xcodebuild -license accept
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 git clone https://github.com/kbrock/dotfiles.git ~/dotfiles
 cd ~/dotfiles
@@ -31,7 +33,8 @@ chsh -s $(which bash)
 - Mount (if DMG): `hdiutil mount YealinkUSBConnect.dmg`
 - Install: `sudo installer -pkg /Volumes/YealinkUSBConnect/YealinkUSBConnect.pkg -target /`
 
-## LG webcam configurator (Optional)
+## Logitech LogiTune (optional)
+
 
 ## Manual:
 

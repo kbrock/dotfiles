@@ -9,26 +9,29 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 function link_file() {
-	file="$1"
-	target="$2"
-	copy="$3"
+  file="$1"
+  target="$2"
+  copy="$3"
 
   if [ ! -e "$file" ] ; then
     echo "No source"
-  	return
+    return
   fi
 
-	link_dir=$(dirname "$target")
-	[ ! -d "$link_dir" ] && echo "Creating $link_dir" && mkdir -p "$link_dir"
+  link_dir=$(dirname "$target")
+  [ ! -d "$link_dir" ] && echo "Creating $link_dir" && mkdir -p "$link_dir"
 
-	if [ "$copy" == "true" ]; then
-		echo "Copying $file -> $target"
-		echo "TODO"
+  if [ "$copy" == "true" ]; then
+    echo "Copying $file -> $target"
+    echo "TODO"
 		rm -f "$target"
 		cp "$file" "$target"
 	else
 		echo "Linking $target -> $file"
-		echo "TODO: ensure linked target isn't wonky"
+		if [ -d "$target" ] && [ ! -L "$target" ]; then
+			echo "Removing existing directory $target"
+			rm -rf "$target"
+		fi
 		ln -snf "$file" "$target"
 	fi
 }
@@ -43,7 +46,7 @@ for target in \
 	.gitconfig \
 	.gitignore_global \
 	.inputrc \
-	.irbrc \
+	.irbrc
 do
 	link_file "$DIR/$target" "$HOME/$target"
 done
@@ -89,6 +92,8 @@ if [ "$IS_MAC" == "true" ]; then
 	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/dotfiles/Library/iTerm"
 	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
+  # make shortcut to iCloud
+  [[ -d ~/iCloud ]] || ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs iCloud
 	# Divvy preferences must be imported via URL (can't be symlinked)
 	# To update the export URL: Open Divvy → Preferences → Shortcuts → Export → Copy URL
 	# Then save to $DIR/Library/Divvy.url

@@ -20,9 +20,7 @@ cask "iterm2" # Terminal emulator for macOS
 # cask "sublime-text" # Text editor
 cask "sublime-merge" # Git client from Sublime
 cask "zed" # High-performance code editor
-cask "visual-studio-code" # VS Code editor
-cask "claude-code" # Claude Code AI coding assistant
-cask "claude" # Claude AI assistant desktop app
+# cask "visual-studio-code" # VS Code editor
 cask "sf-symbols" # Apple SF Symbols browser and toolkit
 
 # Development setup - Databases
@@ -64,15 +62,16 @@ brew "svgo" # SVG optimizer
 brew "mas" # Mac App Store command line interface
 brew "ripgrep" # Fast grep alternative (rg)
 brew "iproute2mac" # Linux ip command for macOS network debugging
+brew "the_silver_searcher" # Code search tool (ag)
 
 # Development setup - AI and ML
 brew "ollama" # Run large language models locally
-brew "claude" # Claude AI
+cask "claude-code" # Claude Code AI coding assistant
+
 # Other development tools
 # brew "act" # Run GitHub Actions locally (aka wwtd)
 # brew "crystal" # Crystal programming language
 #brew "diff-so-fancy" # Good-looking diffs
-brew "dive" # Docker image layer explorer
 #brew "dos2unix" # Convert DOS/Windows line endings to Unix
 brew "duti" # Set default document and URL handlers
 brew "ffmpeg" # Audio/video processing tools
@@ -81,23 +80,23 @@ brew "gh" # GitHub CLI
 #brew "git-filter-repo" # Rewrite Git history
 #brew "gnu-sed" # GNU version of sed
 #brew "go" # Go programming language
-brew "graphviz" # Graph visualization software
 #brew "hub" # GitHub CLI (older alternative to gh)
-brew "imagemagick" # Image processing tools
 #brew "nginx" # Web server for local development
 #brew "nmap" # Network scanner
-brew "qemu" # Generic machine emulator and virtualizer
 # brew "rbspy" # Ruby profiler (samples running processes)
-brew "the_silver_searcher" # Code search tool (ag)
 brew "tree" # Display directory structure
-brew "lima" # Linux virtual machines
 brew "asitop" # Performance monitor for Apple Silicon (GPU, CPU, ANE)
 cask "balenaetcher" # Create bootable USB drives
+# brew "skopeo" # Work with container images and registries
+
+# Virtualization
+brew "dive" # Docker image layer explorer
 brew "docker" # Docker CLI
 # cask "docker" # Docker Desktop
+brew "lima" # Linux virtual machines
 #brew "openshift-cli" # OpenShift CLI
 #brew "operator-sdk" # Kubernetes operator SDK
-# brew "skopeo" # Work with container images and registries
+brew "qemu" # Generic machine emulator and virtualizer
 #cask "virtualbox" # Virtual machine manager
 
 # Productivity apps
@@ -115,7 +114,7 @@ cask "obsidian" # Note-taking and knowledge base
 #cask "turbotax-2024" # Tax preparation software
 
 # USB Devices
-brew "monitorcontrol" # Control external monitor brightness from CLI
+cask "monitorcontrol" # Control external monitor brightness from CLI
 brew "switchaudio-osx" # Switch audio input/output devices from CLI
 cask "vial" # Keyboard firmware configuration tool
 cask "logitune" # Logitech keyboard/camera firmware configuration tool
@@ -129,9 +128,11 @@ cask "zoom" # Video conferencing
 
 # Media and image tools
 #cask "affinity" # Affinity suite (Designer, Photo, Publisher)
+brew "graphviz" # Graph visualization software
 cask "imageoptim" # Image compression GUI
 brew "imageoptim-cli" # ImageOptim command line interface
-cask "krita" # Free and open source digital painting application
+brew "imagemagick" # Image processing tools
+#cask "krita" # Free and open source digital painting application
 cask "shottr" # Screenshot annotation tool
 #cask "skitch" # Screenshot annotation (older alternative)
 cask "steam" # Gaming platform
