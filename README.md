@@ -7,6 +7,7 @@ Open Mac App store and sign in with apple ID (for `install-appstore.sh`)
 ```bash
 xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 git clone https://github.com/kbrock/dotfiles.git ~/dotfiles
 cd ~/dotfiles
@@ -18,6 +19,11 @@ brew bundle install   # install cli tools and some mac apps
 cp gitconfig.local.sample ~/.gitconfig.local
 # vi ~/.gitconfig.local
 open ~/dotfiles/Library/Divvy.url # imports divy bookmarks
+# ensure ~/iCloud/core is downloaded
+# point alfred to ~/iCloud/core, ensuring files have do
+sudo sh -c "echo $(which bash) >> /etc/shells"
+chsh -s $(which bash)
+
 ```
 
 ## Yealink USB Connect (optional)
