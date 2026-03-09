@@ -26,6 +26,7 @@ cask "sf-symbols" # Apple SF Symbols browser and toolkit
 # Development setup - Databases
 brew "postgresql@14", restart_service: true, link: true # PostgreSQL database
 brew "mysql" # MySQL relational database
+brew "mysql-client" # MySQL relational database
 #brew "memcached", restart_service: true # Distributed memory caching
 brew "redis", restart_service: true # In-memory data store
 brew "kafka" # Distributed streaming platform
@@ -37,7 +38,7 @@ brew "chruby" # Ruby version manager
 brew "ruby-build" # Build and install Ruby versions
 brew "fnm" # Fast Node.js version manager (instead of nvm)
 brew "node" # Node.js JavaScript runtime
-
+brew "uv"   # Python package manager (vs env)
 # Development setup - Build tools
 brew "cmake" # Cross-platform build system
 brew "pkg-config" # Manage compile and link flags
@@ -58,15 +59,24 @@ brew "yamllint" # YAML linter
 brew "entr" # Run commands when files change
 #brew "gist" # GitHub Gist from command line
 brew "gron" # Make JSON greppable
+brew "just" # Command runner
+brew "pandoc" # Document converter
+brew "svg2png" # SVG to PNG converter
 brew "svgo" # SVG optimizer
+brew "weasyprint" # HTML/CSS to PDF
 brew "mas" # Mac App Store command line interface
 brew "ripgrep" # Fast grep alternative (rg)
 brew "iproute2mac" # Linux ip command for macOS network debugging
 brew "the_silver_searcher" # Code search tool (ag)
 
 # Development setup - AI and ML
+brew "aider" # AI pair programming
+brew "llama.cpp" # Local LLM inference
+brew "mlx" # Apple ML framework
 brew "ollama" # Run large language models locally
+cask "claude" # Claude desktop app
 cask "claude-code" # Claude Code AI coding assistant
+cask "lm-studio" # Local LLM GUI
 
 # Other development tools
 # brew "act" # Run GitHub Actions locally (aka wwtd)
@@ -79,7 +89,7 @@ brew "gh" # GitHub CLI
 #brew "gist" # GitHub Gist from command line
 #brew "git-filter-repo" # Rewrite Git history
 #brew "gnu-sed" # GNU version of sed
-#brew "go" # Go programming language
+brew "go" # Go programming language
 #brew "hub" # GitHub CLI (older alternative to gh)
 #brew "nginx" # Web server for local development
 #brew "nmap" # Network scanner
@@ -92,10 +102,12 @@ cask "balenaetcher" # Create bootable USB drives
 # Virtualization
 brew "dive" # Docker image layer explorer
 brew "docker" # Docker CLI
+brew "docker-compose" # Multi-container Docker
 # cask "docker" # Docker Desktop
 brew "lima" # Linux virtual machines
-#brew "openshift-cli" # OpenShift CLI
+brew "openshift-cli" # OpenShift CLI
 #brew "operator-sdk" # Kubernetes operator SDK
+cask "podman-desktop" # Podman GUI
 brew "qemu" # Generic machine emulator and virtualizer
 #cask "virtualbox" # Virtual machine manager
 
@@ -106,7 +118,7 @@ cask "1password" # Password manager
 #cask "actual" # Privacy-focused budgeting and finance app
 cask "alfred" # Application launcher and productivity tool
 cask "daisydisk" # Disk space analyzer
-cask "divvy" # Window management tool
+#cask "divvy" # Window management tool (use App Store version for license)
 cask "grammarly-desktop" # Writing assistant
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 #cask "numi" # Beautiful calculator app with natural language
@@ -130,10 +142,12 @@ cask "zoom" # Video conferencing
 #cask "affinity" # Affinity suite (Designer, Photo, Publisher)
 brew "graphviz" # Graph visualization software
 cask "imageoptim" # Image compression GUI
+cask "inkscape" # Vector graphics editor
 brew "imageoptim-cli" # ImageOptim command line interface
 brew "imagemagick" # Image processing tools
 #cask "krita" # Free and open source digital painting application
 cask "shottr" # Screenshot annotation tool
+cask "sloth" # Show open files and sockets
 #cask "skitch" # Screenshot annotation (older alternative)
 cask "steam" # Gaming platform
 
@@ -141,3 +155,10 @@ cask "steam" # Gaming platform
 #cask "dayflow" # Screensaver (was "day-o")
 #cask "remarkable" # Markdown editor
 #cask "spotify" # Music streaming
+cask "sonic-pi" # ruby music generation
+brew "huggingface-cli" # ai model hub
+brew "mermaid-cli" # Mermaid cli (mmdc)
+brew "fzf" # bash dialogs
+brew "podman" # Container engine
+tap "slp/krunkit"
+brew "krunkit" # Lightweight VM runner
