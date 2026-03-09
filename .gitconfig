@@ -25,7 +25,8 @@
   ignore = "!f() { echo \"$@\" >> .gitignore ; }; f"
 
   ## edit gitconfig file with sublime
-  config-subl = "!subl ~/.gitconfig"
+#  config-subl = "!subl ~/.gitconfig"
+  config-subl = "!zed ~/.gitconfig"
 
   ## fetch a github pull request from upstream: git fetch-pr 151
   fetch-pr = "!f() { git fetch --force --update-head-ok -u ${2:-upstream} refs/pull/$1/head:pr/$1; }; f"
@@ -202,8 +203,10 @@
 	required = true
 [gpg]
 	format = ssh
-  # this section has been moved to gitconfig.local
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
 [commit]
 	gpgsign = true
 [tag]
 	gpgsign = true
+# this section has been moved to gitconfig.local

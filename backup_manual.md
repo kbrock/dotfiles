@@ -50,6 +50,8 @@ cp ~/dotfiles-backup/pubring.kbx ~/.gnupg/
 cp ~/dotfiles/gitconfig.local.sample ~/.gitconfig.local
 # Edit with your info
 vi ~/.gitconfig.local
+# Enable local signature verification
+echo "$(git config user.email) $(cat "$(git config user.signingkey)")" > ~/.ssh/allowed_signers
 ```
 
 ### Text Replacements
