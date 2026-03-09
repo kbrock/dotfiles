@@ -65,24 +65,4 @@ chsh -s $(which bash)
 
 ## Transferring to a New Machine
 
-When setting up a new machine, you'll need to manually transfer these items:
-
-1. Open Divvy → Preferences → Shortcuts → Export
-2. Copy the URL
-3. Save (commit) to `~/dotfiles/Library/Divvy.url`
-
-- ~/.ssh/id_ed25519
-- ~/.ssh/id_ed25519.pub
-- ~/.ssh/config
-- ~/.gitconfig.local
-- ~/.gnupg/pubring.kbx
-
-### **macOS Keychain** (Avoid if possible)
-You mentioned you avoid the keychain because it's a black box - good practice!
-
-**What might be in there:**
-- GitHub tokens (if using `credential.helper = osxkeychain`)
-- SSH key passphrases (if using `UseKeychain yes` in SSH config)
-- WiFi passwords (system-managed)
-
-**Alternative:** Store credentials in 1Password or environment variables instead of keychain.
+See [backup_manual.md](backup_manual.md) for the full checklist.

@@ -78,33 +78,49 @@ echo "Configuring Performance..."
 # Reduce motion (disables animations)
 # defaults write com.apple.universalaccess reduceMotion -bool true
 
+# given an extension, find possible entries to use in the duti below
+function ext_to_content_type() {
+  local lsregister=/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister
+  local extension=${1:?Please pass extension}
+  $lsregister -dump | awk '/^uti:/ {print $2}' | grep $extension | sort -u
+}
+
+# given an app name, find the bundle name
+function app_to_bundle() {
+  $(osascript -e 'id of app "${1:-Pass the application name}"')
+}
+
 echo "Configuring default file handlers..."
+#EDITOR_BUNDLE=$((app_to_bundle "Zed"))
 #EDITOR_BUNDLE="com.sublimetext.4"
 EDITOR_BUNDLE="dev.zed.Zed"
 for content_type in \
+    public.json \
     public.plain-text \
     public.source-code \
     public.shell-script \
+    public.bash-script \
+    public.zsh-script \
+    public.make-source \
+    public.script \
     com.netscape.javascript-source \
     public.python-script \
     public.ruby-script \
     public.yaml \
     net.daringfireball.markdown
 do
-    defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add "{LSHandlerContentType=${content_type};LSHandlerRoleAll=${EDITOR_BUNDLE};}"
+    # defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add "{LSHandlerContentType=${content_type};LSHandlerRoleAll=${EDITOR_BUNDLE};}"
+    duti -s "$EDITOR_BUNDLE" "$content_type" all
 done
+# not necessary but suggested as we are trying to figure this out
+#
+# for extensions in .rb .txt .yaml .md .py .js .sh .bash ; do
+#   duti -s "$EDITOR_BUNDLE" ${extension} all
+# done
 
-# Keep Xcode for Apple development files
-EDITOR_BUNDLE="com.apple.dt.Xcode"
-for content_type in \
-    public.swift-source \
-    com.apple.dt.playground \
-    com.apple.dt.playgroundpage \
-    com.apple.xcode.project \
-    com.apple.xcode.workspace
-do
-    defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add "{LSHandlerContentType=${content_type};LSHandlerRoleAll=${EDITOR_BUNDLE};}"
-done
+# reset all custom registries
+# /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -v -apps u,s,l
+killall Finder # picks up the changes
 
 echo ""
 echo "=== Settings Applied ==="
