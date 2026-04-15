@@ -1,6 +1,6 @@
 export LC_CTYPE=en_US.UTF-8
 export GREP_COLOR='1;32'
-export CLICOLOR=1 
+export CLICOLOR=1
 
 #unix commands
 alias ls='ls -G'
@@ -15,9 +15,8 @@ alias mroe='less -r'
 alias wget='curl -O'
 # would alias to which, but
 alias whereis='type -a'
-# gem install terminal-notifier
-alias growl='terminal-notifier -message'
 
+alias marked='open -a "Marked 2.app"'
 #mac only
 not_defined 'ldd' && alias ldd='otool -L'
 add_to_path ~/bin
