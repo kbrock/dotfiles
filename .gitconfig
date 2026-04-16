@@ -6,6 +6,7 @@
   cat = show
   ## git rebase master: rebase current branch to upstream/master
   rem = "!git fetch upstream && git rebase upstream/$(git master-branch)"
+  ## interactive rebase onto upstream/master -- squash/reorder before PR (no fetch)
   remi = "!git rebase upstream/$(git master-branch) ${@--i}"
   # origin = !sh -c 'git remote add -t ${2:-master} -m ${2:-master} ${1:-origin} ${0}'
 
@@ -28,15 +29,7 @@
 #  config-subl = "!subl ~/.gitconfig"
   config-subl = "!zed ~/.gitconfig"
 
-  ## fetch a github pull request from upstream: git fetch-pr 151
-  fetch-pr = "!f() { git fetch --force --update-head-ok -u ${2:-upstream} refs/pull/$1/head:pr/$1; }; f"
-  #fetch-pr = "!f() { git fetch upstream refs/pull/$1/head:refs/remotes/pr/$1; }; f"
-
-  ## rebase a pull request from the current branch (suggestion is to be on master)
-  rebase-pr = "!f() { git checkout -b pr_$1 pr/$1; git rebase @{-1}; git checkout @{-2}; git rebase @{-1}; }; f"
-
-  ## create a local branch for a pull request: git checkout-pr 151
-  #checkout-pr = "!f() { git fetch-pr $1 ; git checkout -b pr_$1 pr/$1 ; }; f"
+  ## fetch/checkout a PR: gh pr checkout <id> (or glab mr checkout <id>)
 
   ## name of the current branch
   # e.g.: master
@@ -59,15 +52,6 @@
   ## url for the current branch ($1 = name of remote) must be linked to master
   ## e.g.: git@github.com:user/prog.git
   remote-url = "! f() { git config remote.${1:-$(git remote-name)}.url ; }; f"
-
-  ## open a pr on production
-  # TODO
-  # ?merge_request%5Bsource_branch%5D=531_embed_key&merge_request%5Bsource_project_id%5D=69&merge_request%5Btarget_branch%5D=master&merge_request%5Btarget_project_id%5D=59
-  # merge_request%5Bsource_project_id%5D=69
-  # merge_request%5Bsource_branch%5D=531_embed_key
-  # merge_request%5Btarget_project_id%5D=59
-  # merge_request%5Btarget_branch%5D=5.3.z
-  prodpr="! f() { git push -u gorigin HEAD ; open $(git url downstream compare) ; }; f"
 
   ## open a pr
   pr = "! f() { open $(git url compare) ; }; f"
@@ -92,41 +76,21 @@
   ## delete my remote branches for a given regular expression (don't delete origin or HEAD)
   # branch-delete-remote git branch -a | awk -F/ ' /origin\/[^mH]/ { print $3 }'
 
-  ## git upstream ($1 = github account. default: manageiq)
-  ## create branch upstream based upon origin
-  upstream = "!f() { local url=`git url origin` ; git remote add upstream ${url/kbrock/${1:-manageiq}}; }; f"
-  downstream = "!f() { local url=`git url production` ; git remote add downstream ${url/kbrock/${1:-cfme}}; }; f"
-
-  ## add a remote for a collaborator
-  ## git collaborate bdunne
-  ## now uses http (vs ssh) urls
-  #     git@github.com:kbrock/manageiq-schema.git
-  # https://github.com/kbrock/manageiq.git
-
+  ## add a remote for a collaborator: git collaborate bdunne
+  ## swaps user in origin (or upstream) URL -- no API call
   collaborate = "! f() { local remote=$(git config remote.origin.url) ; remote=${remote:-$(git config remote.upstream.url)} ; [[ $remote =~ (https?://[^/]*/|git@[^:]*:)([^/]*)(.*)$ ]] ; git remote add $1 ${BASH_REMATCH[1]}$1${BASH_REMATCH[3]} ; git fetch $1 ; } ; f"
-  # fetch a provider (points to miq)
-  # not sure if we should check for $USER too
-  # not sure if we want to look for manageiq-providers-... and tack it on
-  fetch-provider = "! f() { local remote="https://github.com/manageiq/${1}" ; git clone -o upstream $remote && [[ -f providers && $1 =~ ".*provider.*" ]] && (echo $1 >> providers) ; } ; f"
-  # unsure
+
+  ## stage fix, then: git fixup [hash] -- folds staged changes into that commit
+  ## (defaults to HEAD; uses --autosquash rebase, skips editor)
   fixup = "!HASH=${1-$(git rev-parse HEAD)} && git commit --fixup=$HASH && EDITOR=: git rebase -i --autosquash $HASH~1 && echo"
 
   # open a file on upstream "master"
   master = "! f() { git open upstream/$(git master-branch) $(find . -name \"$@\") ; } ; f"
 
-  #diff against head
-  # TODO: diff-head = "diff { open $(git url compare) ; }; f"
-
-  # if this fails, fix with:
-  #   git remote set-head origin -a
-  #   git remote set-head origin main
-  # master-branch = "!BRANCH=$(git config init.defaultBranch) ; echo ${BRANCH:-master}"
-  # config-master = "config init.defaultbranch master"
-  # config-main   = "config init.defaultbranch main"
+  # reads refs/remotes/*/HEAD (sometimes missing, run config-head to populate)
   master-branch = !git branch -rl '*/HEAD' | sed 's@.*/@@' | head -1
-  # not sure if new master-branch and defaultbranch work together
-  config-master = "symbolic-ref HEAD refs/master"
-  config-main   = "symbolic-ref HEAD refs/main"
+  config-head   = "!f() { git remote set-head ${1:-origin} -a ; }; f" # queries remote, populates HEAD
+  # manual override when remote is wrong: git remote set-head origin main
   # list the branches that contain a tag
   branch-having-tag="! f() { git branch -r --contains $(git rev-list --no-walk $1) ; } ; f"
 [apply]
@@ -153,8 +117,9 @@
   ff = only
 	rebase = true
 [push]
-  default = simple
-#  default = current
+  default = simple # explicit remote, safe w/forks
+  autoSetupRemote = true # automatically sets -u
+#  default = current # auto-creates remote branch
 [rebase]
   autosquash = true
   updateRefs = true
