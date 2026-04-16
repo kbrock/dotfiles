@@ -13,6 +13,7 @@ cask "font-open-sans" # Humanist sans serif font
 cask "font-source-code-pro" # Adobe monospace font for code
 cask "font-jetbrains-mono" # JetBrains monospace font
 cask "font-roboto" # Google's signature font
+cask "font-mona-sans" # GitHub's variable sans-serif font
 cask "font-roboto-mono" # Monospace variant of Roboto
 
 # Development setup - Editors and IDEs
@@ -131,6 +132,7 @@ brew "switchaudio-osx" # Switch audio input/output devices from CLI
 cask "vial" # Keyboard firmware configuration tool
 cask "logitune" # Logitech keyboard/camera firmware configuration tool
 cask "qlstephen" # QuickLook plugin for plain text files
+cask "betterzip" # Quicklook plugin for zip files (deprecated)
 
 # Communication apps
 cask "discord" # Voice, video, and text chat
