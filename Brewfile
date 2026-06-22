@@ -119,7 +119,10 @@ cask "1password" # Password manager
 #cask "actual" # Privacy-focused budgeting and finance app
 cask "alfred" # Application launcher and productivity tool
 cask "daisydisk" # Disk space analyzer
-#cask "divvy" # Window management tool (use App Store version for license)
+cask "rectangle" # Window manager (Divvy replacement)
+tap "mikker/tap"
+cask "mikker/tap/leader-key" # Keyboard launcher with nested groups
+cask "mikker/tap/tuna" # Modal launcher (kept for evaluation)
 cask "grammarly-desktop" # Writing assistant
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 #cask "numi" # Beautiful calculator app with natural language
@@ -141,6 +144,10 @@ cask "slack" # Team communication
 cask "zoom" # Video conferencing
 
 # Media and image tools
+brew "handbrake" # Video transcoder CLI
+cask "handbrake" # Video transcoder GUI
+cask "vlc" # Media player (MKV, etc.)
+brew "mkvtoolnix" # MKV manipulation (chapter/cover injection)
 #cask "affinity" # Affinity suite (Designer, Photo, Publisher)
 brew "graphviz" # Graph visualization software
 cask "imageoptim" # Image compression GUI

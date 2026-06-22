@@ -36,6 +36,14 @@ chsh -s $(which bash)
 ## Logitech LogiTune (optional)
 
 
+## Leader Key
+
+Config lives in `~/dotfiles/leader-key/config.json`. After install:
+
+- Open Leader Key → Settings → set the config file path to `~/dotfiles/leader-key/config.json`
+- Reload to apply
+- Set the activation hotkey (e.g. ⌃⌥⌘F) in the Leader Key GUI
+
 ## Manual:
 
 - System Settings > Keyboard > Keyboard Shortcuts

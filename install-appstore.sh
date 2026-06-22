@@ -39,7 +39,7 @@ mas install 1219074514 # Linearity Curve - Vector design and illustration tool
 mas install 1582493835 # Lunacy - Design tool with built-in graphics
 
 # Uncomment these if you prefer App Store versions over Homebrew:
-mas install 413857545  # Divvy - Window management tool (gets license from app store)
+# mas install 413857545  # Divvy - unsupported on Apple Silicon (replaced by Rectangle)
 # mas install 803453959  # Slack - Team communication platform
 
 # this is slow, install at end

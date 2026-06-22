@@ -1,0 +1,75 @@
+{
+  "actions" : [
+    {
+      "actions" : [
+        {
+          "iconPath" : "rectangle.expand.vertical",
+          "key" : "f",
+          "label" : "Full",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=maximize"
+        },
+        {
+          "iconPath" : "arrowshape.left.fill",
+          "key" : "j",
+          "label" : "Left Half",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=left-half"
+        },
+        {
+          "iconPath" : "arrowshape.right.fill",
+          "key" : "l",
+          "label" : "Right Half",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=right-half"
+        },
+        {
+          "iconPath" : "arrowshape.up.fill",
+          "key" : "i",
+          "label" : "Top Half",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=top-half"
+        },
+        {
+          "iconPath" : "arrowshape.down.fill",
+          "key" : "k",
+          "label" : "Bottom Half",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=bottom-half"
+        },
+        {
+          "iconPath" : "arrowshape.left.circle",
+          "key" : "h",
+          "label" : "Left Third",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=first-third"
+        },
+        {
+          "iconPath" : "arrowshape.right.circle",
+          "key" : ";",
+          "label" : "Right Third",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=last-third"
+        },
+        {
+          "iconPath" : "inset.filled.center.rectangle",
+          "key" : "c",
+          "label" : "Center",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=center-third"
+        }
+      ],
+      "iconPath" : "window.vertical.closed",
+      "key" : "f",
+      "label" : "Window",
+      "type" : "group"
+    },
+    {
+      "key" : "v",
+      "label" : "Chrome",
+      "type" : "application",
+      "value" : "/Applications/Google Chrome.app"
+    }
+  ],
+  "type" : "group"
+}
