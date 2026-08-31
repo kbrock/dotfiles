@@ -1,16 +1,25 @@
 # Basic setup
 brew "bash" # Modern bash shell
 brew "bash-completion@2" # Bash completion scripts
-#brew "coreutils" # GNU core utilities (better than BSD versions)
-brew "git" # Version control system
+# brew "coreutils" # GNU core utilities (better than BSD versions)
 brew "vim" # Vi improved text editor
+brew "cmake" # Cross-platform build system
+brew "pkg-config" # Manage compile and link flags (may be installed from source, not via brew)
+brew "curl" # Transfer data with URLs
+brew "wget" # Internet file retriever
+brew "jq" # JSON processor
+brew "tree" # Display directory structure
+brew "ripgrep" # Fast grep alternative (rg)
+brew "the_silver_searcher" # Code search tool (ag)
+brew "iproute2mac" # Linux ip command for macOS network debugging
+brew "mas" # Mac App Store command line interface
+brew "duti" # Set default document and URL handlers (used by macos_apply.sh)
+brew "just" # Command runner
+# brew "nginx" # Web server for local development
 # cask "google-drive"
 
 # Development setup - Fonts
-cask "font-hack" # Monospace font for code
-# cask "font-monocraft" # Minecraft-inspired monospace font
 cask "font-open-sans" # Humanist sans serif font
-cask "font-source-code-pro" # Adobe monospace font for code
 cask "font-jetbrains-mono" # JetBrains monospace font
 cask "font-roboto" # Google's signature font
 cask "font-mona-sans" # GitHub's variable sans-serif font
@@ -21,153 +30,115 @@ cask "iterm2" # Terminal emulator for macOS
 # cask "sublime-text" # Text editor
 cask "sublime-merge" # Git client from Sublime
 cask "zed" # High-performance code editor
-# cask "visual-studio-code" # VS Code editor
-cask "sf-symbols" # Apple SF Symbols browser and toolkit
+# cask "sf-symbols" # Apple SF Symbols browser and toolkit
 
 # Development setup - Databases
 brew "postgresql@14", restart_service: true, link: true # PostgreSQL database
 brew "mysql" # MySQL relational database
 brew "mysql-client" # MySQL relational database
-#brew "memcached", restart_service: true # Distributed memory caching
+# brew "memcached", restart_service: true # Distributed memory caching
 brew "redis", restart_service: true # In-memory data store
-brew "kafka" # Distributed streaming platform
-brew "sqlite3" # SQLite database
-cask "dynamodb-local" # Local DynamoDB for development
+brew "sqlite3" # SQLite database (may be installed from source, not via brew)
 
 # Development setup - Language version managers and runtimes
 brew "chruby" # Ruby version manager
 brew "ruby-build" # Build and install Ruby versions
+brew "yamllint" # YAML linter
 brew "fnm" # Fast Node.js version manager (instead of nvm)
 brew "node" # Node.js JavaScript runtime
-brew "uv"   # Python package manager (vs env)
-# Development setup - Build tools
-brew "cmake" # Cross-platform build system
-brew "pkg-config" # Manage compile and link flags
+brew "uv" # Python package manager (vs env)
+brew "bun" # JavaScript runtime & package manager
+brew "go" # Go programming language
 brew "yarn" # JavaScript package manager
+# brew "crystal" # Crystal programming language
 
 # Development setup - Cloud and infrastructure
 brew "awscli" # AWS command line interface
-cask "corretto" # Amazon Corretto OpenJDK distribution
-brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
-#brew "helm" # Kubernetes package manager
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform" # Infrastructure as code
+cask "dynamodb-local" # Local DynamoDB for development
 
-# Development setup - Utilities
-brew "jq" # JSON processor
-brew "watch" # Execute program periodically
-brew "curl" # Transfer data with URLs
-brew "wget" # Internet file retriever
-brew "yamllint" # YAML linter
-brew "entr" # Run commands when files change
-#brew "gist" # GitHub Gist from command line
-brew "gron" # Make JSON greppable
-brew "just" # Command runner
+# Virtualization and containers
+brew "lima" # Linux virtual machines
+brew "qemu" # Generic machine emulator and virtualizer
+brew "docker" # Docker CLI
+brew "docker-compose" # Multi-container Docker
+brew "docker-buildx" # Docker Buildx plugin
+brew "podman" # Container engine
+brew "container" # Apple native container/Linux-VM runtime
+# tap "suruseas/opossum"
+# brew "suruseas/opossum/opossum" # Docker Compose-like orchestrator for Apple's container runtime
+brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
+# brew "helm" # Kubernetes package manager
+
+# Development setup - GitHub and CI
+brew "git" # Version control system
+brew "gh" # GitHub CLI
+# brew "git-filter-repo" # Rewrite Git history
+# brew "act" # Run GitHub Actions locally
+# brew "wrkflw" # Validate and execute GitHub Actions workflows locally
+
+# Development setup - AI and ML
+brew "llama.cpp" # Local LLM inference (llama-server)
+brew "rtk" # CLI proxy to minimize LLM token consumption
+# brew "ollama" # Run large language models locally
+cask "claude" # Claude desktop app
+cask "claude-code" # Claude Code AI coding assistant
+# cask "codex" # OpenAI Codex CLI/app
+# cask "copilot-cli" # GitHub Copilot CLI
+# cask "draw-things" # Local Stable Diffusion image generation
+
+# Media and document conversion
 brew "pandoc" # Document converter
+# brew "poppler" # PDF tools (pdftotext, pdfimages, etc.)
 brew "svg2png" # SVG to PNG converter
 brew "svgo" # SVG optimizer
 brew "weasyprint" # HTML/CSS to PDF
-brew "mas" # Mac App Store command line interface
-brew "ripgrep" # Fast grep alternative (rg)
-brew "iproute2mac" # Linux ip command for macOS network debugging
-brew "the_silver_searcher" # Code search tool (ag)
+brew "graphviz" # Graph visualization software
+brew "imagemagick" # Image processing tools
+cask "imageoptim" # Image compression GUI
+brew "imageoptim-cli" # ImageOptim command line interface
+cask "inkscape" # Vector graphics editor
+brew "mermaid-cli" # Mermaid cli (mmdc)
+cask "shottr" # Screenshot annotation tool
+# cask "sonic-pi" # ruby music generation
 
-# Development setup - AI and ML
-brew "aider" # AI pair programming
-brew "llama.cpp" # Local LLM inference
-brew "mlx" # Apple ML framework
-brew "ollama" # Run large language models locally
-cask "claude" # Claude desktop app
-cask "claude-code" # Claude Code AI coding assistant
-cask "lm-studio" # Local LLM GUI
-
-# Other development tools
-# brew "act" # Run GitHub Actions locally (aka wwtd)
-# brew "crystal" # Crystal programming language
-#brew "diff-so-fancy" # Good-looking diffs
-#brew "dos2unix" # Convert DOS/Windows line endings to Unix
-brew "duti" # Set default document and URL handlers
-brew "ffmpeg" # Audio/video processing tools
-brew "gh" # GitHub CLI
-#brew "gist" # GitHub Gist from command line
-#brew "git-filter-repo" # Rewrite Git history
-#brew "gnu-sed" # GNU version of sed
-brew "go" # Go programming language
-#brew "hub" # GitHub CLI (older alternative to gh)
-#brew "nginx" # Web server for local development
-#brew "nmap" # Network scanner
-# brew "rbspy" # Ruby profiler (samples running processes)
-brew "tree" # Display directory structure
-brew "asitop" # Performance monitor for Apple Silicon (GPU, CPU, ANE)
-cask "balenaetcher" # Create bootable USB drives
-# brew "skopeo" # Work with container images and registries
-
-# Virtualization
-brew "dive" # Docker image layer explorer
-brew "docker" # Docker CLI
-brew "docker-compose" # Multi-container Docker
-# cask "docker" # Docker Desktop
-brew "lima" # Linux virtual machines
-brew "openshift-cli" # OpenShift CLI
-#brew "operator-sdk" # Kubernetes operator SDK
-cask "podman-desktop" # Podman GUI
-brew "qemu" # Generic machine emulator and virtualizer
-#cask "virtualbox" # Virtual machine manager
+# Media ripping, recovery, and transcoding
+# brew "handbrake" # Video transcoder CLI
+# cask "handbrake-app" # Video transcoder GUI
+# brew "mkvtoolnix" # MKV manipulation (chapter/cover injection)
+# cask "vlc" # Media player (MKV, etc.)
+# brew "ffmpeg" # Audio/video processing tools
+# brew "dvdbackup" # DVD backup tool
+# brew "ddrescue" # Data recovery tool
+# cask "makemkv" # MKV ripping tool
+# cask "balenaetcher" # Create bootable USB drives
 
 # Productivity apps
 cask "google-chrome" # Google Chrome web browser
-cask "opera" # Opera web browser
+cask "brave-browser" # Brave web browser
+# cask "opera" # Opera web browser
 cask "1password" # Password manager
-#cask "actual" # Privacy-focused budgeting and finance app
 cask "alfred" # Application launcher and productivity tool
 cask "daisydisk" # Disk space analyzer
 cask "rectangle" # Window manager (Divvy replacement)
 tap "mikker/tap"
 cask "mikker/tap/leader-key" # Keyboard launcher with nested groups
-cask "mikker/tap/tuna" # Modal launcher (kept for evaluation)
-cask "grammarly-desktop" # Writing assistant
+# cask "mikker/tap/tuna" # Modal launcher (possible Alfred alternative)
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
-#cask "numi" # Beautiful calculator app with natural language
-cask "obsidian" # Note-taking and knowledge base
-#cask "turbotax-2024" # Tax preparation software
+# cask "obsidian" # Note-taking and knowledge base
 
 # USB Devices
-cask "monitorcontrol" # Control external monitor brightness from CLI
-brew "switchaudio-osx" # Switch audio input/output devices from CLI
+cask "betterdisplay" # Display management utility
 cask "vial" # Keyboard firmware configuration tool
-cask "logitune" # Logitech keyboard/camera firmware configuration tool
+# cask "logitune" # Logitech keyboard/camera firmware configuration tool (not on all Macs)
 cask "qlstephen" # QuickLook plugin for plain text files
-cask "betterzip" # Quicklook plugin for zip files (deprecated)
+cask "betterzip" # Quicklook plugin for zip files
 
 # Communication apps
-cask "discord" # Voice, video, and text chat
-#cask "keybase" # Encrypted messaging and file sharing
+# cask "discord" # Voice, video, and text chat
+# cask "keybase" # Encrypted messaging and file sharing
 cask "slack" # Team communication
 cask "zoom" # Video conferencing
-
-# Media and image tools
-brew "handbrake" # Video transcoder CLI
-cask "handbrake" # Video transcoder GUI
-cask "vlc" # Media player (MKV, etc.)
-brew "mkvtoolnix" # MKV manipulation (chapter/cover injection)
-#cask "affinity" # Affinity suite (Designer, Photo, Publisher)
-brew "graphviz" # Graph visualization software
-cask "imageoptim" # Image compression GUI
-cask "inkscape" # Vector graphics editor
-brew "imageoptim-cli" # ImageOptim command line interface
-brew "imagemagick" # Image processing tools
-#cask "krita" # Free and open source digital painting application
-cask "shottr" # Screenshot annotation tool
-cask "sloth" # Show open files and sockets
-#cask "skitch" # Screenshot annotation (older alternative)
 cask "steam" # Gaming platform
-
-# Other apps
-#cask "dayflow" # Screensaver (was "day-o")
-#cask "remarkable" # Markdown editor
-#cask "spotify" # Music streaming
-cask "sonic-pi" # ruby music generation
-brew "huggingface-cli" # ai model hub
-brew "mermaid-cli" # Mermaid cli (mmdc)
-brew "fzf" # bash dialogs
-brew "podman" # Container engine
-tap "slp/krunkit"
-brew "krunkit" # Lightweight VM runner
+# cask "dayflow" # Screensaver (was "day-o")
