@@ -10,11 +10,6 @@ cp -r ~/.ssh ~/dotfiles-backup/
 ```
 Files: `id_ed25519`, `id_ed25519.pub`, `config`
 
-### GPG Keys
-```bash
-cp ~/.gnupg/pubring.kbx ~/dotfiles-backup/
-```
-
 ### Git Local Config
 ```bash
 cp ~/.gitconfig.local ~/dotfiles-backup/
@@ -26,11 +21,6 @@ Contains: name, email, tokens
 cp ~/Library/Spelling/LocalDictionary ~/dotfiles/Library/Spelling/
 ```
 
-### Divvy Shortcuts (if changed)
-1. Open Divvy → Preferences → Shortcuts → Export
-2. Copy URL and save to `~/dotfiles/Library/Divvy.url`
-3. Commit changes
-
 ## On new machine
 
 ### Restore SSH Keys
@@ -38,11 +28,6 @@ cp ~/Library/Spelling/LocalDictionary ~/dotfiles/Library/Spelling/
 cp ~/dotfiles-backup/.ssh/* ~/.ssh/
 chmod 600 ~/.ssh/id_ed25519
 chmod 644 ~/.ssh/id_ed25519.pub
-```
-
-### Restore GPG Keys
-```bash
-cp ~/dotfiles-backup/pubring.kbx ~/.gnupg/
 ```
 
 ### Setup Git Local Config
@@ -75,7 +60,8 @@ System Settings → General → Login Items
 
 Add these apps:
 - Hyperkey
-- Divvy
+- Rectangle
+- Leader Key
 - Alfred 5
 - Shottr
 

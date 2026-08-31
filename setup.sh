@@ -94,10 +94,4 @@ if [ "$IS_MAC" == "true" ]; then
 
   # make shortcut to iCloud
   [[ -d ~/iCloud ]] || ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs iCloud
-	# Divvy preferences must be imported via URL (can't be symlinked)
-	# To update the export URL: Open Divvy → Preferences → Shortcuts → Export → Copy URL
-	# Then save to $DIR/Library/Divvy.url
-	echo "To import Divvy shortcuts, open: $DIR/Library/Divvy.url"
-	# Uncomment to auto-open:
-	# open "$DIR/Library/Divvy.url"
 fi

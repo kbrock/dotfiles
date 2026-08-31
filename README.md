@@ -14,13 +14,15 @@ eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 git clone https://github.com/kbrock/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
+git clone https://github.com/kbrock/bin.git ~/bin
+git clone https://github.com/kbrock/pgbin.git ~/pgbin
+
 brew bundle install   # install cli tools and some mac apps
 ./install-appstore.sh # install mac apps
 ./setup.sh            # link dotfiles
 ./macos_apply.sh      # apply finder/apple preferences
 cp gitconfig.local.sample ~/.gitconfig.local
 # vi ~/.gitconfig.local
-open ~/dotfiles/Library/Divvy.url # imports divy bookmarks
 # ensure ~/iCloud/core is downloaded
 # point alfred to ~/iCloud/core, ensuring files have do
 sudo sh -c "echo $(which bash) >> /etc/shells"
@@ -49,7 +51,7 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 - System Settings > Keyboard > Keyboard Shortcuts
   - > Missing Control
     - move space left/right/switch desktop
-  - > Windows (overlaps with Divyy - may want to revisit)
+  - > Windows (overlaps with Rectangle - may want to revisit)
   - > Input Sources
     - turned off (control-space, control-command-space)
   - > Spotlight
