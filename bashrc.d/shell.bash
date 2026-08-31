@@ -22,7 +22,7 @@ not_defined 'ldd' && alias ldd='otool -L'
 add_to_path ~/bin
 add_to_path ~/pgbin/bin
 
-function title() { echo -e "\033]0;${1:?please specify a title}\007" ; }
+function title() { echo -e "\033]0;${*:?please specify a title}\007" ; }
 #javascript alert dialog
 function alert() {
   message="$1"
@@ -88,7 +88,7 @@ function rm () {
   for path in "$@"; do
     # ignore any arguments
     if [[ "$path" = -* ]]; then :
-    elif [ -e "$path" ] ; then
+    elif [[ -e "$path" || -L "$path" ]] ; then
       local dst=${path##*/}
       # append the time if necessary
       while [ -e ~/.Trash/"$dst" ]; do
