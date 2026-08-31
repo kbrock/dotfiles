@@ -32,7 +32,7 @@
         },
         {
           "iconPath" : "arrowshape.down.fill",
-          "key" : "k",
+          "key" : ",",
           "label" : "Bottom Half",
           "type" : "url",
           "value" : "rectangle://execute-action?name=bottom-half"
@@ -50,6 +50,13 @@
           "label" : "Right Third",
           "type" : "url",
           "value" : "rectangle://execute-action?name=last-third"
+        },
+        {
+          "iconPath" : "inset.filled.center.rectangle",
+          "key" : "k",
+          "label" : "Center",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=center-third"
         },
         {
           "iconPath" : "inset.filled.center.rectangle",
