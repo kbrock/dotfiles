@@ -64,6 +64,20 @@
           "label" : "Center",
           "type" : "url",
           "value" : "rectangle://execute-action?name=center-third"
+        },
+        {
+          "iconPath" : "arrow.down.right.square.fill",
+          "key" : ".",
+          "label" : "Lower Right",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=bottom-right-sixth"
+        },
+        {
+          "iconPath" : "arrow.down.left.square.fill",
+          "key" : "m",
+          "label" : "Lower Left",
+          "type" : "url",
+          "value" : "rectangle://execute-action?name=bottom-left-sixth"
         }
       ],
       "iconPath" : "window.vertical.closed",

@@ -4,9 +4,21 @@
 // documentation: https://zed.dev/docs/configuring-zed
 //
 // To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
 {
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry",
+      "default_config_options": {
+        "effort": "medium",
+        "model": "sonnet"
+      },
+      "env": {
+        "CLAUDE_CODE_EXTRA_BODY": "{\"thinking\":{\"type\":\"adaptive\",\"display\":\"summarized\"}}"
+      }
+    }
+  },
   "cli_default_open_behavior": "new_window",
   "project_panel": {
     "dock": "left"
@@ -17,24 +29,109 @@
   "collaboration_panel": {
     "dock": "left"
   },
-  "agent": {
-    "dock": "right",
-    "favorite_models": [],
-    "model_parameters": []
-  },
   "git_panel": {
     "dock": "left"
   },
-  "show_signature_help_after_edits": false,
+  "edit_predictions": {
+    "allow_data_collection": "no",
+    "mode": "subtle"
+  },
+  "format_on_save": "off",
+  "language_models": {
+    "ollama": {
+      //"low_speed_timeout_in_seconds": 30,
+      "available_models": [
+        {
+          "name": "qwen3-coder",
+          "display_name": "qwen3-coder 64k",
+          "max_tokens": 65536,
+          "supports_tools": true
+        }
+      ]
+    }
+  },
+  // "features": {
+  //   "copilot": false
+  // },
+  "agent": {
+    "show_turn_stats": true,
+    "dock": "right",
+    "flexible": true,
+    "default_width": 900,
+    "default_height": 480,
+    "limit_content_width": false,
+    "tool_permissions": {
+      "tools": {
+        "edit_file": {
+          "default": "allow"
+        },
+        "fetch": {
+          "always_allow": [
+            {
+              "pattern": "^https?://rubygems\\.org"
+            },
+            {
+              "pattern": "^https?://raw\\.githubusercontent\\.com"
+            },
+            {
+              "pattern": "^https?://github\\.com"
+            }
+          ]
+        },
+        "terminal": {
+          "always_allow": [
+            { "pattern": "^(bundle\\s+exec\\s+rails|bin/rails)\\s+(test|routes)\\b" },
+            { "pattern": "^bundle\\s+exec\\s+rubocop\\b" },
+            { "pattern": "^grep\\b" },
+            { "pattern": "^head\\b" },
+            { "pattern": "^tail\\b" },
+            { "pattern": "^cat\\s+\\S" },
+            { "pattern": "^sed\\s+-n\\b" },
+            {
+              "pattern": "^git\\s+status(\\s|$)"
+            },
+            {
+              "pattern": "^git\\s+log(\\s|$)"
+            },
+            {
+              "pattern": "^wc\\b"
+            },
+            {
+              "pattern": "^ls\\b"
+            }
+          ]
+        }
+      }
+    },
+    "play_sound_when_agent_done": "always",
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
+      "provider": "anthropic",
+      "model": "claude-fable-5-1"
+    }
+  },
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false, // lame history thingy, not tab selection
+    "show_tab_bar_buttons": false // new tab, split pane, zoom
+  },
+  "tabs": {
+    "close_position": "right",
+    "git_status": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": true
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware",
+    "background_coloring": "indent_aware"
+  },
   "agent_buffer_font_size": 19.0,
   "agent_ui_font_size": 18.0,
   "ui_font_family": ".ZedSans",
-  "format_on_save": "off",
-  "icon_theme": {
-    "mode": "system",
-    "light": "Zed (Default)",
-    "dark": "Zed (Default)"
-  },
   "base_keymap": "SublimeText",
   "ui_font_size": 17.0,
   "buffer_font_size": 18.0,
@@ -50,17 +147,9 @@
       "language_servers": ["ruby-lsp"],
       "use_auto_surround": false
     },
-    "TypeScript": {
-      "tab_size": 4,
-      "hard_tabs": false,
-      "prettier": {
-        "tabWidth": 4,
-        "useTabs": false
-      }
-    },
     "Markdown": {
       "show_edit_predictions": false,
       "show_completions_on_input": false
     }
-  },
+  }
 }

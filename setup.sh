@@ -45,8 +45,7 @@ for target in \
 	.gitattributes \
 	.gitconfig \
 	.gitignore_global \
-	.inputrc \
-	.irbrc
+	.inputrc
 do
 	link_file "$DIR/$target" "$HOME/$target"
 done
@@ -106,6 +105,8 @@ if [ "$IS_MAC" == "true" ]; then
 	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/dotfiles/Library/iTerm"
 	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
-  # make shortcut to iCloud
-  [[ -d ~/iCloud ]] || ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs iCloud
+  # make shortcut to iCloud (only with HOMEBREW_FULL)
+  if [[ -n "${HOMEBREW_FULL:-}" && ! -e ~/iCloud ]] ; then
+    ln -s ~/Library/Mobile\ Documents/com~apple~CloudDocs ~/iCloud
+  fi
 fi

@@ -1,7 +1,12 @@
 {
+  "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "jq -r '\"\\(.context_window.used_percentage // 0)%/80% context\"'"
+    "command": "~/bin/statusline.rb"
   },
-  "effortLevel": "medium"
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "theme": "dark"
 }

@@ -1,3 +1,6 @@
+# Personal machines opt into the extras:
+#   HOMEBREW_FULL=1 brew bundle install  (brew hides env vars without the HOMEBREW_ prefix)
+
 # Basic setup
 brew "bash" # Modern bash shell
 brew "bash-completion@2" # Bash completion scripts
@@ -10,7 +13,7 @@ brew "wget" # Internet file retriever
 brew "jq" # JSON processor
 brew "tree" # Display directory structure
 brew "ripgrep" # Fast grep alternative (rg)
-brew "the_silver_searcher" # Code search tool (ag)
+#brew "the_silver_searcher" # Code search tool (ag)
 brew "iproute2mac" # Linux ip command for macOS network debugging
 brew "mas" # Mac App Store command line interface
 brew "duti" # Set default document and URL handlers (used by macos_apply.sh)
@@ -34,43 +37,52 @@ cask "zed" # High-performance code editor
 # cask "sf-symbols" # Apple SF Symbols browser and toolkit
 
 # Development setup - Databases
-brew "postgresql@14", restart_service: true, link: true # PostgreSQL database
-brew "mysql" # MySQL relational database
-brew "mysql-client" # MySQL relational database
-# brew "memcached", restart_service: true # Distributed memory caching
-brew "redis", restart_service: true # In-memory data store
+brew "libpq" # psql and friends without a server (used by ~/pgbin)
+if ENV["HOMEBREW_FULL"]
+  brew "postgresql", restart_service: true, link: true # PostgreSQL database
+  brew "mysql" # MySQL relational database
+  brew "mysql-client" # MySQL client
+  brew "redis", restart_service: true # In-memory data store
+end
 brew "sqlite3" # SQLite database (may be installed from source, not via brew)
 
 # Development setup - Language version managers and runtimes
-brew "chruby" # Ruby version manager
+# brew "chruby" # Ruby version manager (using kbrock/chruby fork in ~/src/gems; considering asdf/mise)
 brew "ruby-build" # Build and install Ruby versions
 brew "yamllint" # YAML linter
-brew "fnm" # Fast Node.js version manager (instead of nvm)
-brew "node" # Node.js JavaScript runtime
-brew "uv" # Python package manager (vs env)
-brew "bun" # JavaScript runtime & package manager
-brew "go" # Go programming language
-brew "yarn" # JavaScript package manager
+if ENV["HOMEBREW_FULL"]
+  brew "fnm" # Fast Node.js version manager (instead of nvm)
+  brew "node" # Node.js JavaScript runtime
+  brew "uv" # Python package manager (vs env)
+  brew "bun" # JavaScript runtime & package manager
+  brew "go" # Go programming language
+  brew "yarn" # JavaScript package manager
+end
 # brew "crystal" # Crystal programming language
 
 # Development setup - Cloud and infrastructure
 brew "awscli" # AWS command line interface
-tap "hashicorp/tap"
-brew "hashicorp/tap/terraform" # Infrastructure as code
-cask "dynamodb-local" # Local DynamoDB for development
+brew "aws-vault" # Store AWS credentials in keychain (used by awsv alias)
+if ENV["HOMEBREW_FULL"]
+  tap "hashicorp/tap"
+  brew "hashicorp/tap/terraform" # Infrastructure as code
+  cask "dynamodb-local" # Local DynamoDB for development
+end
 
 # Virtualization and containers
-brew "lima" # Linux virtual machines
-brew "qemu" # Generic machine emulator and virtualizer
-brew "docker" # Docker CLI
-brew "docker-compose" # Multi-container Docker
-brew "docker-buildx" # Docker Buildx plugin
-brew "podman" # Container engine
-brew "container" # Apple native container/Linux-VM runtime
-# tap "suruseas/opossum"
-# brew "suruseas/opossum/opossum" # Docker Compose-like orchestrator for Apple's container runtime
-brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
-# brew "helm" # Kubernetes package manager
+if ENV["HOMEBREW_FULL"]
+  brew "lima" # Linux virtual machines
+  brew "qemu" # Generic machine emulator and virtualizer
+  brew "docker" # Docker CLI
+  brew "docker-compose" # Multi-container Docker
+  brew "docker-buildx" # Docker Buildx plugin
+  brew "podman" # Container engine
+  brew "container" # Apple native container/Linux-VM runtime
+  # tap "suruseas/opossum"
+  # brew "suruseas/opossum/opossum" # Docker Compose-like orchestrator for Apple's container runtime
+  brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
+  # brew "helm" # Kubernetes package manager
+end
 
 # Development setup - GitHub and CI
 brew "git" # Version control system
@@ -80,27 +92,31 @@ brew "gh" # GitHub CLI
 # brew "wrkflw" # Validate and execute GitHub Actions workflows locally
 
 # Development setup - AI and ML
-brew "llama.cpp" # Local LLM inference (llama-server)
-brew "rtk" # CLI proxy to minimize LLM token consumption
+if ENV["HOMEBREW_FULL"]
+  brew "llama.cpp" # Local LLM inference (llama-server)
+  brew "rtk" # CLI proxy to minimize LLM token consumption
+end
 # brew "ollama" # Run large language models locally
 cask "claude" # Claude desktop app
-cask "claude-code" # Claude Code AI coding assistant
+cask "claude-code@latest" # Claude Code AI coding assistant
 # cask "codex" # OpenAI Codex CLI/app
 # cask "copilot-cli" # GitHub Copilot CLI
 # cask "draw-things" # Local Stable Diffusion image generation
 
 # Media and document conversion
-brew "pandoc" # Document converter
 # brew "poppler" # PDF tools (pdftotext, pdfimages, etc.)
-brew "svg2png" # SVG to PNG converter
-brew "svgo" # SVG optimizer
-brew "weasyprint" # HTML/CSS to PDF
 brew "graphviz" # Graph visualization software
-brew "imagemagick" # Image processing tools
-cask "imageoptim" # Image compression GUI
+# brew "imagemagick" # Image processing tools
+# cask "imageoptim" # Image compression GUI
 brew "imageoptim-cli" # ImageOptim command line interface
-cask "inkscape" # Vector graphics editor
-brew "mermaid-cli" # Mermaid cli (mmdc)
+if ENV["HOMEBREW_FULL"]
+  brew "pandoc" # Document converter
+  brew "svg2png" # SVG to PNG converter
+  brew "svgo" # SVG optimizer
+  brew "weasyprint" # HTML/CSS to PDF
+  cask "inkscape" # Vector graphics editor
+  brew "mermaid-cli" # Mermaid cli (mmdc)
+end
 cask "shottr" # Screenshot annotation tool
 # cask "sonic-pi" # ruby music generation
 
@@ -121,26 +137,28 @@ cask "brave-browser" # Brave web browser
 # cask "opera" # Opera web browser
 cask "1password" # Password manager
 cask "alfred" # Application launcher and productivity tool
-cask "daisydisk" # Disk space analyzer
 cask "rectangle" # Window manager (Divvy replacement)
 tap "mikker/tap"
-cask "mikker/tap/leader-key" # Keyboard launcher with nested groups
+cask "mikker/tap/leader-key" # Keyboard launcher with nested groups (needs github access)
 # cask "mikker/tap/tuna" # Modal launcher (possible Alfred alternative)
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base
+cask "daisydisk" if ENV["HOMEBREW_FULL"] # Disk space analyzer
 
 # USB Devices
-cask "betterdisplay" # Display management utility
-cask "vial" # Keyboard firmware configuration tool
-# cask "logitune" # Logitech keyboard/camera firmware configuration tool (not on all Macs)
-cask "qlstephen" # QuickLook plugin for plain text files
-cask "betterzip" # Quicklook plugin for zip files
+if ENV["HOMEBREW_FULL"]
+  cask "betterdisplay" # Display management utility
+  cask "vial" # Keyboard firmware configuration tool
+  cask "logitune" # Logitech keyboard/camera firmware configuration tool
+  cask "qlstephen" # QuickLook plugin for plain text files
+  cask "betterzip" # Quicklook plugin for zip files
+end
 
 # Communication apps
 # cask "discord" # Voice, video, and text chat
 # cask "keybase" # Encrypted messaging and file sharing
 cask "slack" # Team communication
 cask "zoom" # Video conferencing
-cask "steam" # Gaming platform
+cask "steam" if ENV["HOMEBREW_FULL"] # Gaming platform
 # cask "dayflow" # Screensaver (was "day-o")

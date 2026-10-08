@@ -19,6 +19,7 @@ alias whereis='type -a'
 alias marked='open -a "Marked 2.app"'
 #mac only
 not_defined 'ldd' && alias ldd='otool -L'
+not_defined ag && alias ag=rg
 add_to_path ~/bin
 add_to_path ~/pgbin/bin
 
@@ -32,7 +33,7 @@ function alert() {
 function notify {
   message="${1}"
   title="${2-Alert}"
-  osascript -e "display notification \"${message}\" with title \"${title}\"" }
+  osascript -e "display notification \"${message}\" with title \"${title}\"" 
 }
 
 function mw() { more  `which $1` ; }

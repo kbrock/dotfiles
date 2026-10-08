@@ -6,20 +6,21 @@ Open Mac App store and sign in with apple ID (for `install-appstore.sh`)
 
 ```bash
 xcode-select --install
-sudo xcodebuild -license accept
+sudo xcodebuild -license accept # sudo needed?
+softwareupdate --install-rosetta --agree-to-license
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
+git clone https://github.com/kbrock/bin.git ~/bin
+git clone https://github.com/kbrock/pgbin.git ~/pgbin
 git clone https://github.com/kbrock/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
-git clone https://github.com/kbrock/bin.git ~/bin
-git clone https://github.com/kbrock/pgbin.git ~/pgbin
-
 brew bundle install   # install cli tools and some mac apps
+# HOMEBREW_FULL=1 brew bundle install # personal machines: dbs, langs, docker, media, etc
 ./install-appstore.sh # install mac apps
-./setup.sh            # link dotfiles
+./setup.sh            # link dotfiles (HOMEBREW_FULL=1 also links ~/iCloud)
 ./macos_apply.sh      # apply finder/apple preferences
 cp gitconfig.local.sample ~/.gitconfig.local
 # vi ~/.gitconfig.local
@@ -40,11 +41,18 @@ chsh -s $(which bash)
 
 ## Leader Key
 
+Need to download from github. apple store is old
+https://github.com/mikker/LeaderKey/releases/tag/v1.17.3
 Config lives in `~/dotfiles/leader-key/config.json`. After install:
 
 - Open Leader Key → Settings → set the config file path to `~/dotfiles/leader-key/config.json`
 - Reload to apply
-- Set the activation hotkey (e.g. ⌃⌥⌘F) in the Leader Key GUI
+- Set the activation hotkey (e.g. ⌃⌥⌘F) in the Leader Key GUI (LCAG-Space)
+- TODO: F is not working for me for windows. 
+## Hyper
+- remap physical key to hyper key: caps lock
+- include shift in hyper key = false
+- apply hyper key modifiers to keypress events and: click (default, not sure right value)
 
 ## Manual:
 
@@ -58,6 +66,14 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
     - turned off both
   - > App Shortcuts
     - global shortcuts for file... used alfred instead for this - may want to revisit
+- System Settings > Spotlight > Search Privacy... (button at the bottom)
+  - Keeps `mds_stores` from re-indexing folders that change all the time (it was using 1.6GB)
+  - `+`, then cmd-shift-G to type a path. Add:
+    - `~/src` (git, tmp/, log/, node_modules, builds)
+    - `~/.lima` (VM disk images, always changing)
+    - `~/.asdf`, `~/.cache`, `~/Library/Caches`
+  - Don't turn Spotlight off (`mdutil -a -i off`): Alfred uses its index to find apps. ripgrep doesn't use it
+  - Manual only: the exclusion list is a root-owned file Apple doesn't let you script (old tricks like `.metadata_never_index` stopped working). A folder whose name ends in `.noindex` is skipped, but renaming `~/src` isn't practical
 ---
 
 ## What Gets Linked
@@ -77,3 +93,28 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 ## Transferring to a New Machine
 
 See [backup_manual.md](backup_manual.md) for the full checklist.
+
+## TODO
+
+limactl start --name=docker-m5 --vm-type=vz --rosetta template://docker
+docker_context docker-m5 # defined in bashrc.d/lima.sh
+docker context use docker-m5
+docker context ls
+
+docker run --rm -it --platform linux/amd64 ubuntu uname -m
+
+brew install docker-compose
+>> update docker config file to add extension support
+{
+  ...
+  "cliPluginsExtraDirs": [
+    "/opt/homebrew/lib/docker/cli-plugins"
+  ]
+}
+
+## git
+ssh-keygen -t ed25519 -C "git-signing: keenan@thebrocks.net" -f ~/.ssh/id_ed25519_signing
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_signing
+ssh-keygen -t ed25519 -C "keenan@thebrocks.net" -f ~/.ssh/id_ed25519
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+echo "keenan@thebrocks.net $(cat ~/.ssh/id_ed25519_signing.pub)" >> ~/.ssh/allowed_signers

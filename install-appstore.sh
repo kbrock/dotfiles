@@ -21,8 +21,8 @@ echo "Installing Mac App Store applications..."
 echo ""
 
 # Development setup - Editors and IDEs
-echo "Installing Development Tools..."
-mas install 414568915  # Key Codes - Display key codes and unicode characters
+# echo "Installing Development Tools..."
+# mas install 414568915  # Key Codes - Display key codes and unicode characters
 
 # Productivity apps
 echo "Installing Productivity Apps..."
@@ -36,7 +36,7 @@ mas install 973134470  # Be Focused - Pomodoro timer and task manager
 
 # this is slow, install at end
 mas install 497799835  # Xcode - Apple's integrated development environment
-mas install 899247664  # TestFlight - iOS app testing platform
+# mas install 899247664  # TestFlight - iOS app testing platform
 
 echo ""
 echo "✓ App Store installations complete!"
