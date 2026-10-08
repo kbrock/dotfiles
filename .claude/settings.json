@@ -1,5 +1,8 @@
 {
   "model": "opus",
+  "attribution": {
+    "pr": "Claude helped"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/bin/statusline.rb"

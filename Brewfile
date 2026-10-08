@@ -39,7 +39,7 @@ cask "zed" # High-performance code editor
 # Development setup - Databases
 brew "libpq" # psql and friends without a server (used by ~/pgbin)
 if ENV["HOMEBREW_FULL"]
-  brew "postgresql", restart_service: true, link: true # PostgreSQL database
+  brew "postgresql@18", restart_service: true, link: true # PostgreSQL database
   brew "mysql" # MySQL relational database
   brew "mysql-client" # MySQL client
   brew "redis", restart_service: true # In-memory data store
