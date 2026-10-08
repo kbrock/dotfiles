@@ -86,7 +86,7 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 - **iTerm2**: Uses `defaults write` to point to `~/dotfiles/Library/iTerm/`
   - `defaults read com.googlecode.iterm2 PrefsCustomFolder`
 - **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict`
-- **TypeWhisper**: `~/Library/Preferences/com.typewhisper.mac.plist` (dictionary/snippets/etc stores stay local)
+- **TypeWhisper**: `com.typewhisper.mac.plist` is imported with `defaults import` (cfprefsd ignores symlinks); save changes back with `defaults export com.typewhisper.mac ~/dotfiles/Library/Preferences/com.typewhisper.mac.plist`. The .store databases stay local
 
 ---
 

@@ -87,9 +87,12 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 	fi
 
-	# Link TypeWhisper preferences (stores, audio, history, and model caches stay local)
-	if [ -f "$DIR/Library/Preferences/com.typewhisper.mac.plist" ]; then
-		link_file "$DIR/Library/Preferences/com.typewhisper.mac.plist" "$HOME/Library/Preferences/com.typewhisper.mac.plist"
+	# Seed TypeWhisper preferences (stores, audio, history, and model caches stay local)
+	# cfprefsd won't read a symlinked plist, so import once; save back with:
+	#   defaults export com.typewhisper.mac ~/dotfiles/Library/Preferences/com.typewhisper.mac.plist
+	if [ -f "$DIR/Library/Preferences/com.typewhisper.mac.plist" ] && ! defaults read com.typewhisper.mac >/dev/null 2>&1 ; then
+		echo "Importing TypeWhisper preferences"
+		defaults import com.typewhisper.mac "$DIR/Library/Preferences/com.typewhisper.mac.plist"
 	fi
 
 	# Point iTerm to our custom config files
