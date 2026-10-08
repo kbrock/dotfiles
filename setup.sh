@@ -88,6 +88,20 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.claude/settings.json" "$HOME/.claude/settings.json"
 	fi
 
+	# Link TypeWhisper configuration (excludes audio, dictation history, and plugin/model caches)
+	if [ -f "$DIR/Library/Preferences/com.typewhisper.mac.plist" ]; then
+		link_file "$DIR/Library/Preferences/com.typewhisper.mac.plist" "$HOME/Library/Preferences/com.typewhisper.mac.plist"
+	fi
+	for target in \
+		"Library/Application Support/TypeWhisper/dictionary.store" \
+		"Library/Application Support/TypeWhisper/snippets.store" \
+		"Library/Application Support/TypeWhisper/workflows.store" \
+		"Library/Application Support/TypeWhisper/prompt-actions.store" \
+		"Library/Application Support/TypeWhisper/profiles.store"
+	do
+		link_file "$DIR/$target" "$HOME/$target"
+	done
+
 	# Point iTerm to our custom config files
 	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/dotfiles/Library/iTerm"
 	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true

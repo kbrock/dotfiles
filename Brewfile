@@ -14,6 +14,7 @@ brew "the_silver_searcher" # Code search tool (ag)
 brew "iproute2mac" # Linux ip command for macOS network debugging
 brew "mas" # Mac App Store command line interface
 brew "duti" # Set default document and URL handlers (used by macos_apply.sh)
+brew "switchaudio-osx" # Switch macOS audio input/output device from CLI (used by bin/headphones)
 brew "just" # Command runner
 # brew "nginx" # Web server for local development
 # cask "google-drive"
@@ -126,6 +127,7 @@ tap "mikker/tap"
 cask "mikker/tap/leader-key" # Keyboard launcher with nested groups
 # cask "mikker/tap/tuna" # Modal launcher (possible Alfred alternative)
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
+cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base
 
 # USB Devices
