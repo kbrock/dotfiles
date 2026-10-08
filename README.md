@@ -10,7 +10,7 @@ sudo xcodebuild -license accept # sudo needed?
 softwareupdate --install-rosetta --agree-to-license
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv bash)"
 
 git clone https://github.com/kbrock/bin.git ~/bin
 git clone https://github.com/kbrock/pgbin.git ~/pgbin

@@ -108,7 +108,7 @@ cask "claude-code@latest" # Claude Code AI coding assistant
 brew "graphviz" # Graph visualization software
 # brew "imagemagick" # Image processing tools
 # cask "imageoptim" # Image compression GUI
-brew "imageoptim-cli" # ImageOptim command line interface
+# brew "imageoptim-cli" # ImageOptim command line interface
 if ENV["HOMEBREW_FULL"]
   brew "pandoc" # Document converter
   brew "svg2png" # SVG to PNG converter
