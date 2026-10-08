@@ -70,6 +70,7 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 - **iTerm2**: Uses `defaults write` to point to `~/dotfiles/Library/iTerm/`
   - `defaults read com.googlecode.iterm2 PrefsCustomFolder`
 - **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict`
+- **TypeWhisper**: `~/Library/Preferences/com.typewhisper.mac.plist` + `dictionary.store`, `snippets.store`, `workflows.store`, `prompt-actions.store`, `profiles.store` in `~/Library/Application Support/TypeWhisper/`
 
 ---
 
