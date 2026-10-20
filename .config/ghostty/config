@@ -1,0 +1,23 @@
+# Ghostty config; linked to ~/.config/ghostty by setup.sh
+# Reload with cmd+shift+, ; list options with: ghostty +show-config --default --docs
+
+theme = terminal-corrected
+
+font-family = JetBrains Mono
+font-size = 19
+# iTerm2 had horizontal spacing 0.88 and vertical spacing 0.95
+adjust-cell-width = -12%
+adjust-cell-height = -5%
+
+# block cursor that doesn't blink; keep shell integration from switching it to a bar at the prompt
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+confirm-close-surface = false
+
+# option+arrow word movement and option+delete word deletion (readline: esc-b, esc-f, esc-d)
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
+keybind = alt+backspace=text:\x1b\x7f
+keybind = alt+delete=esc:d

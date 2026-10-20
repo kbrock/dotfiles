@@ -82,6 +82,12 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 	fi
 
+	# Link Ghostty configuration (config and themes)
+	if [ -f "$DIR/.config/ghostty/config" ]; then
+		link_file "$DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
+		link_file "$DIR/.config/ghostty/themes" "$HOME/.config/ghostty/themes"
+	fi
+
 	# Link Claude Code configuration
 	if [ -f "$DIR/.claude/settings.json" ]; then
 		link_file "$DIR/.claude/settings.json" "$HOME/.claude/settings.json"

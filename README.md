@@ -82,6 +82,7 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 ### App Configurations
 - **Sublime Text**: `~/Library/Application Support/Sublime Text 3/Packages/User/`
 - **Zed**: `~/.config/zed/settings.json`
+- **Ghostty**: `~/.config/ghostty/config` and `~/.config/ghostty/themes/`
 - **Claude Code**: `~/.claude/settings.json`
 - **iTerm2**: Uses `defaults write` to point to `~/dotfiles/Library/iTerm/`
   - `defaults read com.googlecode.iterm2 PrefsCustomFolder`

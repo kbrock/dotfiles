@@ -1,0 +1,23 @@
+# Ported from the iTerm2 "terminalColor-corrected" preset (background tweaked to #252525)
+palette = 0=#000000
+palette = 1=#dd576c
+palette = 2=#93c836
+palette = 3=#c8c26a
+palette = 4=#5c5dfa
+palette = 5=#a983e7
+palette = 6=#67c4d7
+palette = 7=#d2d2d2
+palette = 8=#615e4b
+palette = 9=#dd5772
+palette = 10=#93c836
+palette = 11=#c8c26c
+palette = 12=#5c83fa
+palette = 13=#aa84e7
+palette = 14=#68c3d7
+palette = 15=#d4d4d4
+background = #252525
+foreground = #fefefe
+cursor-color = #10ada5
+cursor-text = #000000
+selection-background = #9d550f
+selection-foreground = #ffffff
