@@ -1,5 +1,5 @@
 {
-  "model": "opus",
+  "model": "sonnet",
   "attribution": {
     "pr": "Claude helped"
   },
@@ -11,5 +11,6 @@
     "ruby-lsp@claude-plugins-official": true
   },
   "effortLevel": "medium",
-  "theme": "dark"
+  "theme": "dark",
+  "terminalProgressBarEnabled": true
 }

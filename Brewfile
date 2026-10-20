@@ -30,7 +30,8 @@ cask "font-mona-sans" # GitHub's variable sans-serif font
 cask "font-roboto-mono" # Monospace variant of Roboto
 
 # Development setup - Editors and IDEs
-cask "iterm2" # Terminal emulator for macOS
+# cask "iterm2" # Terminal emulator for macOS
+cask "ghostty" # Terminal emulator
 # cask "sublime-text" # Text editor
 cask "sublime-merge" # Git client from Sublime
 cask "zed" # High-performance code editor

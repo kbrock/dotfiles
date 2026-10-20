@@ -74,6 +74,12 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/Sublime Text 3/Packages/User" "$target_dir/Sublime Text 3/Packages/User"
 	fi
 
+	# Link Sublime Merge User preferences directory (opens files in Zed instead of the system default)
+	if [ -d "$DIR/Sublime Merge/Packages/User" ]; then
+		target_dir="$HOME/Library/Application Support"
+		link_file "$DIR/Sublime Merge/Packages/User" "$target_dir/Sublime Merge/Packages/User"
+	fi
+
 	# Link Zed editor configuration
 	if [ -f "$DIR/.config/zed/settings.json" ]; then
 		link_file "$DIR/.config/zed/settings.json" "$HOME/.config/zed/settings.json"

@@ -21,3 +21,9 @@ keybind = alt+left=esc:b
 keybind = alt+right=esc:f
 keybind = alt+backspace=text:\x1b\x7f
 keybind = alt+delete=esc:d
+
+# put tabs in the titlebar (macOS has no setting to show the tab bar with a single tab)
+macos-titlebar-style = tabs
+
+# send Option as Alt so meta shortcuts work (e.g. Claude Code option+p to switch model)
+macos-option-as-alt = true
