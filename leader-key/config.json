@@ -110,10 +110,11 @@
       "value" : "/Applications/Sublime Merge.app"
     },
     {
+      "iconPath" : "/Applications/Ghostty.app",
       "key" : "r",
       "label" : "iTerm",
       "type" : "application",
-      "value" : "/Applications/iTerm.app"
+      "value" : "/Applications/Ghostty.app"
     },
     {
       "key" : "v",

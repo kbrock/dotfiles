@@ -12,18 +12,18 @@ adjust-cell-height = -5%
 # block cursor that doesn't blink; keep shell integration from switching it to a bar at the prompt
 cursor-style = block
 cursor-style-blink = false
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,no-title
 
 confirm-close-surface = false
+
+# restore windows, tabs and splits on relaunch
+window-save-state = always
 
 # option+arrow word movement and option+delete word deletion (readline: esc-b, esc-f, esc-d)
 keybind = alt+left=esc:b
 keybind = alt+right=esc:f
 keybind = alt+backspace=text:\x1b\x7f
 keybind = alt+delete=esc:d
-
-# put tabs in the titlebar (macOS has no setting to show the tab bar with a single tab)
-macos-titlebar-style = tabs
 
 # send Option as Alt so meta shortcuts work (e.g. Claude Code option+p to switch model)
 macos-option-as-alt = true

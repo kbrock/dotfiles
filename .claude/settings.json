@@ -5,7 +5,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/bin/statusline.rb"
+    "command": "~/bin/statusline.rb",
+    "refreshInterval": 30
   },
   "enabledPlugins": {
     "ruby-lsp@claude-plugins-official": true
