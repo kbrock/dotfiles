@@ -1,0 +1,66 @@
+# skhd config. Reload: skhd -r
+# hyper = ctrl + alt + cmd (Hyperkey: caps lock). Punctuation uses hex keycodes: ; 0x29  , 0x2B  . 0x2F
+
+# --- Modes ---
+:: default
+:: leader @
+:: window @
+
+# --- Application keys (ported from Alfred workflow "Application Keys") ---
+ctrl + alt + cmd - e : open -a "Sublime Merge"
+ctrl + alt + cmd - w : open -a "Zed"
+ctrl + alt + cmd - r : open -a "iTerm"
+ctrl + alt + cmd - 0x29 : open -a "Music"
+ctrl + alt + cmd - c : open -a "Slack"
+ctrl + alt + cmd - x : open -a "Microsoft Outlook"
+ctrl + alt + cmd - v : open -a "Google Chrome"
+
+shift + ctrl + alt + cmd - w : open -a "Sublime Text"
+shift + ctrl + alt + cmd - e : open -a "Microsoft Teams"
+shift + ctrl + alt + cmd - r : open -a "iTerm"
+shift + ctrl + alt + cmd - 0x29 : open "$HOME/Applications/Chrome Apps.localized/Amazon Music.app"
+shift + ctrl + alt + cmd - c : open -a "Messages"
+shift + ctrl + alt + cmd - v : open -a "Reminders"
+shift + ctrl + alt + cmd - x : open -a "Calendar"
+
+# --- Leader (ported from Leader Key config.json; app launching lives in the hyper keys above) ---
+# hyper-space enters leader; hyper-f jumps straight to the window group
+ctrl + alt + cmd - space ; leader
+ctrl + alt + cmd - f ; window
+
+leader < escape ; default
+leader < f ; window
+
+# --- Tab and window keys (Alfred key-sends: cmd-shift-[ / cmd-shift-] / cmd-`) ---
+ctrl + alt + cmd - a : skhd -k "cmd + shift - 0x21"
+ctrl + alt + cmd - s : skhd -k "cmd - 0x32"
+ctrl + alt + cmd - d : skhd -k "cmd + shift - 0x1E"
+
+# --- Window group ---
+# Enter with hyper-f (or hyper-space, then f). One key places the front window, then the mode exits.
+# place-window takes x y w h as fractions of the screen below the menu bar.
+#
+#   key      position                 key      position
+#   f        full                     k, c     center third
+#   j        left half                return   center third (also keypad enter 0x4C)
+#   l        right half               h        left third
+#   i        top half                 ;        right third
+#   ,        bottom half              '        far right fifth
+#   m        lower left sixth         .        lower right sixth
+#
+# Escape leaves the mode without moving anything.
+window < escape ; default
+window < f : $HOME/dotfiles/.config/skhd/place-window 0 0 1 1; skhd -k "escape"
+window < j : $HOME/dotfiles/.config/skhd/place-window 0 0 0.5 1; skhd -k "escape"
+window < l : $HOME/dotfiles/.config/skhd/place-window 0.5 0 0.5 1; skhd -k "escape"
+window < i : $HOME/dotfiles/.config/skhd/place-window 0 0 1 0.5; skhd -k "escape"
+window < 0x2B : $HOME/dotfiles/.config/skhd/place-window 0 0.5 1 0.5; skhd -k "escape"
+window < h : $HOME/dotfiles/.config/skhd/place-window 0 0 0.3333 1; skhd -k "escape"
+window < 0x29 : $HOME/dotfiles/.config/skhd/place-window 0.6667 0 0.3333 1; skhd -k "escape"
+window < 0x27 : $HOME/dotfiles/.config/skhd/place-window 0.8 0 0.2 1; skhd -k "escape"
+window < k : $HOME/dotfiles/.config/skhd/place-window 0.3333 0 0.3333 1; skhd -k "escape"
+window < c : $HOME/dotfiles/.config/skhd/place-window 0.3333 0 0.3333 1; skhd -k "escape"
+window < 0x2F : $HOME/dotfiles/.config/skhd/place-window 0.6667 0.5 0.3333 0.5; skhd -k "escape"
+window < 0x24 : $HOME/dotfiles/.config/skhd/place-window 0.3333 0 0.3333 1; skhd -k "escape"
+window < 0x4C : $HOME/dotfiles/.config/skhd/place-window 0.3333 0 0.3333 1; skhd -k "escape"
+window < m : $HOME/dotfiles/.config/skhd/place-window 0 0.5 0.3333 0.5; skhd -k "escape"

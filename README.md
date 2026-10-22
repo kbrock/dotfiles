@@ -49,6 +49,15 @@ Config lives in `~/dotfiles/leader-key/config.json`. After install:
 - Reload to apply
 - Set the activation hotkey (e.g. ⌃⌥⌘F) in the Leader Key GUI (LCAG-Space)
 - TODO: F is not working for me for windows. 
+## skhd
+
+Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which also registers the launchd agent). After install:
+
+- System Settings > Privacy & Security > Accessibility: add `/opt/homebrew/bin/skhd` and turn it on
+- Restart so it picks up the permission: `skhd --restart-service`
+- Reload after editing the config: `skhd -r`
+- Logs: `/tmp/skhd_$USER.err.log`
+
 ## Hyper
 - remap physical key to hyper key: caps lock
 - include shift in hyper key = false

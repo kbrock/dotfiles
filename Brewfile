@@ -142,6 +142,8 @@ cask "rectangle" # Window manager (Divvy replacement)
 tap "mikker/tap"
 cask "mikker/tap/leader-key" # Keyboard launcher with nested groups (needs github access)
 # cask "mikker/tap/tuna" # Modal launcher (possible Alfred alternative)
+tap "koekeishiya/formulae"
+brew "koekeishiya/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base

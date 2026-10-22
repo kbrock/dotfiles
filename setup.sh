@@ -94,6 +94,13 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/ghostty/themes" "$HOME/.config/ghostty/themes"
 	fi
 
+	# Link skhd configuration
+	if [ -f "$DIR/.config/skhd/skhdrc" ]; then
+		link_file "$DIR/.config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+		# Register the launchd agent; needs Accessibility access for skhd before it stays up
+		command -v skhd >/dev/null && skhd --start-service
+	fi
+
 	# Link Claude Code configuration
 	if [ -f "$DIR/.claude/settings.json" ]; then
 		link_file "$DIR/.claude/settings.json" "$HOME/.claude/settings.json"

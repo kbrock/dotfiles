@@ -1,0 +1,16 @@
+#!/usr/bin/osascript -l JavaScript
+// Place the front window. Args: x y w h as fractions of the usable screen area (below the menu bar).
+// Example: place-window 0.5 0 0.5 1   (right half)
+ObjC.import('AppKit');
+
+function run(argv) {
+  const [fx, fy, fw, fh] = argv.map(Number);
+  const frame = $.NSScreen.mainScreen.visibleFrame;
+  const primaryHeight = $.NSScreen.screens.objectAtIndex(0).frame.size.height;
+  const top = primaryHeight - (frame.origin.y + frame.size.height);
+
+  const app = Application('System Events').processes.whose({ frontmost: true })[0];
+  const win = app.windows[0];
+  win.position = [frame.origin.x + fx * frame.size.width, top + fy * frame.size.height];
+  win.size = [fw * frame.size.width, fh * frame.size.height];
+}
