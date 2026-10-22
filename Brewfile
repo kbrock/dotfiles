@@ -138,12 +138,11 @@ cask "brave-browser" # Brave web browser
 # cask "opera" # Opera web browser
 cask "1password" # Password manager
 cask "alfred" # Application launcher and productivity tool
-cask "rectangle" # Window manager (Divvy replacement)
-tap "mikker/tap"
-cask "mikker/tap/leader-key" # Keyboard launcher with nested groups (needs github access)
-# cask "mikker/tap/tuna" # Modal launcher (possible Alfred alternative)
+# tap "mikker/tap"
+# cask "mikker/tap/leader-key" # Alternative to skhd: launcher with nested groups (needs github access)
 tap "koekeishiya/formulae"
 brew "koekeishiya/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
+# cask "hammerspoon" # Lua automation (hotkeys, window moves); alternative to skhd
 cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base

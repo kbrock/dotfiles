@@ -39,16 +39,6 @@ chsh -s $(which bash)
 ## Logitech LogiTune (optional)
 
 
-## Leader Key
-
-Need to download from github. apple store is old
-https://github.com/mikker/LeaderKey/releases/tag/v1.17.3
-Config lives in `~/dotfiles/leader-key/config.json`. After install:
-
-- Open Leader Key → Settings → set the config file path to `~/dotfiles/leader-key/config.json`
-- Reload to apply
-- Set the activation hotkey (e.g. ⌃⌥⌘F) in the Leader Key GUI (LCAG-Space)
-- TODO: F is not working for me for windows. 
 ## skhd
 
 Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which also registers the launchd agent). After install:
@@ -68,7 +58,7 @@ Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which al
 - System Settings > Keyboard > Keyboard Shortcuts
   - > Missing Control
     - move space left/right/switch desktop
-  - > Windows (overlaps with Rectangle - may want to revisit)
+  - > Windows (may want to revisit)
   - > Input Sources
     - turned off (control-space, control-command-space)
   - > Spotlight

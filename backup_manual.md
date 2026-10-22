@@ -60,8 +60,6 @@ System Settings → General → Login Items
 
 Add these apps:
 - Hyperkey
-- Rectangle
-- Leader Key
 - Alfred 5
 - Shottr
 
