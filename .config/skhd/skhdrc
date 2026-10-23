@@ -6,6 +6,11 @@
 :: leader @
 :: window @
 
+# --- Pass all keys through to the remote machine while sharing ---
+.blacklist [
+    "Screen Sharing"
+]
+
 # --- Application keys (ported from Alfred workflow "Application Keys") ---
 ctrl + alt + cmd - e : open -a "Sublime Merge"
 ctrl + alt + cmd - w : open -a "Zed"
