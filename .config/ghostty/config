@@ -5,9 +5,9 @@ theme = terminal-corrected
 
 font-family = JetBrains Mono
 font-size = 19
-# iTerm2 had horizontal spacing 0.88 and vertical spacing 0.95
-adjust-cell-width = -12%
-adjust-cell-height = -5%
+# iTerm2 had horizontal spacing 0.88 and vertical spacing 0.95; Ghostty reads tighter at the same values, so loosened
+adjust-cell-width = -6%
+adjust-cell-height = 0
 
 # block cursor that doesn't blink; keep shell integration from switching it to a bar at the prompt
 cursor-style = block

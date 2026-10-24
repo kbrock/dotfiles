@@ -48,11 +48,6 @@ Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which al
 - Reload after editing the config: `skhd -r`
 - Logs: `/tmp/skhd_$USER.err.log`
 
-## Hyper
-- remap physical key to hyper key: caps lock
-- include shift in hyper key = false
-- apply hyper key modifiers to keypress events and: click (default, not sure right value)
-
 ## Manual:
 
 - System Settings > Keyboard > Keyboard Shortcuts
