@@ -1,5 +1,5 @@
 {
 	"editor_path": "/opt/homebrew/bin/zed",
 	"render_commit_dialog_message_at_top": true,
-	"side_bar_layout": "commit_graph_as_column"
+	"side_bar_layout": "tabs"
 }
