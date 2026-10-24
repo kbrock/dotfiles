@@ -101,6 +101,12 @@ if [ "$IS_MAC" == "true" ]; then
 		command -v skhd >/dev/null && skhd --start-service
 	fi
 
+	# Disabled for now: remap Globe to F18 at login (Library/LaunchAgents/com.local.KeyRemapping.plist); skhd has no F18 leader yet
+	# launchd wants a real file, not a symlink
+	#link_file "$DIR/Library/LaunchAgents/com.local.KeyRemapping.plist" "$HOME/Library/LaunchAgents/com.local.KeyRemapping.plist" true
+	#launchctl bootout "gui/$(id -u)/com.local.KeyRemapping" 2>/dev/null || true
+	#launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.local.KeyRemapping.plist"
+
 	# Link Claude Code configuration
 	if [ -f "$DIR/.claude/settings.json" ]; then
 		link_file "$DIR/.claude/settings.json" "$HOME/.claude/settings.json"

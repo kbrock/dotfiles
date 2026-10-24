@@ -143,7 +143,6 @@ cask "alfred" # Application launcher and productivity tool
 tap "koekeishiya/formulae"
 brew "koekeishiya/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
 # cask "hammerspoon" # Lua automation (hotkeys, window moves); alternative to skhd
-cask "hyperkey" # Convert caps lock to hyper key for shortcuts
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base
 cask "daisydisk" if ENV["HOMEBREW_FULL"] # Disk space analyzer

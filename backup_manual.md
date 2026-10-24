@@ -59,7 +59,6 @@ No manual backup needed if iCloud sync is enabled.
 System Settings → General → Login Items
 
 Add these apps:
-- Hyperkey
 - Alfred 5
 - Shottr
 

@@ -14,7 +14,7 @@
 # --- Application keys (ported from Alfred workflow "Application Keys") ---
 ctrl + alt + cmd - e : open -a "Sublime Merge"
 ctrl + alt + cmd - w : open -a "Zed"
-ctrl + alt + cmd - r : open -a "iTerm"
+ctrl + alt + cmd - r : open -a "Ghostty"
 ctrl + alt + cmd - 0x29 : open -a "Music"
 ctrl + alt + cmd - c : open -a "Slack"
 ctrl + alt + cmd - x : open -a "Microsoft Outlook"
