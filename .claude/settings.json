@@ -13,5 +13,6 @@
   },
   "effortLevel": "medium",
   "theme": "dark",
+  "switchModelsOnFlag": false,
   "terminalProgressBarEnabled": true
 }
