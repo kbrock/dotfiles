@@ -7,5 +7,7 @@
 	signingkey = ~/.ssh/id_ed25519_signing.pub
 [github]
 	login = ...
-	# HTTPS auth (PAT) is handled by the global `credential.helper = osxkeychain` in ~/.gitconfig --
-	# no token needed here. First push/fetch prompts once, Keychain stores it after that.
+	# token stored by credential helper
+# use mac keychain for ssh passwords
+[credential]
+	helper = osxkeychain

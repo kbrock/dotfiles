@@ -108,9 +108,6 @@
 #   log = diff-highlight | less -R
 #   show = diff-highlight | less -x4 -R
 #   diff = diff-highlight | less -x4 -R
-# use mac keychain for ssh passwords
-[credential]
-  helper = osxkeychain
 [grep]
   lineNumber = true
 [pull]
@@ -174,4 +171,3 @@
 	gpgsign = true
 [tag]
 	gpgsign = true
-# this section has been moved to gitconfig.local
