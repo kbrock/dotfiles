@@ -36,6 +36,20 @@ function link_file() {
 	fi
 }
 
+# Pin an app to the end of the Dock unless it is already there. Restart the Dock afterwards.
+function add_to_dock() {
+	app="$1"
+	[ -d "$app" ] || return 0
+	url="file://${app// /%20}/"
+	if defaults read com.apple.dock persistent-apps 2>/dev/null | grep -qF "$url"; then
+		return
+	fi
+	echo "Adding $app to the Dock"
+	defaults write com.apple.dock persistent-apps -array-add \
+		"<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$url</string><key>_CFURLStringType</key><integer>15</integer></dict></dict></dict>"
+	DOCK_CHANGED=true
+}
+
 for target in \
 	.agignore \
 	.bash_profile \
@@ -99,13 +113,16 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 		# Register the launchd agent; needs Accessibility access for skhd before it stays up
 		command -v skhd >/dev/null && skhd --start-service
+		# Clickable escape hatch for when skhd stalls the keyboard
+		osacompile -o "$HOME/Applications/Restart skhd.app" "$DIR/.config/skhd/Restart skhd.applescript"
 	fi
 
-	# Disabled for now: remap Globe to F18 at login (Library/LaunchAgents/com.local.KeyRemapping.plist); skhd has no F18 leader yet
-	# launchd wants a real file, not a symlink
-	#link_file "$DIR/Library/LaunchAgents/com.local.KeyRemapping.plist" "$HOME/Library/LaunchAgents/com.local.KeyRemapping.plist" true
-	#launchctl bootout "gui/$(id -u)/com.local.KeyRemapping" 2>/dev/null || true
-	#launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.local.KeyRemapping.plist"
+	# Dock apps. Activity Monitor and Restart skhd are mouse-only recovery when the keyboard is stuck
+	add_to_dock "/Applications/Ghostty.app"
+	add_to_dock "/Applications/Alfred 5.app"
+	add_to_dock "/System/Applications/Utilities/Activity Monitor.app"
+	add_to_dock "$HOME/Applications/Restart skhd.app"
+	if [ "$DOCK_CHANGED" == "true" ]; then killall Dock; fi
 
 	# Link Claude Code configuration
 	if [ -f "$DIR/.claude/settings.json" ]; then
@@ -119,10 +136,6 @@ if [ "$IS_MAC" == "true" ]; then
 		echo "Importing TypeWhisper preferences"
 		defaults import com.typewhisper.mac "$DIR/Library/Preferences/com.typewhisper.mac.plist"
 	fi
-
-	# Point iTerm to our custom config files
-	defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/dotfiles/Library/iTerm"
-	defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
   # make shortcut to iCloud (only with HOMEBREW_FULL)
   if [[ -n "${HOMEBREW_FULL:-}" && ! -e ~/iCloud ]] ; then
