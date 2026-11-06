@@ -48,6 +48,13 @@ Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which al
 - Reload after editing the config: `skhd -r`
 - Logs: `/tmp/skhd_$USER.err.log`
 
+## Rex (beta)
+
+Manual install: Rex Beta is not in the Brewfile (no Homebrew cask). Install steps: https://www.superlogical.com/rex/docs/installation
+
+- App lives at `/Applications/Rex Beta.app`; the macOS client includes its own local server
+- Remote hosts: Add Remote Host... in the app, or `rex hosts add` on the CLI
+
 ## Manual:
 
 - System Settings > Keyboard > Keyboard Shortcuts
