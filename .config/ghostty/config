@@ -3,7 +3,14 @@
 
 theme = terminal-corrected
 
+# Font trial: uncomment one. All have coding ligatures.
 font-family = JetBrains Mono
+# font-family = Monaspace Neon Frozen
+# font-family = Fira Code
+
+# The statusline's ▰▱ bars and ⇑ ⇈ effort arrows, which JetBrains and Fira lack:
+# take them from Monaspace Neon (brew font-monaspace-frozen) instead of a random fallback.
+font-codepoint-map = U+25B0-U+25B1,U+21D1,U+21C8=Monaspace Neon Frozen
 font-size = 19
 # iTerm2 had horizontal spacing 0.88 and vertical spacing 0.95; Ghostty reads tighter at the same values, so loosened
 adjust-cell-width = -6%

@@ -78,8 +78,6 @@ Config lives in `~/dotfiles/.config/skhd/skhdrc` (linked by `setup.sh`, which al
 - **Zed**: `~/.config/zed/settings.json`
 - **Ghostty**: `~/.config/ghostty/config` and `~/.config/ghostty/themes/`
 - **Claude Code**: `~/.claude/settings.json`
-- **iTerm2**: Uses `defaults write` to point to `~/dotfiles/Library/iTerm/`
-  - `defaults read com.googlecode.iterm2 PrefsCustomFolder`
 - **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict`
 - **TypeWhisper**: `com.typewhisper.mac.plist` is imported with `defaults import` (cfprefsd ignores symlinks); save changes back with `defaults export com.typewhisper.mac ~/dotfiles/Library/Preferences/com.typewhisper.mac.plist`. The .store databases stay local
 

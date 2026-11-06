@@ -17,7 +17,6 @@ brew "ripgrep" # Fast grep alternative (rg)
 brew "iproute2mac" # Linux ip command for macOS network debugging
 brew "mas" # Mac App Store command line interface
 brew "duti" # Set default document and URL handlers (used by macos_apply.sh)
-brew "switchaudio-osx" # Switch macOS audio input/output device from CLI (used by bin/headphones)
 brew "just" # Command runner
 # brew "nginx" # Web server for local development
 # cask "google-drive"
@@ -28,9 +27,10 @@ cask "font-jetbrains-mono" # JetBrains monospace font
 cask "font-roboto" # Google's signature font
 cask "font-mona-sans" # GitHub's variable sans-serif font
 cask "font-roboto-mono" # Monospace variant of Roboto
+cask "font-monaspace-frozen" # Monaspace Neon supplies Ghostty's statusline symbols
+cask "font-fira-code" # Monospace font with coding ligatures
 
 # Development setup - Editors and IDEs
-# cask "iterm2" # Terminal emulator for macOS
 cask "ghostty" # Terminal emulator
 # cask "sublime-text" # Text editor
 cask "sublime-merge" # Git client from Sublime
@@ -48,7 +48,8 @@ end
 brew "sqlite3" # SQLite database (may be installed from source, not via brew)
 
 # Development setup - Language version managers and runtimes
-# brew "chruby" # Ruby version manager (using kbrock/chruby fork in ~/src/gems; considering asdf/mise)
+brew "asdf" # Language version manager (Ruby and others)
+# brew "chruby" # Ruby version manager (replaced by asdf; kbrock/chruby fork in ~/src/gems)
 brew "ruby-build" # Build and install Ruby versions
 brew "yamllint" # YAML linter
 if ENV["HOMEBREW_FULL"]
@@ -64,21 +65,21 @@ end
 # Development setup - Cloud and infrastructure
 brew "awscli" # AWS command line interface
 brew "aws-vault" # Store AWS credentials in keychain (used by awsv alias)
+tap "hashicorp/tap"
+brew "hashicorp/tap/packer" # Build machine images
 if ENV["HOMEBREW_FULL"]
-  tap "hashicorp/tap"
   brew "hashicorp/tap/terraform" # Infrastructure as code
   cask "dynamodb-local" # Local DynamoDB for development
 end
 
 # Virtualization and containers
+brew "lima" # Linux virtual machines
+brew "qemu" # Generic machine emulator and virtualizer
+brew "docker" # Docker CLI
+brew "docker-compose" # Multi-container Docker
+brew "docker-buildx" # Docker Buildx plugin
+brew "container" # Apple native container/Linux-VM runtime
 if ENV["HOMEBREW_FULL"]
-  brew "lima" # Linux virtual machines
-  brew "qemu" # Generic machine emulator and virtualizer
-  brew "docker" # Docker CLI
-  brew "docker-compose" # Multi-container Docker
-  brew "docker-buildx" # Docker Buildx plugin
-  brew "podman" # Container engine
-  brew "container" # Apple native container/Linux-VM runtime
   # tap "suruseas/opossum"
   # brew "suruseas/opossum/opossum" # Docker Compose-like orchestrator for Apple's container runtime
   brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
@@ -107,9 +108,7 @@ cask "claude-code@latest" # Claude Code AI coding assistant
 # Media and document conversion
 # brew "poppler" # PDF tools (pdftotext, pdfimages, etc.)
 brew "graphviz" # Graph visualization software
-# brew "imagemagick" # Image processing tools
-# cask "imageoptim" # Image compression GUI
-# brew "imageoptim-cli" # ImageOptim command line interface
+brew "imagemagick" # Image processing tools
 if ENV["HOMEBREW_FULL"]
   brew "pandoc" # Document converter
   brew "svg2png" # SVG to PNG converter
@@ -138,20 +137,17 @@ cask "brave-browser" # Brave web browser
 # cask "opera" # Opera web browser
 cask "1password" # Password manager
 cask "alfred" # Application launcher and productivity tool
-# tap "mikker/tap"
-# cask "mikker/tap/leader-key" # Alternative to skhd: launcher with nested groups (needs github access)
-tap "koekeishiya/formulae"
-brew "koekeishiya/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
+tap "asmvik/formulae"
+brew "asmvik/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
 # cask "hammerspoon" # Lua automation (hotkeys, window moves); alternative to skhd
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base
 cask "daisydisk" if ENV["HOMEBREW_FULL"] # Disk space analyzer
 
 # USB Devices
+cask "betterdisplay" # Display management utility
+cask "logitune" # Logitech keyboard/camera firmware configuration tool
 if ENV["HOMEBREW_FULL"]
-  cask "betterdisplay" # Display management utility
-  cask "vial" # Keyboard firmware configuration tool
-  cask "logitune" # Logitech keyboard/camera firmware configuration tool
   cask "qlstephen" # QuickLook plugin for plain text files
   cask "betterzip" # Quicklook plugin for zip files
 end

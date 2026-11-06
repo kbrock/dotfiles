@@ -62,8 +62,3 @@ Add these apps:
 - Alfred 5
 - Shottr
 
-### Verify iTerm2 Settings
-```bash
-defaults read com.googlecode.iterm2 PrefsCustomFolder
-# Should output: ~/dotfiles/Library/iTerm
-```
