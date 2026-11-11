@@ -54,6 +54,7 @@ Manual install: Rex Beta is not in the Brewfile (no Homebrew cask). Install step
 
 - App lives at `/Applications/Rex Beta.app`; the macOS client includes its own local server
 - Remote hosts: Add Remote Host... in the app, or `rex hosts add` on the CLI
+- Install: https://www.superlogical.com/rex/docs/installation
 
 ## Manual:
 
