@@ -17,6 +17,7 @@ brew "ripgrep" # Fast grep alternative (rg)
 brew "iproute2mac" # Linux ip command for macOS network debugging
 brew "mas" # Mac App Store command line interface
 brew "duti" # Set default document and URL handlers (used by macos_apply.sh)
+# brew "switchaudio-osx" # Switch macOS audio input/output device from CLI (used by bin/headphones)
 brew "just" # Command runner
 # brew "nginx" # Web server for local development
 # cask "google-drive"
@@ -53,8 +54,8 @@ brew "ruby-build" # Build and install Ruby versions
 brew "yamllint" # YAML linter
 if ENV["HOMEBREW_FULL"]
   brew "fnm" # Fast Node.js version manager (instead of nvm)
-  brew "node" # Node.js JavaScript runtime
-  brew "uv" # Python package manager (vs env)
+  # brew "node" # Node.js JavaScript runtime
+  # brew "uv" # Python package manager (vs env)
   brew "bun" # JavaScript runtime & package manager
   brew "go" # Go programming language
   brew "yarn" # JavaScript package manager
