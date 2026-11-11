@@ -78,6 +78,27 @@ echo "Configuring Performance..."
 # Reduce motion (disables animations)
 # defaults write com.apple.universalaccess reduceMotion -bool true
 
+echo "Configuring Rex (terminal app, domain com.superlogical.rex)..."
+# Rex Beta settings live in this plist, not in init.lua; keys are undocumented and may change.
+# Quit Rex first or it overwrites these on exit. Themes are imported by hand (Settings > Themes).
+pgrep -x "Rex" >/dev/null && echo "  WARNING: Rex Beta is running; quit it and re-run" || true
+# Font
+defaults write com.superlogical.rex Workspace.terminalFontName -string "JetBrains Mono"
+defaults write com.superlogical.rex Workspace.terminalFontStyle -string "Medium"
+defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 12.5
+defaults write com.superlogical.rex Workspace.terminalCharacterSpacing -string "-6.0%"
+defaults write com.superlogical.rex Workspace.terminalCellHeightPercent -float 0
+# Block cursor, not forced over app requests
+defaults write com.superlogical.rex Workspace.terminalCursorStyle -string "block"
+defaults write com.superlogical.rex Workspace.terminalCursorStyleForced -bool false
+# Option sends Alt
+defaults write com.superlogical.rex Workspace.terminalOptionKeyBehavior -string "actsAsAlt"
+# Layout
+defaults write com.superlogical.rex Workspace.tabStyle -string "horizontal"
+defaults write com.superlogical.rex Workspace.sidebarPosition -string "left"
+defaults write com.superlogical.rex Workspace.inactivePaneFadeMode -string "both"
+defaults write com.superlogical.rex Workspace.tabIconTintMode -string "off"
+
 # given an extension, find possible entries to use in the duti below
 function ext_to_content_type() {
   local lsregister=/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister
