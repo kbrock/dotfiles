@@ -1,0 +1,2 @@
+-- Rex config; linked to ~/.config/rex/init.lua by setup.sh
+-- Reload with: rex config reload

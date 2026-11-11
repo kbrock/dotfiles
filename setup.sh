@@ -108,6 +108,11 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/ghostty/themes" "$HOME/.config/ghostty/themes"
 	fi
 
+	# Link Rex configuration
+	if [ -f "$DIR/.config/rex/init.lua" ]; then
+		link_file "$DIR/.config/rex/init.lua" "$HOME/.config/rex/init.lua"
+	fi
+
 	# Link skhd configuration
 	if [ -f "$DIR/.config/skhd/skhdrc" ]; then
 		link_file "$DIR/.config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
