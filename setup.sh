@@ -123,7 +123,7 @@ if [ "$IS_MAC" == "true" ]; then
 	fi
 
 	# Dock apps. Activity Monitor and Restart skhd are mouse-only recovery when the keyboard is stuck
-	add_to_dock "/Applications/Ghostty.app"
+	add_to_dock "/Applications/Rex Beta.app"
 	add_to_dock "/Applications/Alfred 5.app"
 	add_to_dock "/System/Applications/Utilities/Activity Monitor.app"
 	add_to_dock "$HOME/Applications/Restart skhd.app"

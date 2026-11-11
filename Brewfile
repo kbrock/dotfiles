@@ -31,7 +31,6 @@ cask "font-monaspace-frozen" # Monaspace Neon supplies Ghostty's statusline symb
 cask "font-fira-code" # Monospace font with coding ligatures
 
 # Development setup - Editors and IDEs
-cask "ghostty" # Terminal emulator
 # cask "sublime-text" # Text editor
 cask "sublime-merge" # Git client from Sublime
 cask "zed" # High-performance code editor
