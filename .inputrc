@@ -1,2 +1,6 @@
 #for readline
 set editing-mode emacs
+# Alt+forward-delete deletes the word to the right
+"\e[3;3~": kill-word
+# Cmd+forward-delete deletes to the end of the line
+"\e[3;9~": kill-line
