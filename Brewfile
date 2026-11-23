@@ -83,8 +83,6 @@ brew "docker-compose" # Multi-container Docker
 brew "docker-buildx" # Docker Buildx plugin
 brew "container" # Apple native container/Linux-VM runtime
 if ENV["HOMEBREW_FULL"]
-  # tap "suruseas/opossum"
-  # brew "suruseas/opossum/opossum" # Docker Compose-like orchestrator for Apple's container runtime
   brew "kubernetes-cli" # Kubernetes command-line tool (kubectl)
   # brew "helm" # Kubernetes package manager
 end
@@ -100,7 +98,7 @@ brew "gh" # GitHub CLI
 if ENV["HOMEBREW_FULL"]
   brew "llama.cpp" # Local LLM inference (llama-server)
   brew "whisper.cpp" # Local speech-to-text (whisper-server; see whisper/)
-  brew "rtk" # CLI proxy to minimize LLM token consumption
+  # brew "rtk" # CLI proxy to minimize LLM token consumption
 end
 cask "claude" # Claude desktop app
 cask "claude-code@latest" # Claude Code AI coding assistant
