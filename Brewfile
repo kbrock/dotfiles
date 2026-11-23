@@ -11,6 +11,7 @@ brew "pkg-config" # Manage compile and link flags (may be installed from source,
 brew "curl" # Transfer data with URLs
 brew "wget" # Internet file retriever
 brew "jq" # JSON processor
+brew "e2fsprogs" # ext2/3/4 filesystem tools (Linux disk images, SD cards)
 brew "tree" # Display directory structure
 brew "ripgrep" # Fast grep alternative (rg)
 #brew "the_silver_searcher" # Code search tool (ag)
@@ -24,12 +25,14 @@ brew "just" # Command runner
 
 # Development setup - Fonts
 cask "font-open-sans" # Humanist sans serif font
-cask "font-jetbrains-mono" # JetBrains monospace font
+cask "font-jetbrains-mono" # The font: Zed buffer_font_family and code_font_family; choose it in Rex Settings > Terminal > Typography
 cask "font-roboto" # Google's signature font
 cask "font-mona-sans" # GitHub's variable sans-serif font
 cask "font-roboto-mono" # Monospace variant of Roboto
 # cask "font-monaspace-frozen" # Monaspace Neon (was Ghostty's statusline symbols; Rex bundles Nerd Font symbols)
-cask "font-fira-code" # Monospace font with coding ligatures
+cask "font-fira-code" # Monospace font with coding ligatures; no config selects it
+cask "font-hack" # Monospace alternative; no config selects it
+cask "font-source-code-pro" # Monospace alternative; no config selects it
 cask "font-symbols-only-nerd-font" # Nerd Font icons (statusline STATUSLINE_ICONS=nerd); Rex bundles its own, other terminals may not
 
 # Development setup - Editors and IDEs
@@ -67,8 +70,6 @@ brew "awscli" # AWS command line interface
 tap "hashicorp/tap"
 brew "hashicorp/tap/packer" # Build machine images
 brew "xorriso" # Builds ISO images (packer cd_files / cloud-init seed)
-tap "heroku/brew"
-brew "heroku/brew/heroku" # Heroku CLI (official tap bundles its own node; core formula pulls in brew node)
 if ENV["HOMEBREW_FULL"]
   brew "hashicorp/tap/terraform" # Infrastructure as code
   cask "dynamodb-local" # Local DynamoDB for development
@@ -98,6 +99,7 @@ brew "gh" # GitHub CLI
 # Development setup - AI and ML
 if ENV["HOMEBREW_FULL"]
   brew "llama.cpp" # Local LLM inference (llama-server)
+  brew "whisper.cpp" # Local speech-to-text (whisper-server; see whisper/)
   brew "rtk" # CLI proxy to minimize LLM token consumption
 end
 cask "claude" # Claude desktop app
@@ -137,19 +139,24 @@ cask "brave-browser" # Brave web browser
 # cask "opera" # Opera web browser
 cask "1password" # Password manager
 cask "alfred" # Application launcher and productivity tool
-# cask "keepingyouawake" # Keep-awake menu bar app (brew alternative to App Store Amphetamine)
+cask "keepingyouawake" # Keep-awake menu bar app (brew alternative to App Store Amphetamine)
 tap "asmvik/formulae"
 brew "asmvik/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
 # cask "hammerspoon" # Lua automation (hotkeys, window moves); alternative to skhd
+tap "typewhisper/tap"
 cask "typewhisper" # Speech-to-text and AI text processing
 # cask "obsidian" # Note-taking and knowledge base
 cask "daisydisk" if ENV["HOMEBREW_FULL"] # Disk space analyzer
+# cask "sloth" # Show open files and ports per process (GUI for lsof)
+# TurboTax 2025: manual install (Homebrew only carries turbotax-2024)
 
 # USB Devices
 cask "betterdisplay" # Display management utility
+cask "raspberry-pi-imager" # Write OS images to SD cards and USB drives
+cask "quicklook-video" # QuickLook thumbnails, previews and metadata for video files
+cask "terminal-browser" # Terminal-based web browser
 cask "logitune" # Logitech keyboard/camera firmware configuration tool
 if ENV["HOMEBREW_FULL"]
-  cask "qlstephen" # QuickLook plugin for plain text files
   cask "betterzip" # Quicklook plugin for zip files
 end
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install Xcode from the Mac App Store using mas CLI (everything else is in the Brewfile)
+# Install Mac App Store apps (Marked 2, Color Picker, Xcode) using mas CLI (everything else is in the Brewfile)
 # Make sure you're signed into the App Store before running this script
 
 set -e
@@ -17,7 +17,11 @@ if ! mas list &> /dev/null; then
    exit 1
 fi
 
-echo "Installing Xcode (slow)..."
+echo "Installing Mac App Store applications..."
+mas install 890031187  # Marked 2 - Markdown preview
+mas install 1545870783 # Color Picker - Pick colors from anywhere on screen
+
+# this is slow, install last
 mas install 497799835  # Xcode - Apple's integrated development environment
 
 echo ""
