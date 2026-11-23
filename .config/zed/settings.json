@@ -7,6 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "markdown_preview": {
+    "heading_font_weight": 800.0,
+    "code_font_family": "JetBrains Mono"
+  },
   "agent_servers": {
     "claude-acp": {
       "type": "registry",
