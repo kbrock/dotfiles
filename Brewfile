@@ -28,8 +28,9 @@ cask "font-jetbrains-mono" # JetBrains monospace font
 cask "font-roboto" # Google's signature font
 cask "font-mona-sans" # GitHub's variable sans-serif font
 cask "font-roboto-mono" # Monospace variant of Roboto
-cask "font-monaspace-frozen" # Monaspace Neon supplies Ghostty's statusline symbols
+# cask "font-monaspace-frozen" # Monaspace Neon (was Ghostty's statusline symbols; Rex bundles Nerd Font symbols)
 cask "font-fira-code" # Monospace font with coding ligatures
+cask "font-symbols-only-nerd-font" # Nerd Font icons (statusline STATUSLINE_ICONS=nerd); Rex bundles its own, other terminals may not
 
 # Development setup - Editors and IDEs
 # cask "sublime-text" # Text editor
@@ -38,7 +39,6 @@ cask "zed" # High-performance code editor
 # cask "sf-symbols" # Apple SF Symbols browser and toolkit
 
 # Development setup - Databases
-brew "libpq" # psql and friends without a server (used by ~/pgbin)
 if ENV["HOMEBREW_FULL"]
   brew "postgresql@18", restart_service: true, link: true # PostgreSQL database
   brew "mysql" # MySQL relational database
@@ -48,9 +48,8 @@ end
 brew "sqlite3" # SQLite database (may be installed from source, not via brew)
 
 # Development setup - Language version managers and runtimes
-brew "asdf" # Language version manager (Ruby and others)
 # brew "chruby" # Ruby version manager (replaced by asdf; kbrock/chruby fork in ~/src/gems)
-brew "ruby-build" # Build and install Ruby versions
+# brew "ruby-build" # Not needed: asdf-ruby downloads its own pinned ruby-build
 brew "yamllint" # YAML linter
 if ENV["HOMEBREW_FULL"]
   brew "fnm" # Fast Node.js version manager (instead of nvm)
@@ -64,9 +63,11 @@ end
 
 # Development setup - Cloud and infrastructure
 brew "awscli" # AWS command line interface
-brew "aws-vault" # Store AWS credentials in keychain (used by awsv alias)
 tap "hashicorp/tap"
 brew "hashicorp/tap/packer" # Build machine images
+brew "xorriso" # Builds ISO images (packer cd_files / cloud-init seed)
+tap "heroku/brew"
+brew "heroku/brew/heroku" # Heroku CLI (official tap bundles its own node; core formula pulls in brew node)
 if ENV["HOMEBREW_FULL"]
   brew "hashicorp/tap/terraform" # Infrastructure as code
   cask "dynamodb-local" # Local DynamoDB for development
@@ -98,7 +99,6 @@ if ENV["HOMEBREW_FULL"]
   brew "llama.cpp" # Local LLM inference (llama-server)
   brew "rtk" # CLI proxy to minimize LLM token consumption
 end
-# brew "ollama" # Run large language models locally
 cask "claude" # Claude desktop app
 cask "claude-code@latest" # Claude Code AI coding assistant
 # cask "codex" # OpenAI Codex CLI/app
@@ -108,7 +108,6 @@ cask "claude-code@latest" # Claude Code AI coding assistant
 # Media and document conversion
 # brew "poppler" # PDF tools (pdftotext, pdfimages, etc.)
 brew "graphviz" # Graph visualization software
-brew "imagemagick" # Image processing tools
 if ENV["HOMEBREW_FULL"]
   brew "pandoc" # Document converter
   brew "svg2png" # SVG to PNG converter
@@ -137,6 +136,7 @@ cask "brave-browser" # Brave web browser
 # cask "opera" # Opera web browser
 cask "1password" # Password manager
 cask "alfred" # Application launcher and productivity tool
+# cask "keepingyouawake" # Keep-awake menu bar app (brew alternative to App Store Amphetamine)
 tap "asmvik/formulae"
 brew "asmvik/formulae/skhd" # Hotkey daemon: global keys and leader modes from a text file
 # cask "hammerspoon" # Lua automation (hotkeys, window moves); alternative to skhd
@@ -159,3 +159,14 @@ cask "slack" # Team communication
 cask "zoom" # Video conferencing
 cask "steam" if ENV["HOMEBREW_FULL"] # Gaming platform
 # cask "dayflow" # Screensaver (was "day-o")
+
+# p: everything its bin/setup installs, in one spot (docker comes from the formula above)
+brew "asdf" # Language version manager (Ruby and others)
+# brew "mise" # asdf alternative; reads .tool-versions, but bin/setup expects asdf commands
+brew "libyaml" # Ruby's psych extension needs it to build
+brew "libpq" # psql and friends without a server (also used by ~/pgbin)
+brew "aws-vault" # Store AWS credentials in keychain (also used by awsv alias)
+brew "imagemagick" # Image processing tools
+brew "ffmpeg@5" # Keg-only; pinned to match prod
+brew "shared-mime-info" # MIME database for the marcel gem
+brew "ollama" # Run large language models locally
