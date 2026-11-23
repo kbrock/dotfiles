@@ -57,6 +57,7 @@ if ENV["HOMEBREW_FULL"]
   # brew "uv" # Python package manager (vs env)
   brew "bun" # JavaScript runtime & package manager
   brew "go" # Go programming language
+  brew "rustup" # Rust toolchain installer (PATH set in bashrc.d/rust.sh)
   brew "yarn" # JavaScript package manager
 end
 # brew "crystal" # Crystal programming language

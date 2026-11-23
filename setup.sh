@@ -59,7 +59,8 @@ for target in \
 	.gitattributes \
 	.gitconfig \
 	.gitignore_global \
-	.inputrc
+	.inputrc \
+	.vimrc
 do
 	link_file "$DIR/$target" "$HOME/$target"
 done
