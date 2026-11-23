@@ -1,5 +1,7 @@
 # Personal machines opt into the extras:
 #   HOMEBREW_FULL=1 brew bundle install  (brew hides env vars without the HOMEBREW_ prefix)
+# The work machine opts into its own set:
+#   HOMEBREW_WORK=1 brew bundle install
 
 # Basic setup
 brew "bash" # Modern bash shell
@@ -166,13 +168,15 @@ cask "zoom" # Video conferencing
 cask "steam" if ENV["HOMEBREW_FULL"] # Gaming platform
 # cask "dayflow" # Screensaver (was "day-o")
 
-# p: everything its bin/setup installs, in one spot (docker comes from the formula above)
-brew "asdf" # Language version manager (Ruby and others)
-# brew "mise" # asdf alternative; reads .tool-versions, but bin/setup expects asdf commands
-brew "libyaml" # Ruby's psych extension needs it to build
-brew "libpq" # psql and friends without a server (also used by ~/pgbin)
-brew "aws-vault" # Store AWS credentials in keychain (also used by awsv alias)
-brew "imagemagick" # Image processing tools
-brew "ffmpeg@5" # Keg-only; pinned to match prod
-brew "shared-mime-info" # MIME database for the marcel gem
-brew "ollama" # Run large language models locally
+# installed via bin/setup
+if ENV["HOMEBREW_WORK"]
+  brew "asdf" # Language version manager (Ruby and others)
+  # brew "mise" # asdf alternative; reads .tool-versions, but bin/setup expects asdf commands
+  brew "libyaml" # Ruby's psych extension needs it to build
+  brew "libpq" # psql and friends without a server (also used by ~/pgbin)
+  brew "aws-vault" # Store AWS credentials in keychain (also used by awsv alias)
+  brew "imagemagick" # Image processing tools
+  brew "ffmpeg@5" # Keg-only; pinned to match prod
+  brew "shared-mime-info" # MIME database for the marcel gem
+  brew "ollama" # Run large language models locally
+end
