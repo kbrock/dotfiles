@@ -11,3 +11,6 @@
 # use mac keychain for ssh passwords
 [credential]
 	helper = osxkeychain
+	# or a custom helper: reset the list, then add it
+	#helper =
+	#helper = /usr/local/bin/granular-git
