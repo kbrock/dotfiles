@@ -56,6 +56,23 @@ Manual install: Rex Beta is not in the Brewfile (no Homebrew cask). Install step
 - Remote hosts: Add Remote Host... in the app, or `rex hosts add` on the CLI
 - Install: https://www.superlogical.com/rex/docs/installation
 
+## Whisper server (Studio, M4)
+
+Speech-to-text for the LAN on port 9940. Run `whisper/install.sh`: it downloads the model, installs the launchd agent, and checks it by uploading a spoken "testing one two three".
+
+### TypeWhisper client settings (openai-compatible)
+
+- Server URL: `http://Studio.local:9940`
+- API version: `v1`
+- API key: any value (ignored)
+- Server kind: Generic
+- Models (LLM name and transcription model): `whisper-1` (ignored by the server)
+- LLM API: Chat Completions (default)
+- Transcription transport: Batch
+- Batch transcription: Standard v1
+- Upload format: WAV
+- Test connection reports a failure; transcription works anyway
+
 ## Manual:
 
 - System Settings > Keyboard > Keyboard Shortcuts
