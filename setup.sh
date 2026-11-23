@@ -103,6 +103,11 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 	fi
 
+	# Link GitHub CLI settings (hosts.yml holds auth and stays local)
+	if [ -f "$DIR/.config/gh/config.yml" ]; then
+		link_file "$DIR/.config/gh/config.yml" "$HOME/.config/gh/config.yml"
+	fi
+
 	# Link Rex configuration
 	if [ -f "$DIR/.config/rex/init.lua" ]; then
 		link_file "$DIR/.config/rex/init.lua" "$HOME/.config/rex/init.lua"
