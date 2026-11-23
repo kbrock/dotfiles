@@ -58,7 +58,7 @@ for target in \
 	.gemrc \
 	.gitattributes \
 	.gitconfig \
-	.gitignore_global \
+	.config/git/ignore \
 	.inputrc \
 	.vimrc
 do

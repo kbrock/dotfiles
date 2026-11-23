@@ -99,7 +99,6 @@
 # git checkout automatically tracks the remote ()
 #  autosetupmerge = true
 [core]
-  excludesfile = ~/.gitignore_global
   pager = less -x4
   attributesfile = ~/.gitattributes
 	autocrlf = ""
