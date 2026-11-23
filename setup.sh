@@ -102,12 +102,6 @@ if [ "$IS_MAC" == "true" ]; then
 		link_file "$DIR/.config/zed/keymap.json" "$HOME/.config/zed/keymap.json"
 	fi
 
-	# Link Ghostty configuration (config and themes)
-	if [ -f "$DIR/.config/ghostty/config" ]; then
-		link_file "$DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
-		link_file "$DIR/.config/ghostty/themes" "$HOME/.config/ghostty/themes"
-	fi
-
 	# Link Rex configuration
 	if [ -f "$DIR/.config/rex/init.lua" ]; then
 		link_file "$DIR/.config/rex/init.lua" "$HOME/.config/rex/init.lua"
@@ -123,7 +117,7 @@ if [ "$IS_MAC" == "true" ]; then
 	fi
 
 	# Dock apps. Activity Monitor and Restart skhd are mouse-only recovery when the keyboard is stuck
-	add_to_dock "/Applications/Rex Beta.app"
+	add_to_dock "/Applications/Rex.app"
 	add_to_dock "/Applications/Alfred 5.app"
 	add_to_dock "/System/Applications/Utilities/Activity Monitor.app"
 	add_to_dock "$HOME/Applications/Restart skhd.app"

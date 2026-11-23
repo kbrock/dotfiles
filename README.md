@@ -84,7 +84,6 @@ Manual install: Rex Beta is not in the Brewfile (no Homebrew cask). Install step
 ### App Configurations
 - **Sublime Text**: `~/Library/Application Support/Sublime Text 3/Packages/User/`
 - **Zed**: `~/.config/zed/settings.json`
-- **Ghostty**: `~/.config/ghostty/config` and `~/.config/ghostty/themes/`
 - **Claude Code**: `~/.claude/settings.json`
 - **KeyBindings**: `~/Library/KeyBindings/DefaultKeyBinding.dict`
 - **TypeWhisper**: `com.typewhisper.mac.plist` is imported with `defaults import` (cfprefsd ignores symlinks); save changes back with `defaults export com.typewhisper.mac ~/dotfiles/Library/Preferences/com.typewhisper.mac.plist`. The .store databases stay local

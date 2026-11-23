@@ -79,13 +79,18 @@ echo "Configuring Performance..."
 # defaults write com.apple.universalaccess reduceMotion -bool true
 
 echo "Configuring Rex (terminal app, domain com.superlogical.rex)..."
-# Rex Beta settings live in this plist, not in init.lua; keys are undocumented and may change.
+# Rex settings live in this plist, not in init.lua; keys are undocumented and may change.
 # Quit Rex first or it overwrites these on exit. Themes are imported by hand (Settings > Themes).
-pgrep -x "Rex" >/dev/null && echo "  WARNING: Rex Beta is running; quit it and re-run" || true
+# Refresh from Settings with: defaults read com.superlogical.rex | grep -E 'ThemeID|terminalFont|TextContrast'
+pgrep -x "Rex" >/dev/null && echo "  WARNING: Rex is running; quit it and re-run" || true
+# Theme
+defaults write com.superlogical.rex Workspace.darkThemeID -string "abyssal-trench"
+defaults write com.superlogical.rex Workspace.lightThemeID -string "merino-light"
 # Font
-defaults write com.superlogical.rex Workspace.terminalFontName -string "JetBrains Mono"
-defaults write com.superlogical.rex Workspace.terminalFontStyle -string "Medium"
-defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 12.5
+defaults write com.superlogical.rex Workspace.terminalFontName -string "JetBrains Mono NL"
+defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 15
+defaults write com.superlogical.rex Workspace.terminalFontSmoothing -bool true
+defaults write com.superlogical.rex Workspace.terminalImproveTextContrast -bool true
 defaults write com.superlogical.rex Workspace.terminalCharacterSpacing -string "-6.0%"
 defaults write com.superlogical.rex Workspace.terminalCellHeightPercent -float 0
 # Block cursor, not forced over app requests
